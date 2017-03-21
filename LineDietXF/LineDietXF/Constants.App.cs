@@ -10,9 +10,6 @@
         public const int DEBUG_SIMULATE_SLOW_RESPONSE_TIME = 1000; // in milliseconds
 #endif
 
-        public const string AppVersion = "0.5.0";
-        public const string AppVersionDebugAddition = "b";
-
         public const string SQLite_DB_Filename = "Linediet.db";
 
         public static int HISTORY_WeightEntryMaxCount = 31;
