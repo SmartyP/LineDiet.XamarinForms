@@ -1,0 +1,13 @@
+LineDietXF/Droid/obj/
+LineDietXF/packages/
+LineDietXF/iOS/bin/
+LineDietXF/iOS/obj/
+LineDietXF/LineDietXF/bin/
+LineDietXF/LineDietXF/obj/
+*.suo
+LineDietXF/iOS/LineDietXF.iOS.csproj.user
+LineDietXF/Droid/bin/
+LineDietXF/LineDietAppService/bin/
+LineDietXF/LineDietAppService/obj/
+LineDietXF/Droid/LineDietXF.Droid.csproj.user
+LineDietXF/Droid/Resources/Resource.designer.cs
