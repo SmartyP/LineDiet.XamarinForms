@@ -24,9 +24,9 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 
 ## Project Features
 ### MVVM Architecture (using Prism)
-* Data binding via Bindable Properties and Bindable Commands *(with CanExecute support for button disabling)*
-* Use of INavigationService, INavigationAware, and IActiveAware
+* Data binding via Bindable Properties and Bindable Commands *(using CanExecute for button disabling)*
 * Platform specific services with IPlatformInitializer *(ex: AnalyticsService, ReviewService)*
+* Use of INavigationService, INavigationAware, IActiveAware, and PubSubEvent
 * Binding Converters *(ex: CheckmarkVisibilityConverter)*
 * Zero code-behind XAML layouts *(except for orientation UI adjustment in GraphPage.xaml.cs)*
 
@@ -35,12 +35,12 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 * Platform specific style definitions *(ex: TitleLabelStyle, BoxButtonStyle)*
 * Dynamic app themeing - *navigation bar, tab bar, menu items change colors in response to app state*
 * Portrait and Landscape support - *including full-screen graph when in landscape*
-* Loading indicator control - *data bound to all View Models' IsBusy property - use DEBUG_SIMULATE_SLOW_RESPONSE flag to slow down*
+* Loading indicator control - *bound to all View Models' IsBusy property - use DEBUG_SIMULATE_SLOW_RESPONSE flag to slow down*
 * Onboarding carousel - *swipeable set of pages (via DataTemplates) with paging dot indicators*
 * iOS Custom Renderers
 	* AutoSelectEntryRenderer - *auto-selects all text on Entry field focus*
 	* CustomNavigationPageRenderer - *changes Navigation Bar colors dynamically in response to app events*
-	* CustomTabbedPageRenderer - *uses separate tab images for selected/unselected states, offsets images as no labels on tabs*
+	* CustomTabbedPageRenderer - *uses separate tab images for selected/unselected states, vertically offsets images to be centered (as no labels on tabs), and changes tab colors dynamically in response to app events*
 	* CustomViewCellRenderer - *sets ListView selected row background color to clear (see Known Issues below)*
 * Android Custom Renderers
 	* CustomDatePickerRenderer - *removes underline typically shown in Android entry fields*
