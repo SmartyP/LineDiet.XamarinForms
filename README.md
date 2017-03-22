@@ -68,6 +68,7 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 * SVGs for icons *(and relative SVG image service)*
 
 ## TODO List
+* Switch to using asset catalogs for iOS app icons
 * Alternative weight unit support *(ex: kilograms, stones/pounds)*
 * Support for local date format ([example](http://stackoverflow.com/a/37858898/18005))
 * Improved getting started images for tablets
