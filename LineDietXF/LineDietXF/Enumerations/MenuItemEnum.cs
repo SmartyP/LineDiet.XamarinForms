@@ -2,6 +2,7 @@
 {
     public enum MenuItemEnum
     {
+        // Main Menu
         GettingStarted,
         SetGoal,
         Settings,
@@ -10,6 +11,9 @@
         SendFeedback,
         About,
         Debug,
-        Divider
+        Divider,
+
+        // Settings Menu
+        Settings_SetUnitType
     }
 }

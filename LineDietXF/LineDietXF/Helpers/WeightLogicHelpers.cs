@@ -11,6 +11,38 @@ namespace LineDietXF.Helpers
     /// </summary>
     public static class WeightLogicHelpers
     {
+        public static string ToSettingsName(this WeightUnitEnum weightUnit)
+        {
+            switch (weightUnit)
+            {
+                case WeightUnitEnum.ImperialPounds:
+                    return Constants.Strings.Settings_ImperialPound;
+                case WeightUnitEnum.Kilograms:
+                    return Constants.Strings.Settings_Kilograms;
+                default:
+#if DEBUG
+                    Debugger.Break();
+#endif
+                    return "??";
+            }
+        }
+
+        public static string ToSentenceUsageName(this WeightUnitEnum weightUnit)
+        {
+            switch (weightUnit)
+            {
+                case WeightUnitEnum.ImperialPounds:
+                    return Constants.Strings.Common_WeightUnit_ImperialPounds;
+                case WeightUnitEnum.Kilograms:
+                    return Constants.Strings.Common_WeightUnit_Kilograms;
+                default:
+#if DEBUG
+                    Debugger.Break();
+#endif
+                    return "??";
+            }
+        }
+
         public static bool WeightMetGoalOnDate(WeightLossGoal goal, DateTime dt, decimal weightOnDate)
         {
             if (goal == null)
@@ -202,9 +234,31 @@ namespace LineDietXF.Helpers
             // NOTE: we don't want to say "-1.2 gained" so we always make sure what we display is positive
             string gainedLost = (amountLost < 0) ? Constants.Strings.DailyInfoPage_Summary_Gained : Constants.Strings.DailyInfoPage_Summary_Lost;
             string endingText = (todaysEntry.Weight <= todaysGoalWeight) ? Constants.Strings.DailyInfoPage_SummaryEnding_OnTrack : Constants.Strings.DailyInfoPage_SummaryEnding_OffTrack;
-            return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary,
-                gainedLost, Math.Abs(amountLost), Constants.Strings.Common_WeightUnit, daysSinceStart,
+            string weightUnits = todaysEntry.WeightUnit.ToSentenceUsageName();
+            return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary, gainedLost, Math.Abs(amountLost), weightUnits, daysSinceStart,
                 daysToGo, amountRemaining, endingText);
+        }
+
+        public static decimal ConvertWeightUnits(decimal weightValue, WeightUnitEnum origUnits, WeightUnitEnum newUnits)
+        {
+            if (origUnits == newUnits)
+                return weightValue;
+
+            if (origUnits == WeightUnitEnum.ImperialPounds && newUnits == WeightUnitEnum.Kilograms)
+            {
+                return weightValue * Constants.App.PoundsToKilograms;
+            }
+            else if (origUnits == WeightUnitEnum.Kilograms && newUnits == WeightUnitEnum.ImperialPounds)
+            {
+                return weightValue * Constants.App.KilogramsToPounds;
+            }
+            else // unknown conversion, do nothing
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+                return weightValue;
+            }
         }
     }
 }

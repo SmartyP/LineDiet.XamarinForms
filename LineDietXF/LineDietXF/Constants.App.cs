@@ -1,4 +1,6 @@
-﻿namespace LineDietXF.Constants
+﻿using LineDietXF.Enumerations;
+
+namespace LineDietXF.Constants
 {
     public static class App
     {
@@ -17,7 +19,9 @@
 
         // Settings
         public const string Settings_HasDismissedStartupView = "HasDismissedStartupView";
+        public const string Settings_WeightUnits = "WeightUnits";
         public const bool Settings_HasDismissedStartupView_DefaultValue = false;
+        public const WeightUnitEnum Settings_WeightUnits_DefaultValue = WeightUnitEnum.ImperialPounds;
 
         // Graphing
         // NOTE:: constants relative to break points in graph labeling are defined within GraphPageViewModel
@@ -30,6 +34,10 @@
         public const int Graph_MaxDateRangeVisible = 365;
         public const int Graph_MinWeightRangeVisible = 5;
         public const int Graph_MaxWeightRangeVisible = 100;
+
+        // Weight conversions
+        public const decimal PoundsToKilograms = 0.45359237M;
+        public const decimal KilogramsToPounds = 2.2046226218M;
 
         // Urls
         public const string ShareUrl = "http://www.linedietapp.com/?ref=LDapp";

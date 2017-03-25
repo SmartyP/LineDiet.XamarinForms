@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using LineDietXF.Enumerations;
+using SQLite;
 using System;
 using System.Diagnostics;
 
@@ -16,16 +17,24 @@ namespace LineDietXF.Types
 
         [NotNull]
         public decimal Weight { get; set; }
+        
+        [Column("Units")]
+        public WeightUnitEnum WeightUnit { get; set; }
 
         public WeightEntry()
         {
             Weight = decimal.MinValue;
+
+            // NOTE:: The original database did not have this field, and SQLite-Net does not support Default attributes, so we make sure
+            // we explicitly set this here to the default we want for pre-existing records before this field was added
+            WeightUnit = WeightUnitEnum.ImperialPounds;
         }
 
-        public WeightEntry(DateTime dt, decimal wt)
+        public WeightEntry(DateTime dt, decimal wt, WeightUnitEnum weightUnit)
         {
             Date = dt;
             Weight = wt;
+            WeightUnit = weightUnit;
         }
 
         public override string ToString()

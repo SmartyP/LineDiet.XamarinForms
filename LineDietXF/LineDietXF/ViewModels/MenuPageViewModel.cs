@@ -73,7 +73,7 @@ namespace LineDietXF.ViewModels
             WindowColorService = windowColorService;
             ReviewService = reviewService;
 
-            // Build up settings menu
+            // Build up menu
             MenuEntries = BuildMenu();
         }
 
@@ -136,7 +136,7 @@ namespace LineDietXF.ViewModels
 
             menuEntries.Add(new MenuItem(MenuItemEnum.GettingStarted, Constants.Strings.Menu_GettingStarted, false));
             menuEntries.Add(new MenuItem(MenuItemEnum.SetGoal, Constants.Strings.Menu_SetGoal, false));
-            // menuEntries.Add(new MenuItem(MenuItemEnum.Settings, Constants.Strings.Menu_Settings, false)); // TODO:: FUTURE:: add settings menu entry
+            menuEntries.Add(new MenuItem(MenuItemEnum.Settings, Constants.Strings.Menu_Settings, false));
             menuEntries.Add(new MenuItem(MenuItemEnum.Divider, string.Empty, true));
 
             menuEntries.Add(new MenuItem(MenuItemEnum.Share, Constants.Strings.Menu_Share, false));
@@ -169,11 +169,8 @@ namespace LineDietXF.ViewModels
                     await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SetGoalPage)}", useModalNavigation: true);
                     break;
                 case MenuItemEnum.Settings:
-                    // TODO:: FUTURE:: implement settings (ex: choosing pounds, kilograms, or stones/pounds) (ex: choosing different graphing options)
                     AnalyticsService.TrackEvent(Constants.Analytics.MenuCategory, Constants.Analytics.Menu_Settings, 1);
-                    AnalyticsService.TrackFatalError($"{nameof(NavigateToPage)} - should not be able to use Settings menu yet - doing nothing.");
-                    if (Debugger.IsAttached)
-                        Debugger.Break();
+                    await NavigationService.NavigateAsync($"{nameof(SettingsPage)}", useModalNavigation: false);
                     break;
                 case MenuItemEnum.Share:
                     AnalyticsService.TrackEvent(Constants.Analytics.MenuCategory, Constants.Analytics.Menu_Share, 1);

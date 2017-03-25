@@ -1,4 +1,6 @@
-﻿using LineDietXF.Interfaces;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Helpers;
+using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using SQLite;
 using System;
@@ -181,6 +183,83 @@ namespace LineDietXF.Services
 
             var entry = await GetWeightEntryForDate(dt);
             return entry != null;
+        }
+
+        public async Task<ResultWithErrorText> ChangeWeightEntriesAndGoalUnitType(WeightUnitEnum newUnits, bool convertValues)
+        {
+            // convert all values
+            bool success = true;
+            string errorText = string.Empty;
+
+            var allEntries = await GetAllWeightEntries();
+            if (allEntries == null)
+            {
+                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred trying to get weights!");
+                success = false;
+                errorText = $"Unable to get weights, cannot continue.";
+            }
+            else
+            {
+                var weightsWithDifferentUnits = allEntries.Where(w => w.WeightUnit != newUnits);
+                if (weightsWithDifferentUnits.Any())
+                {
+                    foreach (var weight in weightsWithDifferentUnits)
+                    {
+                        if (!await RemoveWeightEntryForDate(weight.Date.Date))
+                        {
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred removing weight entry for date {weight.Date.Date}!");
+                            success = false;
+                            errorText = $"Unable to update weight entry for {weight.Date.Date}. Failed during remove.";
+                            break;
+                        }
+
+                        if (convertValues)
+                            weight.Weight = WeightLogicHelpers.ConvertWeightUnits(weight.Weight, weight.WeightUnit, newUnits);
+
+                        weight.WeightUnit = newUnits;
+                        if (!await AddWeightEntry(weight))
+                        {
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred adding weight entry for date {weight.Date.Date}!");
+                            success = false;
+                            errorText = $"Unable to update weight entry for {weight.Date.Date}. Failed during add.";
+                            break;
+                        }
+                    }
+                }
+
+                // if we have converted all weights, now update the goal (if exists)
+                if (success)
+                {
+                    var goal = await GetGoal();
+                    if (goal != null)
+                    {
+                        if (convertValues)
+                        {
+                            goal.StartWeight = WeightLogicHelpers.ConvertWeightUnits(goal.StartWeight, goal.WeightUnit, newUnits);
+                            goal.GoalWeight = WeightLogicHelpers.ConvertWeightUnits(goal.GoalWeight, goal.WeightUnit, newUnits);
+                        }
+                        goal.WeightUnit = newUnits;
+
+                        if (!await RemoveGoal())
+                        {
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred removing previous goal!");
+                            errorText = "Unable to update goal. Failed during remove.";
+                            success = false;
+                        }
+                        else
+                        {
+                            if (!await SetGoal(goal))
+                            {
+                                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred adding new goal!");
+                                errorText = "Unable to update goal. Failed during add.";
+                                success = false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new ResultWithErrorText(success, errorText);
         }
 
         void FireUserDataUpdated()

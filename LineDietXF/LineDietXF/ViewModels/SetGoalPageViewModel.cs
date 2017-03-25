@@ -60,16 +60,18 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
+        ISettingsService SettingsService { get; set; }
 
         // Commands
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CloseCommand { get; set; }
 
-        public SetGoalPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
+        public SetGoalPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, ISettingsService settingsService, IPageDialogService dialogService, IDataService dataService) :
             base(navigationService, analyticsService, dialogService)
         {
             // Store off injected services
             DataService = dataService;
+            SettingsService = settingsService;
 
             // Setup bindable commands
             SaveCommand = new DelegateCommand(Save, SaveCanExecute);
@@ -220,7 +222,7 @@ namespace LineDietXF.ViewModels
                     }
                 }
 
-                var addStartWeightResult = await DataService.AddWeightEntry(new WeightEntry(StartDate, startWeight));
+                var addStartWeightResult = await DataService.AddWeightEntry(new WeightEntry(StartDate, startWeight, SettingsService.WeightUnit));
                 if (!addStartWeightResult)
                 {
                     AnalyticsService.TrackError($"{nameof(Save)} - Error when trying to add weight entry for start date");
@@ -230,7 +232,7 @@ namespace LineDietXF.ViewModels
                     return;
                 }
 
-                var weightLossGoal = new WeightLossGoal(StartDate, startWeight, GoalDate.Date, goalWeight);
+                var weightLossGoal = new WeightLossGoal(StartDate, startWeight, GoalDate.Date, goalWeight, SettingsService.WeightUnit);
                 if (!await DataService.SetGoal(weightLossGoal))
                 {
                     AnalyticsService.TrackError($"{nameof(Save)} - Error when trying to save new weight loss goal");

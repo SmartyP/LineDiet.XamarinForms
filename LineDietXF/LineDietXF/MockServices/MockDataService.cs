@@ -1,4 +1,5 @@
-﻿using LineDietXF.Interfaces;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using Prism.Events;
 using System;
@@ -36,21 +37,22 @@ namespace LineDietXF.MockServices
                 startDate: new DateTime(2016, 04, 30),
                 startWeight: 225.0M,
                 goalDate: new DateTime(2016, 06, 08),
-                goalWeight: 215.0M);
+                goalWeight: 215.0M, units: 
+                WeightUnitEnum.ImperialPounds);
 
             MockEntries = new List<WeightEntry>();
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 24), 234.4M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 25), 234.3M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 26), 234.2M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 27), 234.1M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 28), 234.0M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 29), 233.9M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 30), 233.8M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 1), 233.7M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 2), 233.6M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 3), 233.5M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 4), 233.4M));
-            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 5), 233.3M));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 24), 234.4M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 25), 234.3M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 26), 234.2M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 27), 234.1M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 28), 234.0M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 29), 233.9M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 4, 30), 233.8M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 1), 233.7M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 2), 233.6M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 3), 233.5M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 4), 233.4M, WeightUnitEnum.ImperialPounds));
+            MockEntries.Add(new WeightEntry(new DateTime(2016, 5, 5), 233.3M, WeightUnitEnum.ImperialPounds));
 
             HasBeenInitialized = true;
             FireUserDataUpdated();
@@ -170,6 +172,11 @@ namespace LineDietXF.MockServices
             if (Constants.App.DEBUG_SIMULATE_SLOW_RESPONSE)
                 await Task.Delay(Constants.App.DEBUG_SIMULATE_SLOW_RESPONSE_TIME);
 #endif
+        }
+
+        public Task<ResultWithErrorText> ChangeWeightEntriesAndGoalUnitType(WeightUnitEnum newUnits, bool convertValues)
+        {
+            return Task.FromResult(new ResultWithErrorText(true, string.Empty));
         }
     }
 }

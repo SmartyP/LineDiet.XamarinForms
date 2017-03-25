@@ -79,6 +79,7 @@ namespace LineDietXF
             Container.RegisterTypeForNavigation<WeightEntryPage>();
             Container.RegisterTypeForNavigation<GettingStartedPage>();
             Container.RegisterTypeForNavigation<AboutPage>();
+            Container.RegisterTypeForNavigation<SettingsPage>();
 
 #if DEBUG
             Container.RegisterTypeForNavigation<DebugPage>();

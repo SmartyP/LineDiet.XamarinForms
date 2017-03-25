@@ -1,4 +1,5 @@
-﻿using LineDietXF.Interfaces;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using Prism.Commands;
 using Prism.Events;
@@ -91,15 +92,15 @@ namespace LineDietXF.ViewModels
                 // set a goal where today is the goal end date
                 var goalStartDate = DateTime.Today.Date - TimeSpan.FromDays(30);
                 var goalEndDate = DateTime.Today.Date;
-                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210);
+                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210, WeightUnitEnum.ImperialPounds);
                 await DataService.SetGoal(goal);
 
                 // add some weights
-                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(5), 235));
-                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(10), 230));
-                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(15), 225));
-                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(20), 220));
-                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(25), 215));
+                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(5), 235, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(10), 230, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(15), 225, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(20), 220, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(goalStartDate + TimeSpan.FromDays(25), 215, WeightUnitEnum.ImperialPounds));
             }
             finally
             {
@@ -122,33 +123,33 @@ namespace LineDietXF.ViewModels
                 await ClearData();
 
                 // set goal
-                var goal = new WeightLossGoal(new DateTime(2017, 1, 1), 237.4M, new DateTime(2017, 7, 1), 200);
+                var goal = new WeightLossGoal(new DateTime(2017, 1, 1), 237.4M, new DateTime(2017, 7, 1), 200, WeightUnitEnum.ImperialPounds);
                 await DataService.SetGoal(goal);
 
                 // add some weights
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 1, 1), 237.4M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 1, 17), 235.2M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 4), 233.0M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 22), 230.8M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 27), 229.4M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 28), 228.6M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 1), 228.2M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 2), 227.0M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 3), 226.4M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 4), 227.0M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 5), 227.2M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 6), 226.0M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 7), 225.4M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 8), 225.4M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 9), 225.2M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 10), 225.8M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 11), 225.2M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 12), 223.8M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 13), 223.5M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 14), 223.0M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 15), 221.8M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 16), 221.6M));
-                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 17), 221.4M));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 1, 1), 237.4M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 1, 17), 235.2M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 4), 233.0M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 22), 230.8M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 27), 229.4M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 2, 28), 228.6M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 1), 228.2M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 2), 227.0M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 3), 226.4M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 4), 227.0M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 5), 227.2M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 6), 226.0M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 7), 225.4M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 8), 225.4M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 9), 225.2M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 10), 225.8M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 11), 225.2M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 12), 223.8M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 13), 223.5M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 14), 223.0M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 15), 221.8M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 16), 221.6M, WeightUnitEnum.ImperialPounds));
+                await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 17), 221.4M, WeightUnitEnum.ImperialPounds));
             }
             finally
             {
@@ -191,10 +192,10 @@ namespace LineDietXF.ViewModels
                 // set a goal where today is the goal end date
                 var goalStartDate = DateTime.Today.Date - TimeSpan.FromDays(30);
                 var goalEndDate = DateTime.Today.Date;
-                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210);
+                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210, WeightUnitEnum.ImperialPounds);
                 await DataService.SetGoal(goal);
 
-                await DataService.AddWeightEntry(new WeightEntry(DateTime.Today.Date, 250));
+                await DataService.AddWeightEntry(new WeightEntry(DateTime.Today.Date, 250, WeightUnitEnum.ImperialPounds));
             }
             finally
             {
@@ -218,10 +219,10 @@ namespace LineDietXF.ViewModels
                 // set a goal where today is the goal end date
                 var goalStartDate = DateTime.Today.Date - TimeSpan.FromDays(30);
                 var goalEndDate = DateTime.Today.Date;
-                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210);
+                var goal = new WeightLossGoal(goalStartDate, 240, goalEndDate, 210, WeightUnitEnum.ImperialPounds);
                 await DataService.SetGoal(goal);
 
-                await DataService.AddWeightEntry(new WeightEntry(DateTime.Today.Date, 210));
+                await DataService.AddWeightEntry(new WeightEntry(DateTime.Today.Date, 210, WeightUnitEnum.ImperialPounds));
             }
             finally
             {
