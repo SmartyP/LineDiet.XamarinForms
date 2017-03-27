@@ -79,6 +79,13 @@ namespace LineDietXF.Constants
         public const string Settings_ChangeWeightUnits_ConvertWeightValues_FatalError = "A fatal error occurred converting weight values, please contact support at smartypantscoding@gmail.com. Details: ";
         public const string Settings_ChangeWeightUnits_ChangeUnits_FatalError = "A fatal error occurred changing weight units, please contact support at smartypantscoding@gmail.com. Details: ";
 
+        // Data Services
+        public const string DataService_ChangeWeightAndGoalUnits_UnableToGetWeights = "Unable to get weights, cannot continue.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedRemovingWeight = "Unable to update weight entry for {0}. Failed during remove.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedAddingWeight = "Unable to update weight entry for {0}. Failed during add.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedRemovingGoal = "Unable to update goal. Failed during remove.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedAddingGoal = "Unable to update goal. Failed during add.";
+
         // Weight Entry Page
         public const string WeightEntryPage_Title_Add = "Enter Weight";
         public const string WeightEntryPage_Title_Update = "Update Weight";

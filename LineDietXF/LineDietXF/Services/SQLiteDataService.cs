@@ -185,7 +185,7 @@ namespace LineDietXF.Services
             return entry != null;
         }
 
-        public async Task<ResultWithErrorText> ChangeWeightEntriesAndGoalUnitType(WeightUnitEnum newUnits, bool convertValues)
+        public async Task<ResultWithErrorText> ChangeWeightAndGoalUnits(WeightUnitEnum newUnits, bool convertValues)
         {
             // convert all values
             bool success = true;
@@ -194,9 +194,9 @@ namespace LineDietXF.Services
             var allEntries = await GetAllWeightEntries();
             if (allEntries == null)
             {
-                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred trying to get weights!");
+                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightAndGoalUnits)} - an error occurred trying to get weights!");
                 success = false;
-                errorText = $"Unable to get weights, cannot continue.";
+                errorText = Constants.Strings.DataService_ChangeWeightAndGoalUnits_UnableToGetWeights;
             }
             else
             {
@@ -207,9 +207,9 @@ namespace LineDietXF.Services
                     {
                         if (!await RemoveWeightEntryForDate(weight.Date.Date))
                         {
-                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred removing weight entry for date {weight.Date.Date}!");
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightAndGoalUnits)} - an error occurred removing weight entry for date {weight.Date.Date}!");
                             success = false;
-                            errorText = $"Unable to update weight entry for {weight.Date.Date}. Failed during remove.";
+                            errorText = string.Format(Constants.Strings.DataService_ChangeWeightAndGoalUnits_FailedRemovingWeight, weight.Date.Date);
                             break;
                         }
 
@@ -219,9 +219,9 @@ namespace LineDietXF.Services
                         weight.WeightUnit = newUnits;
                         if (!await AddWeightEntry(weight))
                         {
-                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred adding weight entry for date {weight.Date.Date}!");
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightAndGoalUnits)} - an error occurred adding weight entry for date {weight.Date.Date}!");
                             success = false;
-                            errorText = $"Unable to update weight entry for {weight.Date.Date}. Failed during add.";
+                            errorText = string.Format(Constants.Strings.DataService_ChangeWeightAndGoalUnits_FailedAddingWeight, weight.Date.Date);
                             break;
                         }
                     }
@@ -242,16 +242,16 @@ namespace LineDietXF.Services
 
                         if (!await RemoveGoal())
                         {
-                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred removing previous goal!");
-                            errorText = "Unable to update goal. Failed during remove.";
+                            AnalyticsService.TrackFatalError($"{nameof(ChangeWeightAndGoalUnits)} - an error occurred removing previous goal!");
+                            errorText = Constants.Strings.DataService_ChangeWeightAndGoalUnits_FailedRemovingGoal;
                             success = false;
                         }
                         else
                         {
                             if (!await SetGoal(goal))
                             {
-                                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightEntriesAndGoalUnitType)} - an error occurred adding new goal!");
-                                errorText = "Unable to update goal. Failed during add.";
+                                AnalyticsService.TrackFatalError($"{nameof(ChangeWeightAndGoalUnits)} - an error occurred adding new goal!");
+                                errorText = Constants.Strings.DataService_ChangeWeightAndGoalUnits_FailedAddingGoal;
                                 success = false;
                             }
                         }

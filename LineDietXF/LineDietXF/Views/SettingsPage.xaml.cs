@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace LineDietXF.Views
@@ -14,7 +8,7 @@ namespace LineDietXF.Views
     {
         public SettingsPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         void SettingsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

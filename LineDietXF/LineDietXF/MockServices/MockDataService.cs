@@ -174,7 +174,7 @@ namespace LineDietXF.MockServices
 #endif
         }
 
-        public Task<ResultWithErrorText> ChangeWeightEntriesAndGoalUnitType(WeightUnitEnum newUnits, bool convertValues)
+        public Task<ResultWithErrorText> ChangeWeightAndGoalUnits(WeightUnitEnum newUnits, bool convertValues)
         {
             return Task.FromResult(new ResultWithErrorText(true, string.Empty));
         }

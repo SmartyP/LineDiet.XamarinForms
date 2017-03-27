@@ -34,7 +34,7 @@ namespace LineDietXF.Interfaces
         Task<bool> RemoveWeightEntryForDate(DateTime dt);
 
         // Conversion (user changes unit settings)
-        Task<ResultWithErrorText> ChangeWeightEntriesAndGoalUnitType(WeightUnitEnum newUnits, bool convertValues);
+        Task<ResultWithErrorText> ChangeWeightAndGoalUnits(WeightUnitEnum newUnits, bool convertValues);
 
         event EventHandler UserDataUpdated;
     }

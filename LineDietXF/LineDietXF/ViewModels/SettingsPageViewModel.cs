@@ -143,7 +143,7 @@ namespace LineDietXF.ViewModels
             {
                 IncrementPendingRequestCount();
 
-                result = await DataService.ChangeWeightEntriesAndGoalUnitType(newUnits, convertValues);
+                result = await DataService.ChangeWeightAndGoalUnits(newUnits, convertValues);
                 if (result.Success)
                 {
                     // update setting
@@ -153,8 +153,8 @@ namespace LineDietXF.ViewModels
             }
             catch (Exception ex)
             {
-                AnalyticsService.TrackFatalError($"{nameof(UpdateWeightEntriesAndGoalUnits)} - an exception occurred calling {nameof(IDataService.ChangeWeightEntriesAndGoalUnitType)}, cannot continue.", ex);
-                result = new ResultWithErrorText(false, $"Exception occurred in call to {nameof(IDataService.ChangeWeightEntriesAndGoalUnitType)}");
+                AnalyticsService.TrackFatalError($"{nameof(UpdateWeightEntriesAndGoalUnits)} - an exception occurred calling {nameof(IDataService.ChangeWeightAndGoalUnits)}, cannot continue.", ex);
+                result = new ResultWithErrorText(false, $"Exception occurred in call to {nameof(IDataService.ChangeWeightAndGoalUnits)}");
             }
             finally
             {

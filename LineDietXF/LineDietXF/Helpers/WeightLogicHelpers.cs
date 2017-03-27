@@ -234,7 +234,7 @@ namespace LineDietXF.Helpers
             // NOTE: we don't want to say "-1.2 gained" so we always make sure what we display is positive
             string gainedLost = (amountLost < 0) ? Constants.Strings.DailyInfoPage_Summary_Gained : Constants.Strings.DailyInfoPage_Summary_Lost;
             string endingText = (todaysEntry.Weight <= todaysGoalWeight) ? Constants.Strings.DailyInfoPage_SummaryEnding_OnTrack : Constants.Strings.DailyInfoPage_SummaryEnding_OffTrack;
-            string weightUnits = todaysEntry.WeightUnit.ToSentenceUsageName();
+            string weightUnits = goal.WeightUnit.ToSentenceUsageName();
             return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary, gainedLost, Math.Abs(amountLost), weightUnits, daysSinceStart,
                 daysToGo, amountRemaining, endingText);
         }
