@@ -5,7 +5,8 @@
                    xmlns:pages="clr-namespace:LineDietXF.Views"
                    prism:ViewModelLocator.AutowireViewModel="True"
 			       x:Class="LineDietXF.Views.MainPage"
-                   Title="Line Diet">
+                   Title="Line Diet"
+                   NavigationPage.BackButtonTitle="Back">
     <TabbedPage.Children>
         <pages:DailyInfoPage x:Name="SummaryTab" />
         <pages:GraphPage x:Name="GraphTab" />
