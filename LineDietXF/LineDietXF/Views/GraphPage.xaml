@@ -52,18 +52,18 @@
                             </ViewCell.ContextActions>
                             <Grid Padding="10,4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="32" />
                                 </Grid.ColumnDefinitions>
-                                <Label FontSize="24"
+                                <Label FontSize="{Binding ., Converter={StaticResource WeightListingFontSizeCvt}}"
 								       HorizontalOptions="Start"
                                        VerticalOptions="Center"
 								       Style="{StaticResource ThinLabelStyle}"
 								       Text="{Binding Date, Converter={StaticResource DateCvt}}"/>
                                 <Label Grid.Column="1" 
 								       Style="{StaticResource ThinLabelStyle}"
-								       FontSize="24"
+								       FontSize="{Binding ., Converter={StaticResource WeightListingFontSizeCvt}}"
 			   					       HorizontalOptions="End"
                                        VerticalOptions="Center"
 								       Text="{Binding ., Converter={StaticResource WeightCvt}}"/>

@@ -24,9 +24,10 @@
                      VerticalOptions="Center"
                      Padding="20,10"
                      Spacing="10">
+            <!-- NOTE:: the font size is dynamicly bound to MainLabelFontSize as weight in stones is much longer (ex: "15st 9.4lb" instead of "219.4" -->
             <Label HorizontalOptions="Center" 
 				   Style="{StaticResource ThinLabelStyle}"
- 				   FontSize="72"
+ 				   FontSize="{Binding MainLabelFontSize}"
 				   Text="{Binding TodaysWeight}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddEntryCommand}" NumberOfTapsRequired="1" />

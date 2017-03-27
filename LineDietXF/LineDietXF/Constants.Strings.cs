@@ -11,7 +11,9 @@ namespace LineDietXF.Constants
         // Common strings - used multiple places
         public const string Common_WeightUnit_ImperialPounds = "pounds";
         public const string Common_WeightUnit_Kilograms = "kilograms";
+        public const string Common_WeightUnit_Stones = "stones";
         public const string Common_WeightFormat = "{0:0.0}";
+        public const string Common_Stones_WeightFormat = "{0:0}st {1:0.0}lb";
         public const string Common_UpdateExistingWeight_Title = "Update existing entry?";
         public const string Common_UpdateExistingWeight_Message = "The existing weight of {0:0.0} on {1:MM/dd/yyyy} will be updated with the weight of {2:0.0}.";
         public const string Common_SaveError = "Error while saving";
@@ -40,6 +42,7 @@ namespace LineDietXF.Constants
         public const string DailyInfoPage_GoalEnd_Success = "You've reached your goal! You can continue to use Line Diet to track your maintenance of your weight, or set a new goal. Congratulations!";
         public const string DailyInfoPage_GoalEnd_Failure = "It looks like you've fallen short of your goal. Why not set a new goal and try again?";
         public const string DailyInfoPage_ProgressSummary = "You have {0} {1:0.0} {2} since starting your current goal {3} days ago. You have {4} days left to lose {5:0.0} {2}. {6}";
+        public const string DailyInfoPage_Stones_ProgressSummary = "You have {0} {1:0} stone(s) {2:0.0} pounds, since starting your current goal {3} days ago. You have {4} days left to lose {5:0} stone(s), {6:0.0} pounds. {7}";
         public const string DailyInfoPage_Summary_Gained = "gained";
         public const string DailyInfoPage_Summary_Lost = "lost";
         public const string DailyInfoPage_SummaryEnding_OnTrack = "Keep up the good work!";
@@ -72,6 +75,7 @@ namespace LineDietXF.Constants
         public const string Settings_WeightUnits = "Measurement Units: ";
         public const string Settings_ImperialPound = "Imperial Pound (US)";
         public const string Settings_Kilograms = "Kilograms";
+        public const string Settings_StonesAndPounds = "Stones";
         public const string Settings_ChangeWeightUnitsActionSheet = "Select the weight units to use";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Title = "Unable to get weights";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Message = "An error occurred trying to retrieve your weights, cannot continue.";        

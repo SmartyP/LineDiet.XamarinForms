@@ -42,6 +42,7 @@
     <Compile Include="Constants.Analytics.cs" />
     <Compile Include="Constants.Strings.cs" />
     <Compile Include="Constants.UI.cs" />
+    <Compile Include="Converters\WeightListingFontSizeConverter.cs" />
     <Compile Include="Enumerations\WeightUnitEnum.cs" />
     <Compile Include="Types\GettingStartedCarouselItem.cs" />
     <Compile Include="Controls\CarouselLayout.cs" />

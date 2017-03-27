@@ -279,10 +279,10 @@ namespace LineDietXF.ViewModels
                 });
 
             // YAxis - weights
-            var minRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+            var minRange = (SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds || SettingsService.WeightUnit == Enumerations.WeightUnitEnum.StonesAndPounds) ?
                         Constants.App.Graph_Pounds_MinWeightRangeVisible :
                         Constants.App.Graph_Kilograms_MinWeightRangeVisible;
-            var maxRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+            var maxRange = (SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds || SettingsService.WeightUnit == Enumerations.WeightUnitEnum.StonesAndPounds) ?
                         Constants.App.Graph_Pounds_MaxWeightRangeVisible :
                         Constants.App.Graph_Kilograms_MaxWeightRangeVisible;
             plotModel.Axes.Add(

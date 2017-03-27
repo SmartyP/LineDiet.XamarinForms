@@ -12,6 +12,7 @@
       <cvt:DateValueConverter x:Key="DateCvt" />
       <cvt:CheckmarkVisibilityConverter x:Key="CheckmarkVisCvt" />      
       <cvt:InverseBooleanConverter x:Key="InverseBoolConverter" />
+      <cvt:WeightListingFontSizeConverter x:Key="WeightListingFontSizeCvt" />
 
       <!-- dynamic colors -->
       <Color x:Key="PrimaryResultColor">#808080</Color>

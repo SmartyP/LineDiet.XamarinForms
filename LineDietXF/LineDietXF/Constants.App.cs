@@ -16,6 +16,7 @@ namespace LineDietXF.Constants
 
         public static int HISTORY_WeightEntryMaxCount = 31;
         public const int SetGoalPage_DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now
+        public const int PoundsInAStone = 14;
 
         // Settings
         public const string Settings_HasDismissedStartupView = "HasDismissedStartupView";
