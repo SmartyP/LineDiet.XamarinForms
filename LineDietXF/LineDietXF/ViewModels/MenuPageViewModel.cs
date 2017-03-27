@@ -18,7 +18,7 @@ namespace LineDietXF.ViewModels
     /// <summary>
     /// Third tab of the app - the main menu
     /// </summary>
-    public class MenuPageViewModel : BaseViewModel, IActiveAware
+    public class MenuPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
         private List<MenuItem> _menuEntries;
         public List<MenuItem> MenuEntries
@@ -64,23 +64,37 @@ namespace LineDietXF.ViewModels
         IDataService DataService { get; set; }
         IWindowColorService WindowColorService { get; set; }
         IReviewService ReviewService { get; set; }
+        ISettingsService SettingsService { get; set; }
 
-        public MenuPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IWindowColorService windowColorService, IReviewService reviewService) :
+        public MenuPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService, IReviewService reviewService) :
             base(navigationService, analyticsService, dialogService)
         {
             // Store off services
             DataService = dataService;
+            SettingsService = settingsService;
             WindowColorService = windowColorService;
             ReviewService = reviewService;
 
-            // Build up settings menu
+            // Build up menu
             MenuEntries = BuildMenu();
+        }
+
+        public void OnNavigatedFrom(NavigationParameters parameters) { }
+
+        public async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            AnalyticsService.TrackPageView(Constants.Analytics.Page_Menu);
+
+            if (parameters != null && parameters.ContainsKey(Constants.App.NavParam_FromGettingStarted) && (bool)parameters[Constants.App.NavParam_FromGettingStarted] == true)
+            {
+                await DialogService.DisplayAlertAsync(Constants.Strings.Common_SettingWeightUnits_Title,
+                    string.Format(Constants.Strings.Common_SettingWeightUnits_Message, SettingsService.WeightUnit.ToSentenceUsageName()),
+                    Constants.Strings.GENERIC_OK);
+            }
         }
 
         public void Setup()
         {
-            AnalyticsService.TrackPageView(Constants.Analytics.Page_Menu);
-
             // wire up events
             DataService.UserDataUpdated += DataService_UserDataUpdated;
 
@@ -136,7 +150,7 @@ namespace LineDietXF.ViewModels
 
             menuEntries.Add(new MenuItem(MenuItemEnum.GettingStarted, Constants.Strings.Menu_GettingStarted, false));
             menuEntries.Add(new MenuItem(MenuItemEnum.SetGoal, Constants.Strings.Menu_SetGoal, false));
-            // menuEntries.Add(new MenuItem(MenuItemEnum.Settings, Constants.Strings.Menu_Settings, false)); // TODO:: FUTURE:: add settings menu entry
+            menuEntries.Add(new MenuItem(MenuItemEnum.Settings, Constants.Strings.Menu_Settings, false));
             menuEntries.Add(new MenuItem(MenuItemEnum.Divider, string.Empty, true));
 
             menuEntries.Add(new MenuItem(MenuItemEnum.Share, Constants.Strings.Menu_Share, false));
@@ -169,11 +183,8 @@ namespace LineDietXF.ViewModels
                     await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SetGoalPage)}", useModalNavigation: true);
                     break;
                 case MenuItemEnum.Settings:
-                    // TODO:: FUTURE:: implement settings (ex: choosing pounds, kilograms, or stones/pounds) (ex: choosing different graphing options)
                     AnalyticsService.TrackEvent(Constants.Analytics.MenuCategory, Constants.Analytics.Menu_Settings, 1);
-                    AnalyticsService.TrackFatalError($"{nameof(NavigateToPage)} - should not be able to use Settings menu yet - doing nothing.");
-                    if (Debugger.IsAttached)
-                        Debugger.Break();
+                    await NavigationService.NavigateAsync($"{nameof(SettingsPage)}", useModalNavigation: false);
                     break;
                 case MenuItemEnum.Share:
                     AnalyticsService.TrackEvent(Constants.Analytics.MenuCategory, Constants.Analytics.Menu_Share, 1);

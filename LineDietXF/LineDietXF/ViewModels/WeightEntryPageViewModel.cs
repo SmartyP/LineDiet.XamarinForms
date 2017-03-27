@@ -49,14 +49,16 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
+        ISettingsService SettingsService { get; set; }
 
         // Private variables        
         private bool _isUpdating = false;
 
-        public WeightEntryPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
+        public WeightEntryPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, ISettingsService settingsService, IPageDialogService dialogService, IDataService dataService) :
             base(navigationService, analyticsService, dialogService)
         {
             DataService = dataService;
+            SettingsService = settingsService;
 
             SaveCommand = new DelegateCommand(Save, SaveCanExecute); // SaveCanExecute dictates whether the command can fire, and in turn disables the button if not
             CloseCommand = new DelegateCommand(Close);
@@ -184,7 +186,7 @@ namespace LineDietXF.ViewModels
                 }
 
                 // create a new weight entry and add it
-                var entry = new WeightEntry(Date, weightValue);
+                var entry = new WeightEntry(Date, weightValue, SettingsService.WeightUnit);
                 if (!await DataService.AddWeightEntry(entry))
                 {
                     AnalyticsService.TrackError($"{nameof(Save)} - an error occurred trying to add new weight entry");
@@ -204,7 +206,7 @@ namespace LineDietXF.ViewModels
 
                     if (success)
                     { 
-                        if (!await DataService.SetGoal(new WeightLossGoal(goal.StartDate, weightValue, goal.GoalDate, goal.GoalWeight)))
+                        if (!await DataService.SetGoal(new WeightLossGoal(goal.StartDate, weightValue, goal.GoalDate, goal.GoalWeight, SettingsService.WeightUnit)))
                             success = false;
                     }
 

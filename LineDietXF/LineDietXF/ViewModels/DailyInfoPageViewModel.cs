@@ -16,7 +16,7 @@ namespace LineDietXF.ViewModels
     /// The primary tab the user sees on startup. Contains daily messaging based on their current data, and allows
     /// user to set a goal or enter a weight
     /// </summary>
-    public class DailyInfoPageViewModel : BaseViewModel, IActiveAware
+    public class DailyInfoPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
         // Bindable Properties
         string _todaysWeight = Constants.Strings.DailyInfoPage_UnknownWeight;
@@ -102,10 +102,22 @@ namespace LineDietXF.ViewModels
             SetGoalCommand = new DelegateCommand(ShowSetGoalScreen);
         }
 
-        void Setup()
+        public void OnNavigatedFrom(NavigationParameters parameters) { }
+
+        public async void OnNavigatedTo(NavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_DailyInfo);
 
+            if (parameters != null && parameters.ContainsKey(Constants.App.NavParam_FromGettingStarted) && (bool)parameters[Constants.App.NavParam_FromGettingStarted] == true)
+            {
+                await DialogService.DisplayAlertAsync(Constants.Strings.Common_SettingWeightUnits_Title,
+                    string.Format(Constants.Strings.Common_SettingWeightUnits_Message, SettingsService.WeightUnit.ToSentenceUsageName()),
+                    Constants.Strings.GENERIC_OK);
+            }
+        }
+
+        void Setup()
+        {
             // wire up events
             DataService.UserDataUpdated += DataService_UserDataUpdated;
 

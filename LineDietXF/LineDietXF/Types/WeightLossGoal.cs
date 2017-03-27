@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using LineDietXF.Enumerations;
+using SQLite;
 using System;
 
 namespace LineDietXF.Types
@@ -23,16 +24,23 @@ namespace LineDietXF.Types
         [NotNull]
         public decimal GoalWeight { get; set; }
 
+        [Column("Units")]
+        public WeightUnitEnum WeightUnit { get; set; }
+
         public WeightLossGoal()
         {
+            // NOTE:: The original database did not have this field, and SQLite-Net does not support Default attributes, so we make sure
+            // we explicitly set this here to the default we want for pre-existing records before this field was added
+            WeightUnit = WeightUnitEnum.ImperialPounds;
         }
 
-        public WeightLossGoal(DateTime startDate, decimal startWeight, DateTime goalDate, decimal goalWeight)
+        public WeightLossGoal(DateTime startDate, decimal startWeight, DateTime goalDate, decimal goalWeight, WeightUnitEnum units)
         {
             StartDate = startDate;
             StartWeight = startWeight;
             GoalDate = goalDate;
             GoalWeight = goalWeight;
+            WeightUnit = units;
         }
     }
 }

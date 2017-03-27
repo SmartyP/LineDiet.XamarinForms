@@ -21,7 +21,7 @@ namespace LineDietXF.ViewModels
     /// <summary>
     /// The second tab of the app which shows the OxyPlot graph and a listing of recent weight entries
     /// </summary>
-    public class GraphPageViewModel : BaseViewModel, IActiveAware
+    public class GraphPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
         static OxyColor GRID_LINES_COLOR_MINOR = Constants.UI.GRAPH_MinorGridLines.ToOxyColor();
         static OxyColor GRID_LINES_COLOR_MAJOR = Constants.UI.GRAPH_MajorGridLines.ToOxyColor();
@@ -112,6 +112,7 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
+        ISettingsService SettingsService { get; set; }
         IWindowColorService WindowColorService { get; set; }
 
         // Bindable Commands
@@ -119,20 +120,26 @@ namespace LineDietXF.ViewModels
         public DelegateCommand<WeightEntry> DeleteEntryCommand { get; set; }
 
         public GraphPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService,
-            IDataService dataService, IWindowColorService windowColorService) :
+            IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService) :
             base(navigationService, analyticsService, dialogService)
         {
             DataService = dataService;
+            SettingsService = settingsService;
             WindowColorService = windowColorService;
 
             AddEntryCommand = new DelegateCommand(ShowAddWeightScreen);
             DeleteEntryCommand = new DelegateCommand<WeightEntry>(ConfirmDeleteItem);
         }
 
-        void Setup()
+        public void OnNavigatedFrom(NavigationParameters parameters) { }
+
+        public void OnNavigatedTo(NavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_Graph);
+        }
 
+        void Setup()
+        {
             // wire up events
             DataService.UserDataUpdated += DataService_UserDataUpdated;
 
@@ -233,7 +240,7 @@ namespace LineDietXF.ViewModels
             DateTime dateRangeStart = dateRange.Item1;
             DateTime dateRangeEnd = dateRange.Item2;
 
-            var weightRange = WeightLogicHelpers.GetMinMaxWeightRange(goal, entries, dateRangeStart, dateRangeEnd);
+            var weightRange = WeightLogicHelpers.GetMinMaxWeightRange(SettingsService.WeightUnit, goal, entries, dateRangeStart, dateRangeEnd);
             decimal minGraphWeight = weightRange.Item1;
             decimal maxGraphWeight = weightRange.Item2;
 
@@ -272,6 +279,12 @@ namespace LineDietXF.ViewModels
                 });
 
             // YAxis - weights
+            var minRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+                        Constants.App.Graph_Pounds_MinWeightRangeVisible :
+                        Constants.App.Graph_Kilograms_MinWeightRangeVisible;
+            var maxRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+                        Constants.App.Graph_Pounds_MaxWeightRangeVisible :
+                        Constants.App.Graph_Kilograms_MaxWeightRangeVisible;
             plotModel.Axes.Add(
                 new LinearAxis
                 {
@@ -290,8 +303,8 @@ namespace LineDietXF.ViewModels
                     MinorStep = 1,
                     MajorStep = 5,
                     IsZoomEnabled = true,
-                    MinimumRange = Constants.App.Graph_MinWeightRangeVisible, // closest zoom in shows at least 5 pounds
-                    MaximumRange = Constants.App.Graph_MaxWeightRangeVisible // furthest zoom out shows at most 100 pounds
+                    MinimumRange = minRange, // closest zoom in shows at least 5 pounds
+                    MaximumRange = maxRange // furthest zoom out shows at most 100 pounds
                 });
 
             var series1 = new LineSeries

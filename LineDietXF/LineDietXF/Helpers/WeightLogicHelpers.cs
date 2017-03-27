@@ -11,6 +11,38 @@ namespace LineDietXF.Helpers
     /// </summary>
     public static class WeightLogicHelpers
     {
+        public static string ToSettingsName(this WeightUnitEnum weightUnit)
+        {
+            switch (weightUnit)
+            {
+                case WeightUnitEnum.ImperialPounds:
+                    return Constants.Strings.Settings_ImperialPound;
+                case WeightUnitEnum.Kilograms:
+                    return Constants.Strings.Settings_Kilograms;
+                default:
+#if DEBUG
+                    Debugger.Break();
+#endif
+                    return "??";
+            }
+        }
+
+        public static string ToSentenceUsageName(this WeightUnitEnum weightUnit)
+        {
+            switch (weightUnit)
+            {
+                case WeightUnitEnum.ImperialPounds:
+                    return Constants.Strings.Common_WeightUnit_ImperialPounds;
+                case WeightUnitEnum.Kilograms:
+                    return Constants.Strings.Common_WeightUnit_Kilograms;
+                default:
+#if DEBUG
+                    Debugger.Break();
+#endif
+                    return "??";
+            }
+        }
+
         public static bool WeightMetGoalOnDate(WeightLossGoal goal, DateTime dt, decimal weightOnDate)
         {
             if (goal == null)
@@ -23,19 +55,21 @@ namespace LineDietXF.Helpers
             return weightOnDate <= goalWeightForDate;
         }
 
-        public static Tuple<decimal, decimal> GetMinMaxWeightRange(WeightLossGoal goal, List<WeightEntry> entries, DateTime dateStart, DateTime dateEnd)
+        public static Tuple<decimal, decimal> GetMinMaxWeightRange(WeightUnitEnum weightUnit, WeightLossGoal goal, List<WeightEntry> entries, DateTime dateStart, DateTime dateEnd)
         {
             if (entries.Count == 0)
             {
                 if (goal != null)
                 {
+                    var goalPadding = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_GoalOnly_Pounds_Padding : Constants.App.Graph_GoalOnly_Kilograms_Padding);
                     // there should normally be at least one weight if a goal is set, there is nothing really to graph but the goal line itself
-                    return new Tuple<decimal, decimal>(goal.GoalWeight - Constants.App.Graph_GoalOnly_Padding,
-                        goal.GoalWeight + Constants.App.Graph_GoalOnly_Padding);
+                    return new Tuple<decimal, decimal>(goal.GoalWeight - goalPadding, goal.GoalWeight + goalPadding);
                 }
 
                 // no goal set and no saved weights, so just graph a default range
-                return new Tuple<decimal, decimal>(Constants.App.Graph_WeightRange_DefaultMin, Constants.App.Graph_WeightRange_DefaultMax);
+                var rangeDefaultMin = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMin : Constants.App.Graph_WeightRange_Kilograms_DefaultMin);
+                var rangeDefaultMax = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMax : Constants.App.Graph_WeightRange_Kilograms_DefaultMax);
+                return new Tuple<decimal, decimal>(rangeDefaultMin, rangeDefaultMax);
             }
 
             decimal minValue = decimal.MaxValue;
@@ -202,9 +236,31 @@ namespace LineDietXF.Helpers
             // NOTE: we don't want to say "-1.2 gained" so we always make sure what we display is positive
             string gainedLost = (amountLost < 0) ? Constants.Strings.DailyInfoPage_Summary_Gained : Constants.Strings.DailyInfoPage_Summary_Lost;
             string endingText = (todaysEntry.Weight <= todaysGoalWeight) ? Constants.Strings.DailyInfoPage_SummaryEnding_OnTrack : Constants.Strings.DailyInfoPage_SummaryEnding_OffTrack;
-            return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary,
-                gainedLost, Math.Abs(amountLost), Constants.Strings.Common_WeightUnit, daysSinceStart,
+            string weightUnits = goal.WeightUnit.ToSentenceUsageName();
+            return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary, gainedLost, Math.Abs(amountLost), weightUnits, daysSinceStart,
                 daysToGo, amountRemaining, endingText);
+        }
+
+        public static decimal ConvertWeightUnits(decimal weightValue, WeightUnitEnum origUnits, WeightUnitEnum newUnits)
+        {
+            if (origUnits == newUnits)
+                return weightValue;
+
+            if (origUnits == WeightUnitEnum.ImperialPounds && newUnits == WeightUnitEnum.Kilograms)
+            {
+                return weightValue * Constants.App.PoundsToKilograms;
+            }
+            else if (origUnits == WeightUnitEnum.Kilograms && newUnits == WeightUnitEnum.ImperialPounds)
+            {
+                return weightValue * Constants.App.KilogramsToPounds;
+            }
+            else // unknown conversion, do nothing
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+                return weightValue;
+            }
         }
     }
 }

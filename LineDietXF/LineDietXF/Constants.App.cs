@@ -1,4 +1,6 @@
-﻿namespace LineDietXF.Constants
+﻿using LineDietXF.Enumerations;
+
+namespace LineDietXF.Constants
 {
     public static class App
     {
@@ -17,19 +19,34 @@
 
         // Settings
         public const string Settings_HasDismissedStartupView = "HasDismissedStartupView";
+        public const string Settings_WeightUnits = "WeightUnits";
         public const bool Settings_HasDismissedStartupView_DefaultValue = false;
+        public const WeightUnitEnum Settings_WeightUnits_DefaultValue = WeightUnitEnum.ImperialPounds;
+
+        // Nav params
+        public const string NavParam_FromGettingStarted = "FromGettingStarted";
 
         // Graphing
         // NOTE:: constants relative to break points in graph labeling are defined within GraphPageViewModel
-        public const decimal Graph_WeightRange_DefaultMin = 160;
-        public const decimal Graph_WeightRange_DefaultMax = 180;
-        public const decimal Graph_WeightRange_MinPadding = 0.98M;
-        public const decimal Graph_WeightRange_MaxPadding = 1.02M;
-        public const decimal Graph_GoalOnly_Padding = 50.0M;
         public const int Graph_MinDateRangeVisible = 5;
         public const int Graph_MaxDateRangeVisible = 365;
-        public const int Graph_MinWeightRangeVisible = 5;
-        public const int Graph_MaxWeightRangeVisible = 100;
+        public const decimal Graph_WeightRange_MinPadding = 0.98M;
+        public const decimal Graph_WeightRange_MaxPadding = 1.02M;
+        public const decimal Graph_WeightRange_Pounds_DefaultMin = 160;
+        public const decimal Graph_WeightRange_Pounds_DefaultMax = 180;
+        public const decimal Graph_WeightRange_Kilograms_DefaultMin = 72;
+        public const decimal Graph_WeightRange_Kilograms_DefaultMax = 82;
+        public const decimal Graph_GoalOnly_Pounds_Padding = 50.0M;
+        public const decimal Graph_GoalOnly_Kilograms_Padding = 22.0M;
+        public const int Graph_Pounds_MinWeightRangeVisible = 5;
+        public const int Graph_Pounds_MaxWeightRangeVisible = 100;
+        public const int Graph_Kilograms_MinWeightRangeVisible = 5;
+        public const int Graph_Kilograms_MaxWeightRangeVisible = 45;
+
+
+        // Weight conversions
+        public const decimal PoundsToKilograms = 0.45359237M;
+        public const decimal KilogramsToPounds = 2.2046226218M;
 
         // Urls
         public const string ShareUrl = "http://www.linedietapp.com/?ref=LDapp";

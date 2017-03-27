@@ -9,11 +9,15 @@ namespace LineDietXF.Constants
         public const string GENERIC_CANCEL = "Cancel";
 
         // Common strings - used multiple places
-        public const string Common_WeightUnit = "pounds"; // TODO:: FUTURE:: swap out with kilograms via setting?
+        public const string Common_WeightUnit_ImperialPounds = "pounds";
+        public const string Common_WeightUnit_Kilograms = "kilograms";
         public const string Common_WeightFormat = "{0:0.0}";
         public const string Common_UpdateExistingWeight_Title = "Update existing entry?";
         public const string Common_UpdateExistingWeight_Message = "The existing weight of {0:0.0} on {1:MM/dd/yyyy} will be updated with the weight of {2:0.0}.";
         public const string Common_SaveError = "Error while saving";
+        public const string Common_FatalError = "Fatal Error";
+        public const string Common_SettingWeightUnits_Title = "Weight Units Setting";
+        public const string Common_SettingWeightUnits_Message = "Line Diet is currently using {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
 
         // Getting Started
         public static string GettingStarted_Page1Title = $"Welcome to {Environment.NewLine} Line Diet!";
@@ -63,6 +67,26 @@ namespace LineDietXF.Constants
         public const string Review_Failed_Part_Android = "Google Play";
         public const string Review_Failed_Part_iOS = "the iTunes App Store";
         public const string Review_Failed_Part_Generic = "the app store";
+
+        // Settings Page
+        public const string Settings_WeightUnits = "Measurement Units: ";
+        public const string Settings_ImperialPound = "Imperial Pound (US)";
+        public const string Settings_Kilograms = "Kilograms";
+        public const string Settings_ChangeWeightUnitsActionSheet = "Select the weight units to use";
+        public const string Settings_ChangeWeightUnits_GetWeightsError_Title = "Unable to get weights";
+        public const string Settings_ChangeWeightUnits_GetWeightsError_Message = "An error occurred trying to retrieve your weights, cannot continue.";        
+        public const string Settings_ChangeWeightUnits_ConvertWarning = "Convert existing weights to new units (ex: 100.0 pounds becomes 45.36 kilos), or change the units and keep the same weight values (ex: 100.0 pounds becomes 100.0 kilos)?";
+        public const string Settings_ChangeWeightUnits_ConvertWarning_ConvertWeightValues = "Convert weight values";
+        public const string Settings_ChangeWeightUnits_ConvertWarning_ChangeUnits = "Just change units";
+        public const string Settings_ChangeWeightUnits_ConvertWeightValues_FatalError = "A fatal error occurred converting weight values, please contact support at smartypantscoding@gmail.com. Details: ";
+        public const string Settings_ChangeWeightUnits_ChangeUnits_FatalError = "A fatal error occurred changing weight units, please contact support at smartypantscoding@gmail.com. Details: ";
+
+        // Data Services
+        public const string DataService_ChangeWeightAndGoalUnits_UnableToGetWeights = "Unable to get weights, cannot continue.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedRemovingWeight = "Unable to update weight entry for {0}. Failed during remove.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedAddingWeight = "Unable to update weight entry for {0}. Failed during add.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedRemovingGoal = "Unable to update goal. Failed during remove.";
+        public const string DataService_ChangeWeightAndGoalUnits_FailedAddingGoal = "Unable to update goal. Failed during add.";
 
         // Weight Entry Page
         public const string WeightEntryPage_Title_Add = "Enter Weight";

@@ -42,6 +42,7 @@
     <Compile Include="Constants.Analytics.cs" />
     <Compile Include="Constants.Strings.cs" />
     <Compile Include="Constants.UI.cs" />
+    <Compile Include="Enumerations\WeightUnitEnum.cs" />
     <Compile Include="Types\GettingStartedCarouselItem.cs" />
     <Compile Include="Controls\CarouselLayout.cs" />
     <Compile Include="Controls\LoadingIndicator.xaml.cs">
@@ -64,6 +65,7 @@
     <Compile Include="Services\SQLiteDataService.cs" />
     <Compile Include="Services\WindowColorService.cs" />
     <Compile Include="Types\InfoForToday.cs" />
+    <Compile Include="Types\ResultWithErrorText.cs" />
     <Compile Include="Types\WeightLossGoal.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="ViewModels\GraphPageViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\SetGoalPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\WeightEntryPageViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -115,6 +118,9 @@
     <Compile Include="Converters\CheckmarkVisibilityConverter.cs" />
     <Compile Include="Views\SetGoalPage.xaml.cs">
       <DependentUpon>SetGoalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WeightEntryPage.xaml.cs">
       <DependentUpon>WeightEntryPage.xaml</DependentUpon>
@@ -237,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\LoadingIndicator.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

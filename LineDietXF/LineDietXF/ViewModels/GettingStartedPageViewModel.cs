@@ -47,7 +47,11 @@ namespace LineDietXF.ViewModels
             SelectedCarouselItem = CarouselItems.First();
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters) { }
+        public void OnNavigatedFrom(NavigationParameters parameters)
+        {
+            parameters.Add(Constants.App.NavParam_FromGettingStarted, true);
+        }
+
         public void OnNavigatingTo(NavigationParameters parameters) { }
 
         public void OnNavigatedTo(NavigationParameters parameters)

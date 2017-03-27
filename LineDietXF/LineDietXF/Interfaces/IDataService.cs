@@ -1,4 +1,5 @@
-﻿using LineDietXF.Types;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Types;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,6 +32,9 @@ namespace LineDietXF.Interfaces
         Task<bool> WeightEntryForDateExists(DateTime dt);
         Task<bool> AddWeightEntry(WeightEntry newEntry);
         Task<bool> RemoveWeightEntryForDate(DateTime dt);
+
+        // Conversion (user changes unit settings)
+        Task<ResultWithErrorText> ChangeWeightAndGoalUnits(WeightUnitEnum newUnits, bool convertValues);
 
         event EventHandler UserDataUpdated;
     }
