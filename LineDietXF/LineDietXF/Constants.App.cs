@@ -23,6 +23,9 @@ namespace LineDietXF.Constants
         public const bool Settings_HasDismissedStartupView_DefaultValue = false;
         public const WeightUnitEnum Settings_WeightUnits_DefaultValue = WeightUnitEnum.ImperialPounds;
 
+        // Nav params
+        public const string NavParam_FromGettingStarted = "FromGettingStarted";
+
         // Graphing
         // NOTE:: constants relative to break points in graph labeling are defined within GraphPageViewModel
         public const decimal Graph_WeightRange_DefaultMin = 160;

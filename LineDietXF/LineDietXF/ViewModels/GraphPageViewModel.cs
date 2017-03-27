@@ -21,7 +21,7 @@ namespace LineDietXF.ViewModels
     /// <summary>
     /// The second tab of the app which shows the OxyPlot graph and a listing of recent weight entries
     /// </summary>
-    public class GraphPageViewModel : BaseViewModel, IActiveAware
+    public class GraphPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
         static OxyColor GRID_LINES_COLOR_MINOR = Constants.UI.GRAPH_MinorGridLines.ToOxyColor();
         static OxyColor GRID_LINES_COLOR_MAJOR = Constants.UI.GRAPH_MajorGridLines.ToOxyColor();
@@ -129,10 +129,15 @@ namespace LineDietXF.ViewModels
             DeleteEntryCommand = new DelegateCommand<WeightEntry>(ConfirmDeleteItem);
         }
 
-        void Setup()
+        public void OnNavigatedFrom(NavigationParameters parameters) { }
+
+        public void OnNavigatedTo(NavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_Graph);
+        }
 
+        void Setup()
+        {
             // wire up events
             DataService.UserDataUpdated += DataService_UserDataUpdated;
 

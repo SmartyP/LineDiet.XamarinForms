@@ -18,7 +18,7 @@ namespace LineDietXF.ViewModels
     /// <summary>
     /// Third tab of the app - the main menu
     /// </summary>
-    public class MenuPageViewModel : BaseViewModel, IActiveAware
+    public class MenuPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
         private List<MenuItem> _menuEntries;
         public List<MenuItem> MenuEntries
@@ -64,12 +64,14 @@ namespace LineDietXF.ViewModels
         IDataService DataService { get; set; }
         IWindowColorService WindowColorService { get; set; }
         IReviewService ReviewService { get; set; }
+        ISettingsService SettingsService { get; set; }
 
-        public MenuPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IWindowColorService windowColorService, IReviewService reviewService) :
+        public MenuPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService, IReviewService reviewService) :
             base(navigationService, analyticsService, dialogService)
         {
             // Store off services
             DataService = dataService;
+            SettingsService = settingsService;
             WindowColorService = windowColorService;
             ReviewService = reviewService;
 
@@ -77,10 +79,22 @@ namespace LineDietXF.ViewModels
             MenuEntries = BuildMenu();
         }
 
-        public void Setup()
+        public void OnNavigatedFrom(NavigationParameters parameters) { }
+
+        public async void OnNavigatedTo(NavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_Menu);
 
+            if (parameters != null && parameters.ContainsKey(Constants.App.NavParam_FromGettingStarted) && (bool)parameters[Constants.App.NavParam_FromGettingStarted] == true)
+            {
+                await DialogService.DisplayAlertAsync(Constants.Strings.Common_SettingWeightUnits_Title,
+                    string.Format(Constants.Strings.Common_SettingWeightUnits_Message, SettingsService.WeightUnit.ToSentenceUsageName()),
+                    Constants.Strings.GENERIC_OK);
+            }
+        }
+
+        public void Setup()
+        {
             // wire up events
             DataService.UserDataUpdated += DataService_UserDataUpdated;
 
