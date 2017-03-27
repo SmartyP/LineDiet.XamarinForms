@@ -240,7 +240,7 @@ namespace LineDietXF.ViewModels
             DateTime dateRangeStart = dateRange.Item1;
             DateTime dateRangeEnd = dateRange.Item2;
 
-            var weightRange = WeightLogicHelpers.GetMinMaxWeightRange(goal, entries, dateRangeStart, dateRangeEnd);
+            var weightRange = WeightLogicHelpers.GetMinMaxWeightRange(SettingsService.WeightUnit, goal, entries, dateRangeStart, dateRangeEnd);
             decimal minGraphWeight = weightRange.Item1;
             decimal maxGraphWeight = weightRange.Item2;
 
