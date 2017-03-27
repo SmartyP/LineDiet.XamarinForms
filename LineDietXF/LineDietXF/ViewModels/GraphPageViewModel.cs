@@ -112,6 +112,7 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
+        ISettingsService SettingsService { get; set; }
         IWindowColorService WindowColorService { get; set; }
 
         // Bindable Commands
@@ -119,10 +120,11 @@ namespace LineDietXF.ViewModels
         public DelegateCommand<WeightEntry> DeleteEntryCommand { get; set; }
 
         public GraphPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService,
-            IDataService dataService, IWindowColorService windowColorService) :
+            IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService) :
             base(navigationService, analyticsService, dialogService)
         {
             DataService = dataService;
+            SettingsService = settingsService;
             WindowColorService = windowColorService;
 
             AddEntryCommand = new DelegateCommand(ShowAddWeightScreen);
@@ -277,6 +279,12 @@ namespace LineDietXF.ViewModels
                 });
 
             // YAxis - weights
+            var minRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+                        Constants.App.Graph_Pounds_MinWeightRangeVisible :
+                        Constants.App.Graph_Kilograms_MinWeightRangeVisible;
+            var maxRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+                        Constants.App.Graph_Pounds_MaxWeightRangeVisible :
+                        Constants.App.Graph_Kilograms_MaxWeightRangeVisible;
             plotModel.Axes.Add(
                 new LinearAxis
                 {
@@ -295,8 +303,8 @@ namespace LineDietXF.ViewModels
                     MinorStep = 1,
                     MajorStep = 5,
                     IsZoomEnabled = true,
-                    MinimumRange = Constants.App.Graph_MinWeightRangeVisible, // closest zoom in shows at least 5 pounds
-                    MaximumRange = Constants.App.Graph_MaxWeightRangeVisible // furthest zoom out shows at most 100 pounds
+                    MinimumRange = minRange, // closest zoom in shows at least 5 pounds
+                    MaximumRange = maxRange // furthest zoom out shows at most 100 pounds
                 });
 
             var series1 = new LineSeries

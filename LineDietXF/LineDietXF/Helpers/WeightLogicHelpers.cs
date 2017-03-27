@@ -61,13 +61,15 @@ namespace LineDietXF.Helpers
             {
                 if (goal != null)
                 {
+                    var goalPadding = (goal.WeightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_GoalOnly_Pounds_Padding : Constants.App.Graph_GoalOnly_Kilograms_Padding);
                     // there should normally be at least one weight if a goal is set, there is nothing really to graph but the goal line itself
-                    return new Tuple<decimal, decimal>(goal.GoalWeight - Constants.App.Graph_GoalOnly_Padding,
-                        goal.GoalWeight + Constants.App.Graph_GoalOnly_Padding);
+                    return new Tuple<decimal, decimal>(goal.GoalWeight - goalPadding, goal.GoalWeight + goalPadding);
                 }
 
                 // no goal set and no saved weights, so just graph a default range
-                return new Tuple<decimal, decimal>(Constants.App.Graph_WeightRange_DefaultMin, Constants.App.Graph_WeightRange_DefaultMax);
+                var rangeDefaultMin = (goal.WeightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMin : Constants.App.Graph_WeightRange_Kilograms_DefaultMin);
+                var rangeDefaultMax = (goal.WeightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMax : Constants.App.Graph_WeightRange_Kilograms_DefaultMax);
+                return new Tuple<decimal, decimal>(rangeDefaultMin, rangeDefaultMax);
             }
 
             decimal minValue = decimal.MaxValue;
