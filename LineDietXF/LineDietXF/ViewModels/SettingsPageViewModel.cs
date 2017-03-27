@@ -54,7 +54,7 @@ namespace LineDietXF.ViewModels
             // add blank to top to add top space
             menuEntries.Add(new MenuItem(MenuItemEnum.Divider, string.Empty, true));
 
-            var weightUnitsText = Constants.Strings.Settings_WeightUnits + SettingsService.WeightUnit.ToSettingsName();
+            var weightUnitsText = Constants.Strings.Settings_WeightUnits + Environment.NewLine + SettingsService.WeightUnit.ToSettingsName();
             menuEntries.Add(new MenuItem(MenuItemEnum.Settings_SetUnitType, weightUnitsText, false));
 
             // add blank to top to add bottom space
