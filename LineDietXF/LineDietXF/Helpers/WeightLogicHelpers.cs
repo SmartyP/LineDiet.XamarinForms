@@ -295,5 +295,10 @@ namespace LineDietXF.Helpers
 
             return new Tuple<int, decimal>(stones, pounds);
         }
+
+        public static decimal ConvertPoundsToStonesOnly(decimal weightInPounds)
+        {
+            return weightInPounds / Constants.App.PoundsInAStone;
+        }
     }
 }

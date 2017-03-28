@@ -13,7 +13,8 @@ namespace LineDietXF.Constants
         public const string Common_WeightUnit_Kilograms = "kilograms";
         public const string Common_WeightUnit_Stones = "stones";
         public const string Common_WeightFormat = "{0:0.0}";
-        public const string Common_Stones_WeightFormat = "{0:0}st {1:0.0}lb";
+        public const string Common_Stones_WeightFormat = "{0:0}st {1:0.0}lbs";
+        public const string Common_Stones_ShortWeightFormat = "{0:0.0}st";
         public const string Common_UpdateExistingWeight_Title = "Update existing entry?";
         public const string Common_UpdateExistingWeight_Message = "The existing weight of {0:0.0} on {1:MM/dd/yyyy} will be updated with the weight of {2:0.0}.";
         public const string Common_SaveError = "Error while saving";
