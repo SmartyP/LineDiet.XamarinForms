@@ -70,10 +70,13 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 
 ## TODO List
 * Switch to using asset catalogs for iOS app icons
-* Alternative weight unit support *(ex: kilograms, stones/pounds)*
 * Support for local date format ([example](http://stackoverflow.com/a/37858898/18005))
 * Improved getting started images for tablets
 * Remove delay before graph/listings populate the first time
+
+## Version History
+* v1.0 - initial release
+* v1.1 - support for pounds, kilograms, and stones as weight units (in Settings)
 
 ## Known Issues
 * Mock services have been stubbed out, but would not work well if used for unit tests currently
