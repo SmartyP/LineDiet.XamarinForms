@@ -342,9 +342,13 @@ namespace LineDietXF.ViewModels
             // start and goal weights in case they just want a line to show a maintenance weight they are trying to stay at
             if (goalWeight > startWeight)
             {
-                await DialogService.DisplayAlertAsync(Constants.Strings.SetGoalPage_GoalWeightGreaterThanStartWeight_Title,
+                // TODO:: analytics
+                var result = await DialogService.DisplayAlertAsync(Constants.Strings.SetGoalPage_GoalWeightGreaterThanStartWeight_Title,
                     Constants.Strings.SetGoalpage_GoalWeightGreaterThanStartWeight_Message,
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.GENERIC_OK, Constants.Strings.GENERIC_CANCEL);
+
+                if (!result)
+                    return;
             }
 
             try
