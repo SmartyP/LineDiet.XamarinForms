@@ -414,8 +414,7 @@ namespace LineDietXF.ViewModels
 
         string WeightLabelFormatter(double d)
         {
-            var stones = WeightLogicHelpers.ConvertPoundsToStonesOnly(Convert.ToDecimal(d));
-            return string.Format(Constants.Strings.Common_Stones_ShortWeightFormat, stones);
+            return Convert.ToDecimal(d).PoundsToShortStonesDecimalString();
         }
 
         async void EditEntry(WeightEntry selectedItem)

@@ -1,4 +1,5 @@
 ﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
 using LineDietXF.Types;
 using System;
 using System.Collections.Generic;
@@ -253,10 +254,10 @@ namespace LineDietXF.Helpers
             }
             else // special formatting for stones/pounds
             {
-                Tuple<int, decimal> lostInStones = ConvertPoundsToStonesAndPounds(Math.Abs(amountLost));
-                Tuple<int, decimal> remainingInStones = ConvertPoundsToStonesAndPounds(amountRemaining);
-                return string.Format(Constants.Strings.DailyInfoPage_Stones_ProgressSummary, gainedLost, lostInStones.Item1, lostInStones.Item2, daysSinceStart,
-                    daysToGo, remainingInStones.Item1, remainingInStones.Item2, endingText);
+                var lostInStones = Math.Abs(amountLost).ToStonesAndPounds();
+                var remainingInStones = amountRemaining.ToStonesAndPounds();
+                return string.Format(Constants.Strings.DailyInfoPage_Stones_ProgressSummary, gainedLost, lostInStones.Stones, lostInStones.Pounds, daysSinceStart,
+                    daysToGo, remainingInStones.Stones, remainingInStones.Pounds, endingText);
             }
         }
 
@@ -285,25 +286,6 @@ namespace LineDietXF.Helpers
 #endif
                 return weightValue;
             }
-        }
-
-        // 14 pounds per stone
-        public static Tuple<int, decimal> ConvertPoundsToStonesAndPounds(decimal weightInPounds)
-        {
-            int stones = Convert.ToInt32(Math.Truncate(weightInPounds / Constants.App.PoundsInAStone));
-            decimal pounds = weightInPounds % Constants.App.PoundsInAStone;
-
-            return new Tuple<int, decimal>(stones, pounds);
-        }
-
-        public static decimal ConvertPoundsToStonesOnly(decimal weightInPounds)
-        {
-            return weightInPounds / Constants.App.PoundsInAStone;
-        }
-
-        public static decimal ConvertStonesToDecimal(Tuple<int, decimal> stonePounds)
-        {
-            return (stonePounds.Item1 * Constants.App.PoundsInAStone) + stonePounds.Item2;
         }
     }
 }

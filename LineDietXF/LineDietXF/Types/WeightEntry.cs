@@ -1,4 +1,5 @@
 ﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
 using LineDietXF.Helpers;
 using SQLite;
 using System;
@@ -49,14 +50,9 @@ namespace LineDietXF.Types
             }
 
             if (WeightUnit == WeightUnitEnum.StonesAndPounds)
-            {
-                var stonesAndPounds = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(Weight);
-                return string.Format(Constants.Strings.Common_Stones_WeightFormat, stonesAndPounds.Item1, stonesAndPounds.Item2);
-            }
+                return Weight.ToLongStonesPoundsString();
             else
-            {
                 return string.Format(Constants.Strings.Common_WeightFormat, Weight);
-            }
         }
     }
 }

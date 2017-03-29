@@ -44,6 +44,7 @@
     <Compile Include="Constants.UI.cs" />
     <Compile Include="Converters\WeightListingFontSizeConverter.cs" />
     <Compile Include="Enumerations\WeightUnitEnum.cs" />
+    <Compile Include="Extensions\StonesAndPoundsExtensions.cs" />
     <Compile Include="Types\GettingStartedCarouselItem.cs" />
     <Compile Include="Controls\CarouselLayout.cs" />
     <Compile Include="Controls\LoadingIndicator.xaml.cs">
@@ -67,6 +68,7 @@
     <Compile Include="Services\WindowColorService.cs" />
     <Compile Include="Types\InfoForToday.cs" />
     <Compile Include="Types\ResultWithErrorText.cs" />
+    <Compile Include="Types\StonesAndPounds.cs" />
     <Compile Include="Types\WeightLossGoal.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

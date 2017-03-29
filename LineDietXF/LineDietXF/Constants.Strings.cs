@@ -20,7 +20,7 @@ namespace LineDietXF.Constants
         public const string Common_SaveError = "Error while saving";
         public const string Common_FatalError = "Fatal Error";
         public const string Common_SettingWeightUnits_Title = "Weight Units Setting";
-        public const string Common_SettingWeightUnits_Message = "Line Diet is currently using {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
+        public const string Common_SettingWeightUnits_Message = "Line Diet is currently set to use {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
 
         // Getting Started
         public static string GettingStarted_Page1Title = $"Welcome to {Environment.NewLine} Line Diet!";

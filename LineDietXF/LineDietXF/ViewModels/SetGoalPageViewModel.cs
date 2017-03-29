@@ -1,4 +1,5 @@
 ﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
 using LineDietXF.Helpers;
 using LineDietXF.Interfaces;
 using LineDietXF.Types;
@@ -177,14 +178,14 @@ namespace LineDietXF.ViewModels
             // setup entry fields for start and goal weights (we have different fields for stones (2 fields) than kg/pounds)
             if (ShowStonesEntryFields)
             {
-                var startWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingGoal.StartWeight);
-                var goalWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingGoal.GoalWeight);
+                var startWeightStones = existingGoal.StartWeight.ToStonesAndPounds();
+                var goalWeightStones = existingGoal.GoalWeight.ToStonesAndPounds();
 
-                StartWeightStones = startWeightStones.Item1.ToString();
-                StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Item2);
+                StartWeightStones = startWeightStones.Stones.ToString();
+                StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Pounds);
 
-                GoalWeightStones = goalWeightStones.Item1.ToString();
-                GoalWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, goalWeightStones.Item2);
+                GoalWeightStones = goalWeightStones.Stones.ToString();
+                GoalWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, goalWeightStones.Pounds);
             }
             else
             {
@@ -205,9 +206,9 @@ namespace LineDietXF.ViewModels
                 {
                     if (ShowStonesEntryFields)
                     {
-                        var startWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingStartDateWeight.Weight);
-                        StartWeightStones = startWeightStones.Item1.ToString();
-                        StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Item2);
+                        var startWeightStones = existingStartDateWeight.Weight.ToStonesAndPounds();
+                        StartWeightStones = startWeightStones.Stones.ToString();
+                        StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Pounds);
                     }
                     else
                     {
@@ -234,11 +235,6 @@ namespace LineDietXF.ViewModels
 
             if (ShowStonesEntryFields) // logic for pounds entry (two fields)
             {
-                // disable the save button if any weight field is empty
-                if (string.IsNullOrWhiteSpace(StartWeightStones) || string.IsNullOrWhiteSpace(StartWeightStonePounds) ||
-                    string.IsNullOrWhiteSpace(GoalWeightStones) || string.IsNullOrWhiteSpace(GoalWeightStonePounds))
-                    return false;
-
                 // disable the save button if weight fields can't be parsed
                 if (GetStartWeightInStones() == null || GetGoalWeightInStones() == null)
                     return false;
@@ -258,30 +254,39 @@ namespace LineDietXF.ViewModels
             return true;
         }
 
-        Tuple<int, decimal> GetStartWeightInStones()
-        {            
+        StonesAndPounds GetStartWeightInStones()
+        {
+            // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
+            if (string.IsNullOrWhiteSpace(StartWeightStones))
+                return null;
+
             int startWeightStones;
             if (!int.TryParse(StartWeightStones, out startWeightStones))
                 return null;
 
-            decimal startWeightPounds;
-            if (!decimal.TryParse(StartWeightStonePounds, out startWeightPounds))
+            // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
+            decimal startWeightPounds = 0;
+            if (!string.IsNullOrEmpty(StartWeightStonePounds) && !decimal.TryParse(StartWeightStonePounds, out startWeightPounds))
                 return null;
 
-            return new Tuple<int, decimal>(startWeightStones, startWeightPounds);
+            return new StonesAndPounds(startWeightStones, startWeightPounds);
         }
 
-        Tuple<int, decimal> GetGoalWeightInStones()
-        {
+        StonesAndPounds GetGoalWeightInStones()
+        {            
+            if (string.IsNullOrWhiteSpace(GoalWeightStones))
+                return null;
+
             int goalWeightStones;
             if (!int.TryParse(GoalWeightStones, out goalWeightStones))
                 return null;
 
-            decimal goalWeightPounds;
-            if (!decimal.TryParse(GoalWeightStonePounds, out goalWeightPounds))
+            // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
+            decimal goalWeightPounds = 0;
+            if (!string.IsNullOrEmpty(GoalWeightStonePounds) && !decimal.TryParse(GoalWeightStonePounds, out goalWeightPounds))
                 return null;
 
-            return new Tuple<int, decimal>(goalWeightStones, goalWeightPounds);
+            return new StonesAndPounds(goalWeightStones, goalWeightPounds);
         }
 
         async void Save()
@@ -301,8 +306,8 @@ namespace LineDietXF.ViewModels
                 if (startWeightStoneFields == null || goalWeightStoneFields == null)
                     parsedWeightFields = false;
 
-                startWeight = WeightLogicHelpers.ConvertStonesToDecimal(startWeightStoneFields);
-                goalWeight = WeightLogicHelpers.ConvertStonesToDecimal(goalWeightStoneFields);
+                startWeight = startWeightStoneFields.ToPoundsDecimal();
+                goalWeight = goalWeightStoneFields.ToPoundsDecimal();
             }
             else
             {
@@ -345,13 +350,13 @@ namespace LineDietXF.ViewModels
                         string warningMessage;
                         if (ShowStonesEntryFields)
                         {
-                            var existingWeightInStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingWeight.Weight);
-                            var startWeightInStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(startWeight);
+                            var existingWeightInStones = existingWeight.Weight.ToStonesAndPounds();
+                            var startWeightInStones = startWeight.ToStonesAndPounds();
 
                             warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, 
-                                string.Format(Constants.Strings.Common_Stones_WeightFormat, existingWeightInStones.Item1, existingWeightInStones.Item2),
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, existingWeightInStones.Stones, existingWeightInStones.Pounds),
                                 StartDate, 
-                                string.Format(Constants.Strings.Common_Stones_WeightFormat, startWeightInStones.Item1, startWeightInStones.Item2));
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, startWeightInStones.Stones, startWeightInStones.Pounds));
                         }
                         else
                         {
