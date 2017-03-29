@@ -1,4 +1,5 @@
 ﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
 using LineDietXF.Types;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace LineDietXF.Helpers
                     return Constants.Strings.Settings_ImperialPound;
                 case WeightUnitEnum.Kilograms:
                     return Constants.Strings.Settings_Kilograms;
+                case WeightUnitEnum.StonesAndPounds:
+                    return Constants.Strings.Settings_StonesAndPounds;
                 default:
 #if DEBUG
                     Debugger.Break();
@@ -35,6 +38,9 @@ namespace LineDietXF.Helpers
                     return Constants.Strings.Common_WeightUnit_ImperialPounds;
                 case WeightUnitEnum.Kilograms:
                     return Constants.Strings.Common_WeightUnit_Kilograms;
+                case WeightUnitEnum.StonesAndPounds:
+                    // NOTE:: this method is not used for the summary info as stones are displayed as "X stones, X.X pounds", unlike other unit types
+                    return Constants.Strings.Common_WeightUnit_Stones; 
                 default:
 #if DEBUG
                     Debugger.Break();
@@ -61,14 +67,17 @@ namespace LineDietXF.Helpers
             {
                 if (goal != null)
                 {
-                    var goalPadding = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_GoalOnly_Pounds_Padding : Constants.App.Graph_GoalOnly_Kilograms_Padding);
+                    var goalPadding = (weightUnit == WeightUnitEnum.ImperialPounds || weightUnit == WeightUnitEnum.StonesAndPounds ? 
+                        Constants.App.Graph_GoalOnly_Pounds_Padding : Constants.App.Graph_GoalOnly_Kilograms_Padding);
                     // there should normally be at least one weight if a goal is set, there is nothing really to graph but the goal line itself
                     return new Tuple<decimal, decimal>(goal.GoalWeight - goalPadding, goal.GoalWeight + goalPadding);
                 }
 
                 // no goal set and no saved weights, so just graph a default range
-                var rangeDefaultMin = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMin : Constants.App.Graph_WeightRange_Kilograms_DefaultMin);
-                var rangeDefaultMax = (weightUnit == WeightUnitEnum.ImperialPounds ? Constants.App.Graph_WeightRange_Pounds_DefaultMax : Constants.App.Graph_WeightRange_Kilograms_DefaultMax);
+                var rangeDefaultMin = (weightUnit == WeightUnitEnum.ImperialPounds || weightUnit == WeightUnitEnum.StonesAndPounds ? 
+                    Constants.App.Graph_WeightRange_Pounds_DefaultMin : Constants.App.Graph_WeightRange_Kilograms_DefaultMin);
+                var rangeDefaultMax = (weightUnit == WeightUnitEnum.ImperialPounds || weightUnit == WeightUnitEnum.StonesAndPounds ? 
+                    Constants.App.Graph_WeightRange_Pounds_DefaultMax : Constants.App.Graph_WeightRange_Kilograms_DefaultMax);
                 return new Tuple<decimal, decimal>(rangeDefaultMin, rangeDefaultMax);
             }
 
@@ -236,9 +245,20 @@ namespace LineDietXF.Helpers
             // NOTE: we don't want to say "-1.2 gained" so we always make sure what we display is positive
             string gainedLost = (amountLost < 0) ? Constants.Strings.DailyInfoPage_Summary_Gained : Constants.Strings.DailyInfoPage_Summary_Lost;
             string endingText = (todaysEntry.Weight <= todaysGoalWeight) ? Constants.Strings.DailyInfoPage_SummaryEnding_OnTrack : Constants.Strings.DailyInfoPage_SummaryEnding_OffTrack;
-            string weightUnits = goal.WeightUnit.ToSentenceUsageName();
-            return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary, gainedLost, Math.Abs(amountLost), weightUnits, daysSinceStart,
-                daysToGo, amountRemaining, endingText);
+
+            if (goal.WeightUnit != WeightUnitEnum.StonesAndPounds)
+            {
+                string weightUnits = goal.WeightUnit.ToSentenceUsageName();
+                return string.Format(Constants.Strings.DailyInfoPage_ProgressSummary, gainedLost, Math.Abs(amountLost), weightUnits, daysSinceStart,
+                    daysToGo, amountRemaining, endingText);
+            }
+            else // special formatting for stones/pounds
+            {
+                var lostInStones = Math.Abs(amountLost).ToStonesAndPounds();
+                var remainingInStones = amountRemaining.ToStonesAndPounds();
+                return string.Format(Constants.Strings.DailyInfoPage_Stones_ProgressSummary, gainedLost, lostInStones.Stones, lostInStones.Pounds, daysSinceStart,
+                    daysToGo, remainingInStones.Stones, remainingInStones.Pounds, endingText);
+            }
         }
 
         public static decimal ConvertWeightUnits(decimal weightValue, WeightUnitEnum origUnits, WeightUnitEnum newUnits)
@@ -246,11 +266,16 @@ namespace LineDietXF.Helpers
             if (origUnits == newUnits)
                 return weightValue;
 
-            if (origUnits == WeightUnitEnum.ImperialPounds && newUnits == WeightUnitEnum.Kilograms)
+            // we treat pounds and stones/pounds the same (just changes in how shown on graph, text, etc. - stored the same)
+            if (origUnits == WeightUnitEnum.ImperialPounds && newUnits == WeightUnitEnum.StonesAndPounds ||
+                origUnits == WeightUnitEnum.StonesAndPounds && newUnits == WeightUnitEnum.ImperialPounds)
+                return weightValue;
+
+            if ((origUnits == WeightUnitEnum.ImperialPounds || origUnits == WeightUnitEnum.StonesAndPounds) && newUnits == WeightUnitEnum.Kilograms)
             {
                 return weightValue * Constants.App.PoundsToKilograms;
             }
-            else if (origUnits == WeightUnitEnum.Kilograms && newUnits == WeightUnitEnum.ImperialPounds)
+            else if (origUnits == WeightUnitEnum.Kilograms && (newUnits == WeightUnitEnum.ImperialPounds || newUnits == WeightUnitEnum.StonesAndPounds))
             {
                 return weightValue * Constants.App.KilogramsToPounds;
             }

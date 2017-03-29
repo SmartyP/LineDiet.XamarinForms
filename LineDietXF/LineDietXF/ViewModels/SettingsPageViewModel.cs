@@ -84,11 +84,13 @@ namespace LineDietXF.ViewModels
                 new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.ImperialPounds); }));
             var kilogramsAction = ActionSheetButton.CreateButton(WeightUnitEnum.Kilograms.ToSettingsName(),
                 new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.Kilograms); }));
+            var stonesPoundAction = ActionSheetButton.CreateButton(WeightUnitEnum.StonesAndPounds.ToSettingsName(),
+                new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.StonesAndPounds); }));
             var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.GENERIC_CANCEL, 
                 new DelegateCommand(() => { }));
 
             DialogService.DisplayActionSheetAsync(Constants.Strings.Settings_ChangeWeightUnitsActionSheet, 
-                imperialPoundsAction, kilogramsAction, cancelAction);
+                imperialPoundsAction, kilogramsAction, stonesPoundAction, cancelAction);
         }
 
         async void WeightUnitTypeSelected(WeightUnitEnum newUnits)
@@ -107,9 +109,13 @@ namespace LineDietXF.ViewModels
                 var weightsWithDifferentUnits = allEntries.Where(w => w.WeightUnit != newUnits);
                 if (!weightsWithDifferentUnits.Any())
                 {
-                    SettingsService.WeightUnit = newUnits; // nothing to change, so just change the setting and return
-                    SetupMenu(); // refresh the menu to show the new setting
-                    return;
+                    var currentGoal = await DataService.GetGoal();
+                    if (currentGoal == null)
+                    {
+                        SettingsService.WeightUnit = newUnits; // nothing to change, so just change the setting and return
+                        SetupMenu(); // refresh the menu to show the new setting
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
@@ -122,6 +128,15 @@ namespace LineDietXF.ViewModels
             finally
             {
                 DecrementPendingRequestCount();
+            }
+
+            // if they are switching between pounds and stones/pounds we don't need to ask them how to convert as the data is stored
+            // the same either way (just changes how presented), so just go straight to the conversion in this case
+            if ((newUnits == WeightUnitEnum.ImperialPounds && SettingsService.WeightUnit == WeightUnitEnum.StonesAndPounds) || 
+                (newUnits == WeightUnitEnum.StonesAndPounds && SettingsService.WeightUnit == WeightUnitEnum.ImperialPounds))
+            {
+                UpdateWeightEntriesAndGoalUnits(newUnits, false);
+                return;
             }
 
             // show warning of needing to convert these values

@@ -54,6 +54,7 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 * Loading/Saving of app settings *(via Settings Plugin for Xamarin and Windows)*
 * Sharing of app via various social networks *(via Share Plugin for Xamarin and Windows)*
 * Data bound ListViews with context menu for deletion
+* Support for weight units in pounds, kilograms, and stones
 
 ## Potential Future Improvements
 * Support more platforms (ex: Windows Phone, Apple Watch, Windows 10, Android Wear)

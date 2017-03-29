@@ -12,6 +12,7 @@
       <cvt:DateValueConverter x:Key="DateCvt" />
       <cvt:CheckmarkVisibilityConverter x:Key="CheckmarkVisCvt" />      
       <cvt:InverseBooleanConverter x:Key="InverseBoolConverter" />
+      <cvt:WeightListingFontSizeConverter x:Key="WeightListingFontSizeCvt" />
 
       <!-- dynamic colors -->
       <Color x:Key="PrimaryResultColor">#808080</Color>
@@ -27,6 +28,7 @@
       <Color x:Key="ButtonFillColor">#66ffffff</Color>
       <Color x:Key="ButtonTextColor">#ffffff</Color>
       <Color x:Key="EntryPlaceholderColor">#66ffffff</Color>
+      <Color x:Key="LoadingOverlayColor">#44000000</Color>
 
       <!-- label styles -->
       <OnPlatform x:Key="ThinFontFamilyStyle"
@@ -78,21 +80,28 @@
         <Setter Property="TextColor" Value="{DynamicResource PrimaryResultColor}"/>
         <Setter Property="FontSize" Value="28"/>
       </Style>
-
-      <!-- button styles -->
-      <!-- Android buttons are inset a bit and don't line up with entry fields, so setting global negative left/right margins to fix this globally -->
-      <OnPlatform x:Key="ButtonMargin"  
-                  x:TypeArguments="Thickness"
-                  iOS="0,0,0,6"
-                  Android="-4,0,-4,6"
-                  WinPhone="0,0,0,0" />
-      
+     
+      <!-- button styles -->      
       <Style x:Key="BoxButtonStyle" TargetType="Button">
         <Setter Property="BorderRadius" Value="0" />
         <Setter Property="BackgroundColor" Value="{StaticResource ButtonFillColor}" />
         <Setter Property="FontFamily" Value="{DynamicResource NormalFontFamilyStyle}" />
         <Setter Property="TextColor" Value="{StaticResource ButtonTextColor}" />
-        <Setter Property="Margin" Value="{DynamicResource ButtonMargin}" />
+        <Setter Property="Margin" Value="0,0,0,6" />
+      </Style>
+
+      <!-- Android buttons are inset a bit and don't line up with entry fields, so the ButtonWrappingPanel helps them align
+           NOTE:: Initially this was done on the BoxButtonStyle, however it was noticed that if there were multiple buttons that
+           only the first would align. This issue appeared after adding the weight field wrapping grids for showing/hiding different
+           weight fields for kg/pounds VS stones. Instead applying the margin on a wrapping StackLayout for the buttons works fine. -->
+      <OnPlatform x:Key="ButtonWrappingPanelMargin"
+                  x:TypeArguments="Thickness"
+                  iOS="0,20,0,8"
+                  Android="-4,20,-4,8"
+                  WinPhone="0,20,0,8" />
+
+      <Style x:Key="ButtonWrappingPanel" TargetType="StackLayout">
+        <Setter Property="Margin" Value="{StaticResource ButtonWrappingPanelMargin}" />
       </Style>
 
       <!-- entry styles -->

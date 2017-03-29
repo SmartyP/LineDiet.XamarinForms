@@ -11,13 +11,16 @@ namespace LineDietXF.Constants
         // Common strings - used multiple places
         public const string Common_WeightUnit_ImperialPounds = "pounds";
         public const string Common_WeightUnit_Kilograms = "kilograms";
+        public const string Common_WeightUnit_Stones = "stones";
         public const string Common_WeightFormat = "{0:0.0}";
+        public const string Common_Stones_WeightFormat = "{0:0}st {1:0.#}lbs";
+        public const string Common_Stones_ShortWeightFormat = "{0:0.#}st";
         public const string Common_UpdateExistingWeight_Title = "Update existing entry?";
         public const string Common_UpdateExistingWeight_Message = "The existing weight of {0:0.0} on {1:MM/dd/yyyy} will be updated with the weight of {2:0.0}.";
         public const string Common_SaveError = "Error while saving";
         public const string Common_FatalError = "Fatal Error";
-        public const string Common_SettingWeightUnits_Title = "Weight Units Setting";
-        public const string Common_SettingWeightUnits_Message = "Line Diet is currently using {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
+        public const string Common_SettingWeightUnits_Title = "Weight Unit Setting";
+        public const string Common_SettingWeightUnits_Message = "Line Diet is currently set to use {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
 
         // Getting Started
         public static string GettingStarted_Page1Title = $"Welcome to {Environment.NewLine} Line Diet!";
@@ -40,6 +43,7 @@ namespace LineDietXF.Constants
         public const string DailyInfoPage_GoalEnd_Success = "You've reached your goal! You can continue to use Line Diet to track your maintenance of your weight, or set a new goal. Congratulations!";
         public const string DailyInfoPage_GoalEnd_Failure = "It looks like you've fallen short of your goal. Why not set a new goal and try again?";
         public const string DailyInfoPage_ProgressSummary = "You have {0} {1:0.0} {2} since starting your current goal {3} days ago. You have {4} days left to lose {5:0.0} {2}. {6}";
+        public const string DailyInfoPage_Stones_ProgressSummary = "You have {0} {1:0} stone(s) {2:0.0} pounds, since starting your current goal {3} days ago. You have {4} days left to lose {5:0} stone(s), {6:0.0} pounds. {7}";
         public const string DailyInfoPage_Summary_Gained = "gained";
         public const string DailyInfoPage_Summary_Lost = "lost";
         public const string DailyInfoPage_SummaryEnding_OnTrack = "Keep up the good work!";
@@ -72,10 +76,11 @@ namespace LineDietXF.Constants
         public const string Settings_WeightUnits = "Measurement Units: ";
         public const string Settings_ImperialPound = "Imperial Pound (US)";
         public const string Settings_Kilograms = "Kilograms";
+        public const string Settings_StonesAndPounds = "Stones";
         public const string Settings_ChangeWeightUnitsActionSheet = "Select the weight units to use";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Title = "Unable to get weights";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Message = "An error occurred trying to retrieve your weights, cannot continue.";        
-        public const string Settings_ChangeWeightUnits_ConvertWarning = "Convert existing weights to new units (ex: 100.0 pounds becomes 45.36 kilos), or change the units and keep the same weight values (ex: 100.0 pounds becomes 100.0 kilos)?";
+        public const string Settings_ChangeWeightUnits_ConvertWarning = "Convert weights to new units (ex: 100.0 pounds to 45.36 kilos)?";
         public const string Settings_ChangeWeightUnits_ConvertWarning_ConvertWeightValues = "Convert weight values";
         public const string Settings_ChangeWeightUnits_ConvertWarning_ChangeUnits = "Just change units";
         public const string Settings_ChangeWeightUnits_ConvertWeightValues_FatalError = "A fatal error occurred converting weight values, please contact support at smartypantscoding@gmail.com. Details: ";
@@ -92,20 +97,23 @@ namespace LineDietXF.Constants
         public const string WeightEntryPage_Title_Add = "Enter Weight";
         public const string WeightEntryPage_Title_Update = "Update Weight";
         public const string WeightEntryPage_InvalidWeight_Title = "Invalid weight";
-        public const string WeightEntryPage_InvalidWeight_Message = "Could not convert entered weight to a valid numerical weight.";
+        public const string WeightEntryPage_InvalidWeight_Message = "Could not convert entered weight to a valid weight.";
         public const string WeightEntryPage_Save_RemoveExistingWeightFailed_Message = "An error occurred removing an existing weight entry for the selected date.";
         public const string WeightEntryPage_Save_AddingWeightFailed_Message = "An error occurred when adding the new weight entry.";
         public const string WeightEntryPage_Save_Exception_Message = "An exception occurred while saving your weight entry.";
+        public const string WeightEntrylPage_WeightLabel = "Weight (in {0})";
 
         // Set Goal Page
         public const string SetGoalPage_InvalidWeight_Title = "Invalid weight";
-        public const string SetGoalPage_InvalidWeight_Message = "Could not convert entered goal weight to a valid numerical weight.";
+        public const string SetGoalPage_InvalidWeight_Message = "Could not convert entered start and/or goal weight into a valid weight.";
         public const string SetGoalPage_GoalWeightGreaterThanStartWeight_Title = "Are you sure?";
         public const string SetGoalpage_GoalWeightGreaterThanStartWeight_Message = "Your goal weight is greater than your start weight. Are you sure your goal is to gain weight?";
         public const string SetGoalPage_Save_RemoveExistingWeightFailed_Message = "An error occurred removing an existing weight entry for the goal start date.";
         public const string SetGoalPage_Save_AddingWeightFailed_Message = "An error occurred adding a new weight entry for the goal start date.";
         public const string SetGoalPage_Save_AddingGoalFailed_Message = "An error occurred creating the new weight loss goal.";
         public const string SetGoalPage_Save_Exception_Message = "An exception occurred while saving your weight loss goal.";
+        public const string SetGoalPage_StartWeightLabel = "Start Weight (in {0})";
+        public const string SetGoalPage_GoalWeightLabel = "Goal Weight (in {0})";
 
         // Sharing
         public const string ShareTitle = "Check out Line Diet!";

@@ -1,4 +1,6 @@
 ﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
+using LineDietXF.Helpers;
 using SQLite;
 using System;
 using System.Diagnostics;
@@ -47,7 +49,10 @@ namespace LineDietXF.Types
                 return "<error>";
             }
 
-            return string.Format(Constants.Strings.Common_WeightFormat, Weight);
+            if (WeightUnit == WeightUnitEnum.StonesAndPounds)
+                return Weight.ToLongStonesPoundsString();
+            else
+                return string.Format(Constants.Strings.Common_WeightFormat, Weight);
         }
     }
 }

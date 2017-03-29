@@ -26,19 +26,38 @@
                 <DatePicker Date="{Binding Date}"
                             Style="{StaticResource DateEntryStyle}"/>
 
-                <Label Text="Weight" 
+                <!-- weight section (shows different fields for stones unit type) -->
+                <Label Text="{Binding WeightLabel}" 
                        Style="{StaticResource FieldLabelStyle}"/>
-                <Entry Margin="0,0,0,20" 
-                       Style="{StaticResource WeightEntryStyle}"
-                       Text="{Binding Weight}"
-                       Placeholder="Enter weight (ex: 123.4)"/>
+                <Grid IsVisible="{Binding ShowStonesEntryFields, Converter={StaticResource InverseBoolConverter}}">
+                    <Entry Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding Weight}"
+                           Placeholder="Enter weight (ex: 123.4)"/>
+                </Grid>
+                <Grid IsVisible="{Binding ShowStonesEntryFields}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding WeightStones}"
+                           Placeholder="Stones (ex: 10)"/>
+                    <Entry Grid.Column="1" 
+                           Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding WeightStonePounds}"
+                           Placeholder="Pounds (ex: 12.2)"/>
+                </Grid>
 
-                <Button Text="Save"
-                        Style="{StaticResource BoxButtonStyle}"
-                        Command="{Binding SaveCommand}"/>
-                <Button Text="Cancel"
-                        Style="{StaticResource BoxButtonStyle}"
-                        Command="{Binding CloseCommand}"/>
+                <!-- bottom buttons -->
+                <StackLayout Style="{StaticResource ButtonWrappingPanel}">
+                    <Button Text="Save"
+                            Style="{StaticResource BoxButtonStyle}"
+                            Command="{Binding SaveCommand}"/>
+                    <Button Text="Cancel"
+                            Style="{StaticResource BoxButtonStyle}"
+                            Command="{Binding CloseCommand}"/>
+                </StackLayout>
+                
             </StackLayout>
         </ScrollView>
 

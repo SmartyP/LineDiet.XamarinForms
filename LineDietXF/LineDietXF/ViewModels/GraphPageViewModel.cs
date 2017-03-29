@@ -1,4 +1,5 @@
 ﻿using LineDietXF.Converters;
+using LineDietXF.Enumerations;
 using LineDietXF.Extensions;
 using LineDietXF.Helpers;
 using LineDietXF.Interfaces;
@@ -279,13 +280,14 @@ namespace LineDietXF.ViewModels
                 });
 
             // YAxis - weights
-            var minRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+            var minRange = (SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds || SettingsService.WeightUnit == Enumerations.WeightUnitEnum.StonesAndPounds) ?
                         Constants.App.Graph_Pounds_MinWeightRangeVisible :
                         Constants.App.Graph_Kilograms_MinWeightRangeVisible;
-            var maxRange = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds ?
+            var maxRange = (SettingsService.WeightUnit == Enumerations.WeightUnitEnum.ImperialPounds || SettingsService.WeightUnit == Enumerations.WeightUnitEnum.StonesAndPounds) ?
                         Constants.App.Graph_Pounds_MaxWeightRangeVisible :
                         Constants.App.Graph_Kilograms_MaxWeightRangeVisible;
-            plotModel.Axes.Add(
+
+            var weightAxis =             
                 new LinearAxis
                 {
                     Position = AxisPosition.Left,
@@ -300,12 +302,21 @@ namespace LineDietXF.ViewModels
                     TickStyle = TickStyle.Outside,
                     MajorGridlineStyle = LineStyle.Solid,
                     MinorGridlineStyle = LineStyle.Solid,
-                    MinorStep = 1,
-                    MajorStep = 5,
+                    MinorStep = 1, 
+                    MajorStep = 5, 
                     IsZoomEnabled = true,
                     MinimumRange = minRange, // closest zoom in shows at least 5 pounds
                     MaximumRange = maxRange // furthest zoom out shows at most 100 pounds
-                });
+                };
+
+            // use a special weight axis label formatter for stones/pounds
+            if (SettingsService.WeightUnit == WeightUnitEnum.StonesAndPounds)
+            {
+                weightAxis.LabelFormatter = WeightLabelFormatter;
+                weightAxis.MajorStep = 7;
+            }
+
+            plotModel.Axes.Add(weightAxis);
 
             var series1 = new LineSeries
             {
@@ -399,6 +410,11 @@ namespace LineDietXF.ViewModels
             }
 
             //Debug.WriteLine($"min={dateMin}, max={dateMax}, delta={delta}");
+        }
+
+        string WeightLabelFormatter(double d)
+        {
+            return Convert.ToDecimal(d).PoundsToShortStonesDecimalString();
         }
 
         async void EditEntry(WeightEntry selectedItem)

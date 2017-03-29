@@ -18,6 +18,7 @@ namespace LineDietXF.ViewModels
     {
         // Services        
         IDataService DataService { get; set; }
+        ISettingsService SettingsService { get; set; }
         IEventAggregator EventAggregator { get; set; }
         IWindowColorService WindowColorService { get; set; }
 
@@ -29,11 +30,12 @@ namespace LineDietXF.ViewModels
         public DelegateCommand TestEndingAGoalCommand { get; set; }
         public DelegateCommand TestRealDataSetCommand { get; set; }
 
-        public DebugPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
+        public DebugPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
             base(navigationService, analyticsService, dialogService)
         {
             // Store off injected services
             DataService = dataService;
+            SettingsService = settingsService;
             EventAggregator = eventAggregator;
             WindowColorService = windowColorService;
 
@@ -74,6 +76,14 @@ namespace LineDietXF.ViewModels
 
         async Task<bool> ShowLoseDataWarning()
         {
+            if (SettingsService.WeightUnit != WeightUnitEnum.ImperialPounds)
+            {
+                await DialogService.DisplayAlertAsync("Wrong units", "These methods are only setup for use when using pounds as the units. Change to pounds in Settings before using these methods for creating test data, then change units back.",
+                    Constants.Strings.GENERIC_OK);
+
+                return false;
+            }
+
             return await DialogService.DisplayAlertAsync("Are you sure?", "This will delete all data and set it back up with sample data, are you sure?",
                 Constants.Strings.GENERIC_OK, Constants.Strings.GENERIC_CANCEL);
         }

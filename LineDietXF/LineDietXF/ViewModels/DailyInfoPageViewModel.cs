@@ -55,6 +55,13 @@ namespace LineDietXF.ViewModels
             set { SetProperty(ref _isSetGoalButtonVisible, value); }
         }
 
+        int _mainLabelFontSize;
+        public int MainLabelFontSize
+        {
+            get { return _mainLabelFontSize; }
+            set { SetProperty(ref _mainLabelFontSize, value); }
+        }
+
         #region IActiveAware implementation
 
         public event EventHandler IsActiveChanged;
@@ -182,6 +189,8 @@ namespace LineDietXF.ViewModels
                 IsEnterWeightButtonVisible = infoForToday.IsEnterWeightButtonVisible;
                 IsSetGoalButtonVisible = infoForToday.IsSetGoalButtonVisible;
 
+                MainLabelFontSize = SettingsService.WeightUnit == Enumerations.WeightUnitEnum.StonesAndPounds ?
+                    Constants.UI.DailyInfoFontSize_Stones : Constants.UI.DailyInfoFontSize_Normal;
                 WindowColorService.ChangeAppBaseColor(infoForToday.ColorToShow);
             }
             catch (Exception ex)

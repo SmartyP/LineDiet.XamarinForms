@@ -6,6 +6,7 @@
     public enum WeightUnitEnum
     {
         ImperialPounds,
-        Kilograms
+        Kilograms,
+        StonesAndPounds
     }
 }
