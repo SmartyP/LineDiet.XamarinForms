@@ -80,7 +80,7 @@ namespace LineDietXF.Constants
         public const string Settings_ChangeWeightUnitsActionSheet = "Select the weight units to use";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Title = "Unable to get weights";
         public const string Settings_ChangeWeightUnits_GetWeightsError_Message = "An error occurred trying to retrieve your weights, cannot continue.";        
-        public const string Settings_ChangeWeightUnits_ConvertWarning = "Convert existing weights to new units (ex: 100.0 pounds becomes 45.36 kilos), or change the units and keep the same weight values (ex: 100.0 pounds becomes 100.0 kilos)?";
+        public const string Settings_ChangeWeightUnits_ConvertWarning = "Convert weights to new units (ex: 100.0 pounds to 45.36 kilos)?";
         public const string Settings_ChangeWeightUnits_ConvertWarning_ConvertWeightValues = "Convert weight values";
         public const string Settings_ChangeWeightUnits_ConvertWarning_ChangeUnits = "Just change units";
         public const string Settings_ChangeWeightUnits_ConvertWeightValues_FatalError = "A fatal error occurred converting weight values, please contact support at smartypantscoding@gmail.com. Details: ";
