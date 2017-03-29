@@ -27,7 +27,7 @@
                             Style="{StaticResource DateEntryStyle}"/>
 
                 <!-- weight section (shows different fields for stones unit type) -->
-                <Label Text="Weight" 
+                <Label Text="{Binding WeightLabel}" 
                        Style="{StaticResource FieldLabelStyle}"/>
                 <Grid IsVisible="{Binding ShowStonesEntryFields, Converter={StaticResource InverseBoolConverter}}">
                     <Entry Style="{StaticResource WeightEntryStyle}"

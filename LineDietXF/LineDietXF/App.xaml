@@ -28,6 +28,7 @@
       <Color x:Key="ButtonFillColor">#66ffffff</Color>
       <Color x:Key="ButtonTextColor">#ffffff</Color>
       <Color x:Key="EntryPlaceholderColor">#66ffffff</Color>
+      <Color x:Key="LoadingOverlayColor">#44000000</Color>
 
       <!-- label styles -->
       <OnPlatform x:Key="ThinFontFamilyStyle"

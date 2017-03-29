@@ -112,6 +112,22 @@ namespace LineDietXF.ViewModels
             set { SetProperty(ref _showPoundsEntryFields, value); }
         }
 
+        public string StartWeightLabel
+        {
+            get
+            {
+                return string.Format(Constants.Strings.SetGoalPage_StartWeightLabel, SettingsService.WeightUnit.ToSentenceUsageName());
+            }
+        }
+
+        public string GoalWeightLabel
+        {
+            get
+            {
+                return string.Format(Constants.Strings.SetGoalPage_GoalWeightLabel, SettingsService.WeightUnit.ToSentenceUsageName());
+            }
+        }
+
         // Services
         IDataService DataService { get; set; }
         ISettingsService SettingsService { get; set; }
@@ -272,6 +288,10 @@ namespace LineDietXF.ViewModels
             if (startWeightStones < 0 || startWeightPounds < 0)
                 return null;
 
+            // don't allow pounds to be 14 or more (would be another stone)
+            if (startWeightPounds >= Constants.App.PoundsInAStone)
+                return null;
+
             return new StonesAndPounds(startWeightStones, startWeightPounds);
         }
 
@@ -291,6 +311,10 @@ namespace LineDietXF.ViewModels
 
             // don't allow negative values
             if (goalWeightStones < 0 || goalWeightPounds < 0)
+                return null;
+
+            // don't allow pounds to be 14 or more (would be another stone)
+            if (goalWeightPounds >= Constants.App.PoundsInAStone)
                 return null;
 
             return new StonesAndPounds(goalWeightStones, goalWeightPounds);

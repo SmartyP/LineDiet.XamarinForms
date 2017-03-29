@@ -7,7 +7,7 @@
       HorizontalOptions="Fill"
       VerticalOptions="Fill"
       RowSpacing="0"
-      BackgroundColor="{StaticResource SlightDimmingOverlayColor}">
+      BackgroundColor="{StaticResource LoadingOverlayColor}">
     <ActivityIndicator Style="{StaticResource LoadingStyle}" 
                        IsRunning="{Binding IsBusy}"
                        IsVisible="{Binding IsBusy}"/>

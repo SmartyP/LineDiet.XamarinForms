@@ -1,5 +1,6 @@
 ﻿using LineDietXF.Enumerations;
 using LineDietXF.Extensions;
+using LineDietXF.Helpers;
 using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using Prism.Commands;
@@ -72,6 +73,14 @@ namespace LineDietXF.ViewModels
         {
             get { return _showPoundsEntryFields; }
             set { SetProperty(ref _showPoundsEntryFields, value); }
+        }
+
+        public string WeightLabel
+        {
+            get
+            {
+                return string.Format(Constants.Strings.WeightEntrylPage_WeightLabel, SettingsService.WeightUnit.ToSentenceUsageName());
+            }
         }
 
         // Bindable Commands
@@ -156,6 +165,10 @@ namespace LineDietXF.ViewModels
 
             // don't allow negative values
             if (weightStones < 0 || weightPounds < 0)
+                return null;
+
+            // don't allow pounds to be 14 or more (would be another stone)
+            if (weightPounds >= Constants.App.PoundsInAStone)
                 return null;
 
             return new StonesAndPounds(weightStones, weightPounds);

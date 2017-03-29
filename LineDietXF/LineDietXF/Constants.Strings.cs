@@ -19,7 +19,7 @@ namespace LineDietXF.Constants
         public const string Common_UpdateExistingWeight_Message = "The existing weight of {0:0.0} on {1:MM/dd/yyyy} will be updated with the weight of {2:0.0}.";
         public const string Common_SaveError = "Error while saving";
         public const string Common_FatalError = "Fatal Error";
-        public const string Common_SettingWeightUnits_Title = "Weight Units Setting";
+        public const string Common_SettingWeightUnits_Title = "Weight Unit Setting";
         public const string Common_SettingWeightUnits_Message = "Line Diet is currently set to use {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
 
         // Getting Started
@@ -101,6 +101,7 @@ namespace LineDietXF.Constants
         public const string WeightEntryPage_Save_RemoveExistingWeightFailed_Message = "An error occurred removing an existing weight entry for the selected date.";
         public const string WeightEntryPage_Save_AddingWeightFailed_Message = "An error occurred when adding the new weight entry.";
         public const string WeightEntryPage_Save_Exception_Message = "An exception occurred while saving your weight entry.";
+        public const string WeightEntrylPage_WeightLabel = "Weight (in {0})";
 
         // Set Goal Page
         public const string SetGoalPage_InvalidWeight_Title = "Invalid weight";
@@ -111,6 +112,8 @@ namespace LineDietXF.Constants
         public const string SetGoalPage_Save_AddingWeightFailed_Message = "An error occurred adding a new weight entry for the goal start date.";
         public const string SetGoalPage_Save_AddingGoalFailed_Message = "An error occurred creating the new weight loss goal.";
         public const string SetGoalPage_Save_Exception_Message = "An exception occurred while saving your weight loss goal.";
+        public const string SetGoalPage_StartWeightLabel = "Start Weight (in {0})";
+        public const string SetGoalPage_GoalWeightLabel = "Goal Weight (in {0})";
 
         // Sharing
         public const string ShareTitle = "Check out Line Diet!";

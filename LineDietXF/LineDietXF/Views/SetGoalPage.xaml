@@ -32,7 +32,7 @@
                             Date="{Binding StartDate}"/>
 
                 <!-- start weight section (shows different fields for stones unit type) -->
-                <Label Text="Start Weight" 
+                <Label Text="{Binding StartWeightLabel}" 
                        Style="{StaticResource FieldLabelStyle}"/>
                 <Grid IsVisible="{Binding ShowStonesEntryFields, Converter={StaticResource InverseBoolConverter}}">
                     <Entry Style="{StaticResource WeightEntryStyle}"
@@ -60,7 +60,7 @@
                             Date="{Binding GoalDate}"/>
 
                 <!-- goal weight section (shows different fields for stones unit type) -->
-                <Label Text="Goal Weight"
+                <Label Text="{Binding GoalWeightLabel}"
                        Style="{StaticResource FieldLabelStyle}"/>
                 <Grid IsVisible="{Binding ShowStonesEntryFields, Converter={StaticResource InverseBoolConverter}}">
                     <Entry Style="{StaticResource WeightEntryStyle}"
