@@ -28,12 +28,12 @@
 
                 <Label Text="Weight" 
                        Style="{StaticResource FieldLabelStyle}"/>
-                <Entry Margin="0,0,0,20" 
-                       Style="{StaticResource WeightEntryStyle}"
+                <Entry Style="{StaticResource WeightEntryStyle}"
                        Text="{Binding Weight}"
                        Placeholder="Enter weight (ex: 123.4)"/>
 
-                <Button Text="Save"
+                <Button Margin="0,20,0,0"
+                        Text="Save"
                         Style="{StaticResource BoxButtonStyle}"
                         Command="{Binding SaveCommand}"/>
                 <Button Text="Cancel"

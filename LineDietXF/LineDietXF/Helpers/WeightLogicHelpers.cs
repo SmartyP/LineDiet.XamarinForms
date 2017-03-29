@@ -300,5 +300,10 @@ namespace LineDietXF.Helpers
         {
             return weightInPounds / Constants.App.PoundsInAStone;
         }
+
+        public static decimal ConvertStonesToDecimal(Tuple<int, decimal> stonePounds)
+        {
+            return (stonePounds.Item1 * Constants.App.PoundsInAStone) + stonePounds.Item2;
+        }
     }
 }

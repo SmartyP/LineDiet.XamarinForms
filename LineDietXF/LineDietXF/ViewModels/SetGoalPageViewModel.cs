@@ -1,4 +1,6 @@
-﻿using LineDietXF.Interfaces;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Helpers;
+using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using Prism.Commands;
 using Prism.Navigation;
@@ -36,6 +38,50 @@ namespace LineDietXF.ViewModels
             }
         }
 
+        string _startWeightStones;
+        public string StartWeightStones
+        {
+            get { return _startWeightStones; }
+            set
+            {
+                SetProperty(ref _startWeightStones, value);
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        string _startWeightStonePounds;
+        public string StartWeightStonePounds
+        {
+            get { return _startWeightStonePounds; }
+            set
+            {
+                SetProperty(ref _startWeightStonePounds, value);
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        string _goalWeightStones;
+        public string GoalWeightStones
+        {
+            get { return _goalWeightStones; }
+            set
+            {
+                SetProperty(ref _goalWeightStones, value);
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        string _goalWeightStonePounds;
+        public string GoalWeightStonePounds
+        {
+            get { return _goalWeightStonePounds; }
+            set
+            {
+                SetProperty(ref _goalWeightStonePounds, value);
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         DateTime _goalDate = DateTime.Today.AddMonths(Constants.App.SetGoalPage_DefaultGoalDateOffsetInMonths);
         public DateTime GoalDate
         {
@@ -56,6 +102,13 @@ namespace LineDietXF.ViewModels
                 SetProperty(ref _goalWeight, value);
                 SaveCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        bool _showPoundsEntryFields;
+        public bool ShowStonesEntryFields
+        {
+            get { return _showPoundsEntryFields; }
+            set { SetProperty(ref _showPoundsEntryFields, value); }
         }
 
         // Services
@@ -80,6 +133,7 @@ namespace LineDietXF.ViewModels
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
+            ShowStonesEntryFields = SettingsService.WeightUnit == WeightUnitEnum.StonesAndPounds;
             UpdateStartWeightFromStartDate();
         }
 
@@ -117,10 +171,26 @@ namespace LineDietXF.ViewModels
 
             // NOTE:: we could see if the goal date was already past and not load it in that case, but it would be better to still
             // bring in what they had before and just let them update it (ex: moving goal date forward / back)
-            StartDate = existingGoal.StartDate;
-            StartWeight = string.Format(Constants.Strings.Common_WeightFormat, existingGoal.StartWeight);
+            StartDate = existingGoal.StartDate;            
             GoalDate = existingGoal.GoalDate;
-            GoalWeight = string.Format(Constants.Strings.Common_WeightFormat, existingGoal.GoalWeight);
+
+            // setup entry fields for start and goal weights (we have different fields for stones (2 fields) than kg/pounds)
+            if (ShowStonesEntryFields)
+            {
+                var startWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingGoal.StartWeight);
+                var goalWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingGoal.GoalWeight);
+
+                StartWeightStones = startWeightStones.Item1.ToString();
+                StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Item2);
+
+                GoalWeightStones = goalWeightStones.Item1.ToString();
+                GoalWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, goalWeightStones.Item2);
+            }
+            else
+            {
+                StartWeight = string.Format(Constants.Strings.Common_WeightFormat, existingGoal.StartWeight);
+                GoalWeight = string.Format(Constants.Strings.Common_WeightFormat, existingGoal.GoalWeight);
+            }
         }
 
         async void UpdateStartWeightFromStartDate()
@@ -132,7 +202,18 @@ namespace LineDietXF.ViewModels
 
                 var existingStartDateWeight = await DataService.GetWeightEntryForDate(StartDate);
                 if (existingStartDateWeight != null)
-                    StartWeight = existingStartDateWeight.ToString();
+                {
+                    if (ShowStonesEntryFields)
+                    {
+                        var startWeightStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingStartDateWeight.Weight);
+                        StartWeightStones = startWeightStones.Item1.ToString();
+                        StartWeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, startWeightStones.Item2);
+                    }
+                    else
+                    {
+                        StartWeight = existingStartDateWeight.ToString();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -147,20 +228,60 @@ namespace LineDietXF.ViewModels
 
         bool SaveCanExecute()
         {
-            // disable the save button if either weight field is empty
-            if (string.IsNullOrWhiteSpace(StartWeight) || string.IsNullOrWhiteSpace(GoalWeight))
-                return false;
-
             // disable the save button if their goal date is before their start date or the dates are equal
             if (GoalDate <= StartDate)
                 return false;
 
-            // disable the save button if either weight text field can't be parsed
-            decimal startWeight, goalWeight;
-            if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
-                return false;
+            if (ShowStonesEntryFields) // logic for pounds entry (two fields)
+            {
+                // disable the save button if any weight field is empty
+                if (string.IsNullOrWhiteSpace(StartWeightStones) || string.IsNullOrWhiteSpace(StartWeightStonePounds) ||
+                    string.IsNullOrWhiteSpace(GoalWeightStones) || string.IsNullOrWhiteSpace(GoalWeightStonePounds))
+                    return false;
+
+                // disable the save button if weight fields can't be parsed
+                if (GetStartWeightInStones() == null || GetGoalWeightInStones() == null)
+                    return false;
+            }
+            else // logic for single field (kg or pounds)
+            { 
+                // disable the save button if either weight field is empty
+                if (string.IsNullOrWhiteSpace(StartWeight) || string.IsNullOrWhiteSpace(GoalWeight))
+                    return false;
+
+                // disable the save button if either weight text field can't be parsed
+                decimal startWeight, goalWeight;
+                if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
+                    return false;
+            }
 
             return true;
+        }
+
+        Tuple<int, decimal> GetStartWeightInStones()
+        {            
+            int startWeightStones;
+            if (!int.TryParse(StartWeightStones, out startWeightStones))
+                return null;
+
+            decimal startWeightPounds;
+            if (!decimal.TryParse(StartWeightStonePounds, out startWeightPounds))
+                return null;
+
+            return new Tuple<int, decimal>(startWeightStones, startWeightPounds);
+        }
+
+        Tuple<int, decimal> GetGoalWeightInStones()
+        {
+            int goalWeightStones;
+            if (!int.TryParse(GoalWeightStones, out goalWeightStones))
+                return null;
+
+            decimal goalWeightPounds;
+            if (!decimal.TryParse(GoalWeightStonePounds, out goalWeightPounds))
+                return null;
+
+            return new Tuple<int, decimal>(goalWeightStones, goalWeightPounds);
         }
 
         async void Save()
@@ -168,8 +289,28 @@ namespace LineDietXF.ViewModels
             AnalyticsService.TrackEvent(Constants.Analytics.SetGoalCategory, Constants.Analytics.SetGoal_SavedGoal, 1);
 
             // convert entered value to a valid weight
-            decimal startWeight, goalWeight;
-            if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
+            bool parsedWeightFields = true;
+            decimal startWeight = 0;
+            decimal goalWeight = 0;
+
+            if (ShowStonesEntryFields)
+            {
+                var startWeightStoneFields = GetStartWeightInStones();
+                var goalWeightStoneFields = GetGoalWeightInStones();
+
+                if (startWeightStoneFields == null || goalWeightStoneFields == null)
+                    parsedWeightFields = false;
+
+                startWeight = WeightLogicHelpers.ConvertStonesToDecimal(startWeightStoneFields);
+                goalWeight = WeightLogicHelpers.ConvertStonesToDecimal(goalWeightStoneFields);
+            }
+            else
+            {
+                if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
+                    parsedWeightFields = false;                
+            }
+
+            if (!parsedWeightFields)
             {
                 // show error about invalid value if we can't convert the entered value to a decimal
                 await DialogService.DisplayAlertAsync(Constants.Strings.SetGoalPage_InvalidWeight_Title,
@@ -200,9 +341,25 @@ namespace LineDietXF.ViewModels
                 {
                     if (existingWeight.Weight != startWeight)
                     {
+                        // show different message for stones/pounds
+                        string warningMessage;
+                        if (ShowStonesEntryFields)
+                        {
+                            var existingWeightInStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(existingWeight.Weight);
+                            var startWeightInStones = WeightLogicHelpers.ConvertPoundsToStonesAndPounds(startWeight);
+
+                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, 
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, existingWeightInStones.Item1, existingWeightInStones.Item2),
+                                StartDate, 
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, startWeightInStones.Item1, startWeightInStones.Item2));
+                        }
+                        else
+                        {
+                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingWeight.Weight, StartDate, startWeight);
+                        }
+
                         // show warning that an existing entry will be updated (is actually deleted and re-added), allow them to cancel
-                        var result = await DialogService.DisplayAlertAsync(Constants.Strings.Common_UpdateExistingWeight_Title,
-                            string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingWeight.Weight, StartDate, startWeight),
+                        var result = await DialogService.DisplayAlertAsync(Constants.Strings.Common_UpdateExistingWeight_Title, warningMessage,
                             Constants.Strings.GENERIC_OK,
                             Constants.Strings.GENERIC_CANCEL);
 

@@ -97,14 +97,14 @@ namespace LineDietXF.Constants
         public const string WeightEntryPage_Title_Add = "Enter Weight";
         public const string WeightEntryPage_Title_Update = "Update Weight";
         public const string WeightEntryPage_InvalidWeight_Title = "Invalid weight";
-        public const string WeightEntryPage_InvalidWeight_Message = "Could not convert entered weight to a valid numerical weight.";
+        public const string WeightEntryPage_InvalidWeight_Message = "Could not convert entered weight to a valid weight.";
         public const string WeightEntryPage_Save_RemoveExistingWeightFailed_Message = "An error occurred removing an existing weight entry for the selected date.";
         public const string WeightEntryPage_Save_AddingWeightFailed_Message = "An error occurred when adding the new weight entry.";
         public const string WeightEntryPage_Save_Exception_Message = "An exception occurred while saving your weight entry.";
 
         // Set Goal Page
         public const string SetGoalPage_InvalidWeight_Title = "Invalid weight";
-        public const string SetGoalPage_InvalidWeight_Message = "Could not convert entered goal weight to a valid numerical weight.";
+        public const string SetGoalPage_InvalidWeight_Message = "Could not convert entered start and/or goal weight into a valid weight.";
         public const string SetGoalPage_GoalWeightGreaterThanStartWeight_Title = "Are you sure?";
         public const string SetGoalpage_GoalWeightGreaterThanStartWeight_Message = "Your goal weight is greater than your start weight. Are you sure your goal is to gain weight?";
         public const string SetGoalPage_Save_RemoveExistingWeightFailed_Message = "An error occurred removing an existing weight entry for the goal start date.";
