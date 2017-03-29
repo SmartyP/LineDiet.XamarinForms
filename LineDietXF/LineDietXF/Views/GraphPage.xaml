@@ -93,7 +93,8 @@
         </Grid> <!-- BottomAreaGrid -->
 
         <!-- loading overlay -->
-        <controls:LoadingIndicator Grid.RowSpan="2"                                                 
+        <controls:LoadingIndicator x:Name="LoadingIndicator" 
+                                   Grid.RowSpan="2"                                                 
                                    IsVisible="{Binding IsBusy}" />
 
     </Grid> <!-- RootGrid -->

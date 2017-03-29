@@ -40,6 +40,7 @@ namespace LineDietXF.Views
                     RootGrid.RowDefinitions.RemoveAt(1);
                     BottomAreaGrid.IsVisible = false;
                     Grid.SetRow(BottomAreaGrid, 0);
+                    Grid.SetRowSpan(LoadingIndicator, 1);
 
                     orientationChanged = true;
                 }
@@ -51,6 +52,7 @@ namespace LineDietXF.Views
                     RootGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
                     Grid.SetRow(BottomAreaGrid, 1);
                     BottomAreaGrid.IsVisible = true;
+                    Grid.SetRowSpan(LoadingIndicator, 2);
 
                     orientationChanged = true;
                 }
