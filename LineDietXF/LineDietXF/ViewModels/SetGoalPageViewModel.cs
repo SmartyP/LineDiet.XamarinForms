@@ -256,7 +256,6 @@ namespace LineDietXF.ViewModels
 
         StonesAndPounds GetStartWeightInStones()
         {
-            // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             if (string.IsNullOrWhiteSpace(StartWeightStones))
                 return null;
 
@@ -267,6 +266,10 @@ namespace LineDietXF.ViewModels
             // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             decimal startWeightPounds = 0;
             if (!string.IsNullOrEmpty(StartWeightStonePounds) && !decimal.TryParse(StartWeightStonePounds, out startWeightPounds))
+                return null;
+
+            // don't allow negative values
+            if (startWeightStones < 0 || startWeightPounds < 0)
                 return null;
 
             return new StonesAndPounds(startWeightStones, startWeightPounds);
@@ -284,6 +287,10 @@ namespace LineDietXF.ViewModels
             // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             decimal goalWeightPounds = 0;
             if (!string.IsNullOrEmpty(GoalWeightStonePounds) && !decimal.TryParse(GoalWeightStonePounds, out goalWeightPounds))
+                return null;
+
+            // don't allow negative values
+            if (goalWeightStones < 0 || goalWeightPounds < 0)
                 return null;
 
             return new StonesAndPounds(goalWeightStones, goalWeightPounds);
@@ -304,10 +311,14 @@ namespace LineDietXF.ViewModels
                 var goalWeightStoneFields = GetGoalWeightInStones();
 
                 if (startWeightStoneFields == null || goalWeightStoneFields == null)
+                {
                     parsedWeightFields = false;
-
-                startWeight = startWeightStoneFields.ToPoundsDecimal();
-                goalWeight = goalWeightStoneFields.ToPoundsDecimal();
+                }
+                else
+                {
+                    startWeight = startWeightStoneFields.ToPoundsDecimal();
+                    goalWeight = goalWeightStoneFields.ToPoundsDecimal();
+                }
             }
             else
             {
@@ -341,16 +352,16 @@ namespace LineDietXF.ViewModels
                 IncrementPendingRequestCount();
 
                 // see if they've entered a different weight already for this date, if so warn them about it being updated
-                var existingWeight = await DataService.GetWeightEntryForDate(StartDate);
-                if (existingWeight != null)
+                var existingEntry = await DataService.GetWeightEntryForDate(StartDate);
+                if (existingEntry != null)
                 {
-                    if (existingWeight.Weight != startWeight)
+                    if (existingEntry.Weight != startWeight)
                     {
                         // show different message for stones/pounds
                         string warningMessage;
                         if (ShowStonesEntryFields)
                         {
-                            var existingWeightInStones = existingWeight.Weight.ToStonesAndPounds();
+                            var existingWeightInStones = existingEntry.Weight.ToStonesAndPounds();
                             var startWeightInStones = startWeight.ToStonesAndPounds();
 
                             warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, 
@@ -360,7 +371,7 @@ namespace LineDietXF.ViewModels
                         }
                         else
                         {
-                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingWeight.Weight, StartDate, startWeight);
+                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingEntry.Weight, StartDate, startWeight);
                         }
 
                         // show warning that an existing entry will be updated (is actually deleted and re-added), allow them to cancel

@@ -26,11 +26,27 @@
                 <DatePicker Date="{Binding Date}"
                             Style="{StaticResource DateEntryStyle}"/>
 
+                <!-- weight section (shows different fields for stones unit type) -->
                 <Label Text="Weight" 
                        Style="{StaticResource FieldLabelStyle}"/>
-                <Entry Style="{StaticResource WeightEntryStyle}"
-                       Text="{Binding Weight}"
-                       Placeholder="Enter weight (ex: 123.4)"/>
+                <Grid IsVisible="{Binding ShowStonesEntryFields, Converter={StaticResource InverseBoolConverter}}">
+                    <Entry Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding Weight}"
+                           Placeholder="Enter weight (ex: 123.4)"/>
+                </Grid>
+                <Grid IsVisible="{Binding ShowStonesEntryFields}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding WeightStones}"
+                           Placeholder="Stones (ex: 10)"/>
+                    <Entry Grid.Column="1" 
+                           Style="{StaticResource WeightEntryStyle}"
+                           Text="{Binding WeightStonePounds}"
+                           Placeholder="Pounds (ex: 12.2)"/>
+                </Grid>
 
                 <Button Margin="0,20,0,0"
                         Text="Save"

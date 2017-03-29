@@ -1,4 +1,6 @@
-﻿using LineDietXF.Interfaces;
+﻿using LineDietXF.Enumerations;
+using LineDietXF.Extensions;
+using LineDietXF.Interfaces;
 using LineDietXF.Types;
 using Prism.Commands;
 using Prism.Navigation;
@@ -43,6 +45,35 @@ namespace LineDietXF.ViewModels
             }
         }
 
+        private string _weightStones = string.Empty;
+        public string WeightStones
+        {
+            get { return _weightStones; }
+            set
+            {
+                SetProperty(ref _weightStones, value);
+                SaveCommand.RaiseCanExecuteChanged(); // anytime this value changes re-evaluate if the save button should be enabled
+            }
+        }
+
+        private string _weightStonePounds = string.Empty;
+        public string WeightStonePounds
+        {
+            get { return _weightStonePounds; }
+            set
+            {
+                SetProperty(ref _weightStonePounds, value);
+                SaveCommand.RaiseCanExecuteChanged(); // anytime this value changes re-evaluate if the save button should be enabled
+            }
+        }
+
+        bool _showPoundsEntryFields;
+        public bool ShowStonesEntryFields
+        {
+            get { return _showPoundsEntryFields; }
+            set { SetProperty(ref _showPoundsEntryFields, value); }
+        }
+
         // Bindable Commands
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CloseCommand { get; set; }
@@ -66,6 +97,8 @@ namespace LineDietXF.ViewModels
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
+            ShowStonesEntryFields = SettingsService.WeightUnit == WeightUnitEnum.StonesAndPounds;
+
             // see if we were passed in a weight entry to edit
             if (parameters != null && parameters.ContainsKey(nameof(WeightEntry)))
             {
@@ -73,15 +106,28 @@ namespace LineDietXF.ViewModels
 
                 _isUpdating = true;
                 TitleText = Constants.Strings.WeightEntryPage_Title_Update;
-                Weight = weightEntry.ToString();
                 Date = weightEntry.Date;
+
+                // show the previous weight for this date (different fields populated for stones units)
+                if (ShowStonesEntryFields)
+                {
+                    var weightInStones = weightEntry.Weight.ToStonesAndPounds();
+                    WeightStones = weightInStones.Stones.ToString();
+                    WeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, weightInStones.Pounds);
+                }
+                else
+                {
+                    Weight = weightEntry.ToString();
+                }                
             }
             else
             {
                 _isUpdating = false;
                 TitleText = Constants.Strings.WeightEntryPage_Title_Add;
-                Weight = string.Empty;
                 Date = DateTime.Today.Date;
+                Weight = string.Empty;
+                WeightStones = string.Empty;
+                WeightStonePounds = string.Empty;
             }
         }
 
@@ -94,6 +140,27 @@ namespace LineDietXF.ViewModels
         {
         }
 
+        StonesAndPounds GetWeightInStones()
+        {
+            if (string.IsNullOrWhiteSpace(WeightStones))
+                return null;
+
+            int weightStones;
+            if (!int.TryParse(WeightStones, out weightStones))
+                return null;
+
+            // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
+            decimal weightPounds = 0;
+            if (!string.IsNullOrEmpty(WeightStonePounds) && !decimal.TryParse(WeightStonePounds, out weightPounds))
+                return null;
+
+            // don't allow negative values
+            if (weightStones < 0 || weightPounds < 0)
+                return null;
+
+            return new StonesAndPounds(weightStones, weightPounds);
+        }
+
         bool SaveCanExecute()
         {
             // disable save button if they pick a date in the future
@@ -102,12 +169,24 @@ namespace LineDietXF.ViewModels
 
             // disable save button if we can't parse the weight text they entered
             decimal weightValue;
-            if (!decimal.TryParse(Weight, out weightValue))
-                return false;
 
-            // disable save button if they enter a negative number or 0
-            if (weightValue <= 0)
-                return false;
+            if (ShowStonesEntryFields)
+            {
+                var weightInStones = GetWeightInStones();
+                if (weightInStones == null)
+                    return false;
+
+                weightValue = weightInStones.ToPoundsDecimal();
+            }
+            else
+            {
+                if (!decimal.TryParse(Weight, out weightValue))
+                    return false;
+
+                // disable save button if they enter a negative number or 0
+                if (weightValue <= 0)
+                    return false;
+            }
 
             return true;
         }
@@ -122,7 +201,16 @@ namespace LineDietXF.ViewModels
                 if (existingWeight == null)
                     return;
 
-                Weight = existingWeight.ToString();
+                if (ShowStonesEntryFields)
+                {
+                    var stonesAndPounds = existingWeight.Weight.ToStonesAndPounds();
+                    WeightStones = stonesAndPounds.Stones.ToString();
+                    WeightStonePounds = string.Format(Constants.Strings.Common_WeightFormat, stonesAndPounds.Pounds);
+                }
+                else
+                {
+                    Weight = existingWeight.ToString();
+                }
             }
             catch (Exception ex)
             {
@@ -140,8 +228,29 @@ namespace LineDietXF.ViewModels
             AnalyticsService.TrackEvent(Constants.Analytics.WeightEntryCategory, _isUpdating ? Constants.Analytics.WeightEntry_UpdateWeight : Constants.Analytics.WeightEntry_AddedWeight, 1);
 
             // convert entered value to a valid weight
-            decimal weightValue;
-            if (!decimal.TryParse(Weight, out weightValue))
+            bool parsedWeightValues = true;
+            decimal weightValue = 0.0M;
+            if (ShowStonesEntryFields)
+            {
+                var weightStoneFields = GetWeightInStones();
+                if (weightStoneFields == null)
+                {
+                    parsedWeightValues = false;
+                }
+                else
+                {
+                    weightValue = weightStoneFields.ToPoundsDecimal();
+                }
+            }
+            else
+            {
+                if (!decimal.TryParse(Weight, out weightValue))
+                {
+                    parsedWeightValues = false;
+                }
+            }
+
+            if (!parsedWeightValues)
             {
                 // show error about invalid value if we can't convert the entered value to a decimal
                 await DialogService.DisplayAlertAsync(Constants.Strings.WeightEntryPage_InvalidWeight_Title,
@@ -162,9 +271,24 @@ namespace LineDietXF.ViewModels
                     // if we aren't updating, and the values aren't equal then show a warning (no need to show warning if the weights are the same)
                     if (!_isUpdating && existingEntry.Weight != weightValue)
                     {
+                        // show different message for stones/pounds
+                        string warningMessage;
+                        if (ShowStonesEntryFields)
+                        {
+                            var existingWeightInStones = existingEntry.Weight.ToStonesAndPounds();
+                            var newWeightInStones = weightValue.ToStonesAndPounds();
+                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message,
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, existingWeightInStones.Stones, existingWeightInStones.Pounds),
+                                Date,
+                                string.Format(Constants.Strings.Common_Stones_WeightFormat, newWeightInStones.Stones, newWeightInStones.Pounds));
+                        }
+                        else
+                        {
+                            warningMessage = string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingEntry.Weight, Date, weightValue);
+                        }
                         // show warning that an existing entry will be updated (is actually deleted and re-added), allow them to cancel
                         var result = await DialogService.DisplayAlertAsync(Constants.Strings.Common_UpdateExistingWeight_Title,
-                        string.Format(Constants.Strings.Common_UpdateExistingWeight_Message, existingEntry.Weight, Date, weightValue),
+                            warningMessage,
                             Constants.Strings.GENERIC_OK,
                             Constants.Strings.GENERIC_CANCEL);
 
