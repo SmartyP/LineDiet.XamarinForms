@@ -82,12 +82,15 @@
                 </Grid>                
 
                 <!-- bottom buttons -->
-                <Button Margin="0,20,0,0" Text="Set Goal"
-                        Style="{StaticResource BoxButtonStyle}"
-                        Command="{Binding SaveCommand}"/>
-                <Button Text="Cancel"
-                        Style="{StaticResource BoxButtonStyle}"
-                        Command="{Binding CloseCommand}"/>
+                <StackLayout Style="{StaticResource ButtonWrappingPanel}">
+                    <Button Text="Set Goal"
+                            Style="{StaticResource BoxButtonStyle}"
+                            Command="{Binding SaveCommand}"/>
+                    <Button Text="Cancel"
+                            Style="{StaticResource BoxButtonStyle}"
+                            Command="{Binding CloseCommand}"/>
+                </StackLayout>
+                
             </StackLayout>
         </ScrollView>
 
