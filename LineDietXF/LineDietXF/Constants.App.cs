@@ -6,19 +6,19 @@ namespace LineDietXF.Constants
     {
 #if DEBUG        
         // NOTE:: DEBUG FLAGS - THESE SHOULD NEVER BE CHECKED IN AS TRUE
-        public static readonly bool DEBUG_USE_MOCKS = false;
-        public static readonly bool DEBUG_SIMULATE_SLOW_RESPONSE = false;
-        public static readonly bool DEBUG_FORCE_SHOW_GETTING_STARTED = false;
+        public const bool DEBUG_USE_MOCKS = false;
+        public const bool DEBUG_SIMULATE_SLOW_RESPONSE = false;
+        public const bool DEBUG_FORCE_SHOW_GETTING_STARTED = false;
         public const int DEBUG_SIMULATE_SLOW_RESPONSE_TIME = 1000; // in milliseconds
 #endif
 
         public const string SQLite_DB_Filename = "Linediet.db";
         
         // NOTE:: since everything is local currently we're not significantly limiting how many weights are shown on the listing
-        public static int HISTORY_WeightEntryMaxCount_Listing = int.MaxValue;
+        public const int HISTORY_WeightEntryMaxCount_Listing = int.MaxValue;
         // NOTE:: if we graph more than ~530 items Android appears to stop drawing lines connecting the dots
-        public static int HISTORY_WeightEntryMaxCount_Graphing = 1000; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (1000 is max tested)
-        public static int HISTORY_WeightEntryMaxCount_Graphing_Android = 525; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing        
+        public const int HISTORY_WeightEntryMaxCount_Graphing = 1000; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (1000 is max tested)
+        public const int HISTORY_WeightEntryMaxCount_Graphing_Android = 525; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing        
 
         public const int SetGoalPage_DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now
         public const int PoundsInAStone = 14;
