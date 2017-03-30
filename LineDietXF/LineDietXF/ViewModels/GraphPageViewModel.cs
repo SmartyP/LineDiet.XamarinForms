@@ -15,6 +15,7 @@ using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace LineDietXF.ViewModels
@@ -197,7 +198,7 @@ namespace LineDietXF.ViewModels
                 WindowColorService.ChangeAppBaseColor(infoForToday.ColorToShow);
 
                 // update the listing of weight entries
-                var latestWeightEntries = await DataService.GetLatestWeightEntries(Constants.App.HISTORY_WeightEntryMaxCount)
+                var latestWeightEntries = await DataService.GetLatestWeightEntries(Constants.App.HISTORY_WeightEntryMaxCount_Listing)
                                                            .ConfigureAwait(false) as List<WeightEntry>;
 
                 IsWeightListingVisible = latestWeightEntries.Count > 0; // will show/hide list and placeholder label        
@@ -220,7 +221,11 @@ namespace LineDietXF.ViewModels
                         LatestWeightEntries = new ObservableCollection<WeightEntry>(latestWeightEntries);
                 });
 
-                RefreshGraphDataModel(latestWeightEntries, goal);
+                // NOTE:: we limit how many points are graphed as it can be a performance concern if too high, and OxyPlot appears to stop drawing connecting lines beyond ~530 items
+                int maxGraphPoints = (Device.OS == TargetPlatform.Android) ? Constants.App.HISTORY_WeightEntryMaxCount_Graphing_Android : 
+                    Constants.App.HISTORY_WeightEntryMaxCount_Graphing;
+                var limitedEntries = latestWeightEntries.OrderByDescending(x => x.Date).Take(maxGraphPoints).ToList();
+                RefreshGraphDataModel(limitedEntries, goal);
             }
             catch (Exception ex)
             {

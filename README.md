@@ -77,7 +77,7 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 ## Version History
 * v1.00 - initial release
 * v1.10 - support for pounds, kilograms, and stones as weight units (in Settings)
-* v1.11 - fix for landscape graphing, added ListView virtualization, removed graph/listing limit
+* v1.11 - fix for landscape graphing, added ListView virtualization, increased graph/listing item limit (see Known Issues for why Android has lower graphing limit) 
 
 ## Known Issues
 * Mock services have been stubbed out, but would not work well if used for unit tests currently
@@ -85,6 +85,7 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 * Xamarin Forms Preview does not work due to conflict with OxyPlot library [[External issue](https://bugzilla.xamarin.com/show_bug.cgi?id=52158)]
 * Date picker on Visual Studio Android emulators looks bad (looks fine on physical devices) [[External issue](https://forums.xamarin.com/discussion/comment/178616/#Comment_178616)]
 * Nav bar color on embedded webview (ex: links from about page) are not shown on emulator [External issue?]
+* OxyPlot appears to stop drawing lines connecting dots when graphing more than ~525 items - currently limiting number of items to graph on Android to avoid this [External issue?]
 
 ## Contributing to this Project ##
 I welcome any contributions that will help improve the functionality and/or code quality of this project. If you have a specific idea you would like to implement feel free to contact me ([@SmartyP](http://www.smartyp.net)) directly, or submit a pull request.

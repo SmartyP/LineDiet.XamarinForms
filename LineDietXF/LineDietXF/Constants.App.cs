@@ -13,8 +13,13 @@ namespace LineDietXF.Constants
 #endif
 
         public const string SQLite_DB_Filename = "Linediet.db";
+        
+        // NOTE:: since everything is local currently we're not significantly limiting how many weights are shown on the listing
+        public static int HISTORY_WeightEntryMaxCount_Listing = int.MaxValue;
+        // NOTE:: if we graph more than ~530 items Android appears to stop drawing lines connecting the dots
+        public static int HISTORY_WeightEntryMaxCount_Graphing = 1000; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (1000 is max tested)
+        public static int HISTORY_WeightEntryMaxCount_Graphing_Android = 525; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing        
 
-        public static int HISTORY_WeightEntryMaxCount = int.MaxValue; // NOTE:: since everything is local currently we're not limiting how many weights are shown on graph and listing
         public const int SetGoalPage_DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now
         public const int PoundsInAStone = 14;
 
