@@ -31,6 +31,7 @@ namespace LineDietXF.ViewModels
 
         // The graph has several breakpoints for how the date axis is labeled and how often those labels appear
         // This roughly breaks down to a a day scale, week scale, thirty day scale, and year scale
+        // TODO:: FUTURE:: make axis format strings swap for cultures that list day before month
         const int DayScale_MinorStep = 1;
         const int DayScale_MajorStep = 1;
         const string DayScale_AxisFormat = "M/d";
@@ -274,9 +275,9 @@ namespace LineDietXF.ViewModels
                     MinorGridlineStyle = LineStyle.Solid,
                     MinorIntervalType = DateTimeIntervalType.Days,
                     IntervalType = DateTimeIntervalType.Days,
-                    MinorStep = WeekScale_MinorStep,
-                    MajorStep = WeekScale_MajorStep, // a week
-                    StringFormat = WeekScale_AxisFormat, // TODO:: FUTURE:: make swap for some cultures?
+                    MinorStep = WeekScale_MinorStep, // NOTE:: updated in DateAxis_Changed on zoom
+                    MajorStep = WeekScale_MajorStep, // NOTE:: updated in DateAxis_Changed on zoom
+                    StringFormat = WeekScale_AxisFormat, // NOTE:: updated in DateAxis_Changed on zoom
                     IsZoomEnabled = true,
                     MinimumRange = Constants.App.Graph_MinDateRangeVisible, // closest zoom in shows at least 5 days
                     MaximumRange = Constants.App.Graph_MaxDateRangeVisible, // furthest zoom out shows at most 1 year
@@ -321,14 +322,15 @@ namespace LineDietXF.ViewModels
 
             plotModel.Axes.Add(weightAxis);
 
+            // weight series
             var series1 = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 4,
-                MarkerStroke = OxyColors.White,
+                MarkerSize = Constants.UI.GraphMarkerSize, // size of dot markers (NOTE:: adjusted in DateAxis_Changed on zoom)
                 MarkerFill = OxyColors.White,
-                StrokeThickness = 4,
-                MarkerStrokeThickness = 1,
+                MarkerStroke = OxyColors.Transparent, // color of stroke around marker
+                MarkerStrokeThickness = 0, // thickness of stroke around marker (0 for no stroke)
+                StrokeThickness = Constants.UI.GraphStrokeThickness, // size of lines between dots (NOTE:: adjusted in DateAxis_Changed on zoom)
                 Color = OxyColors.White
             };
 
@@ -343,6 +345,7 @@ namespace LineDietXF.ViewModels
             // setup goal line
             if (goal != null)
             {
+                // goal series
                 var series2 = new LineSeries
                 {
                     MarkerType = MarkerType.None,
@@ -386,6 +389,7 @@ namespace LineDietXF.ViewModels
             var dateMin = dateAxis.ActualMinimum;
             var dateMax = dateAxis.ActualMaximum;
             var delta = dateMax - dateMin;
+            //Debug.WriteLine($"min={dateMin}, max={dateMax}, delta={delta}");
 
             if (delta > YearScale_BreakPoint) // more than 280 days being shown
             {
@@ -412,7 +416,14 @@ namespace LineDietXF.ViewModels
                 dateAxis.StringFormat = DayScale_AxisFormat;
             }
 
-            //Debug.WriteLine($"min={dateMin}, max={dateMax}, delta={delta}");
+            // update line thickness and dots based on zoom level for more clarity and less jumble when zoomed out
+            if (PlotModel.Series != null && PlotModel.Series.Count > 0 && PlotModel.Series[0] is LineSeries)
+            {
+                var lineSeries = PlotModel.Series[0] as LineSeries;
+                var factor = delta / 30; // TODO:: by default the view shows 30 days, need to tie this to a common variable
+                lineSeries.MarkerSize = Math.Min(Math.Max(Constants.UI.GraphMarkerSize / factor, 1), Constants.UI.GraphMarkerSize); // don't let it get below 1 or over default
+                lineSeries.StrokeThickness = Math.Min(Math.Max(Constants.UI.GraphStrokeThickness / factor, 1), Constants.UI.GraphStrokeThickness); // don't let it get below 1 or over default
+            }
         }
 
         string WeightLabelFormatter(double d)

@@ -20,6 +20,8 @@ namespace LineDietXF.Constants
         public static Color GraphMinorGridLinesColor = Color.FromRgba(255, 255, 255, 24);
         public static Color GraphMajorGridLinesColor = Color.FromRgba(255, 255, 255, 64);
         public static Color GraphBorderColor = Color.FromRgba(255, 255, 255, 96);
+        public const double GraphMarkerSize = 4; // size of dot markers
+        public const double GraphStrokeThickness = 4; // size of lines between dots
 
         public static Color WebBrowserNavColor = Color.FromRgb(64, 64, 64);
     }
