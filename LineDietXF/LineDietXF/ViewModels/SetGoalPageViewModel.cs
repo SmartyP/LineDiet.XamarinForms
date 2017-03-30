@@ -130,18 +130,16 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
-        ISettingsService SettingsService { get; set; }
 
         // Commands
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CloseCommand { get; set; }
 
-        public SetGoalPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, ISettingsService settingsService, IPageDialogService dialogService, IDataService dataService) :
-            base(navigationService, analyticsService, dialogService)
+        public SetGoalPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             // Store off injected services
             DataService = dataService;
-            SettingsService = settingsService;
 
             // Setup bindable commands
             SaveCommand = new DelegateCommand(Save, SaveCanExecute);

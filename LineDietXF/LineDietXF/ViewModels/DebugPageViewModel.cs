@@ -18,7 +18,6 @@ namespace LineDietXF.ViewModels
     {
         // Services        
         IDataService DataService { get; set; }
-        ISettingsService SettingsService { get; set; }
         IEventAggregator EventAggregator { get; set; }
         IWindowColorService WindowColorService { get; set; }
 
@@ -31,12 +30,11 @@ namespace LineDietXF.ViewModels
         public DelegateCommand TestRealDataSetCommand { get; set; }
         public DelegateCommand TestLargeDataSetCommand { get; set; }
 
-        public DebugPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
-            base(navigationService, analyticsService, dialogService)
+        public DebugPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             // Store off injected services
             DataService = dataService;
-            SettingsService = settingsService;
             EventAggregator = eventAggregator;
             WindowColorService = windowColorService;
 

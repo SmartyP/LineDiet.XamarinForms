@@ -9,9 +9,9 @@ namespace LineDietXF.ViewModels
     /// </summary>
     public partial class MainPageViewModel : BaseViewModel, INavigatedAware
     {
-        public MainPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService,
+        public MainPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService,
                                  IPageDialogService dialogService) :
-            base(navigationService, analyticsService, dialogService)
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
         }
 

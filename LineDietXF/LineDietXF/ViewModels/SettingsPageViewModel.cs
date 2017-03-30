@@ -34,14 +34,12 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService;
-        ISettingsService SettingsService;
 
-        public SettingsPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, ISettingsService settingsService, IPageDialogService dialogService, IDataService dataService) :
-            base(navigationService, analyticsService, dialogService)
+        public SettingsPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             // Store off services
             DataService = dataService;
-            SettingsService = settingsService;
 
             // Build up settings menu
             SetupMenu();            

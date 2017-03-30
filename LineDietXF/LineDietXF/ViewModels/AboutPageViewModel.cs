@@ -16,8 +16,8 @@ namespace LineDietXF.ViewModels
         public DelegateCommand VisitSPCWebsiteCommand { get; set; }
         public DelegateCommand VisitGithubCommand { get; set; }
 
-        public AboutPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService) :
-            base(navigationService, analyticsService, dialogService)
+        public AboutPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             // Wire up commands
             VisitSmartyPNetCommand = new DelegateCommand(VisitSmartyPNet);

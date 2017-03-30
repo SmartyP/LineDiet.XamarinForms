@@ -32,8 +32,8 @@ namespace LineDietXF.ViewModels
         // Bindable Commands
         public DelegateCommand CloseCommand { get; set; }
 
-        public GettingStartedPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService) :
-            base(navigationService, analyticsService, dialogService)
+        public GettingStartedPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             CloseCommand = new DelegateCommand(Close);
 

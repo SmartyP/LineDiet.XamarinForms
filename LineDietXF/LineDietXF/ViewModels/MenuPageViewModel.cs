@@ -64,14 +64,12 @@ namespace LineDietXF.ViewModels
         IDataService DataService { get; set; }
         IWindowColorService WindowColorService { get; set; }
         IReviewService ReviewService { get; set; }
-        ISettingsService SettingsService { get; set; }
 
-        public MenuPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService, IReviewService reviewService) :
-            base(navigationService, analyticsService, dialogService)
+        public MenuPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IWindowColorService windowColorService, IReviewService reviewService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             // Store off services
             DataService = dataService;
-            SettingsService = settingsService;
             WindowColorService = windowColorService;
             ReviewService = reviewService;
 

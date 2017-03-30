@@ -114,19 +114,17 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
-        ISettingsService SettingsService { get; set; }
         IWindowColorService WindowColorService { get; set; }
 
         // Bindable Commands
         public DelegateCommand AddEntryCommand { get; set; }
         public DelegateCommand<WeightEntry> DeleteEntryCommand { get; set; }
 
-        public GraphPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService,
-            IDataService dataService, ISettingsService settingsService, IWindowColorService windowColorService) :
-            base(navigationService, analyticsService, dialogService)
+        public GraphPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService,
+            IDataService dataService, IWindowColorService windowColorService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             DataService = dataService;
-            SettingsService = settingsService;
             WindowColorService = windowColorService;
 
             AddEntryCommand = new DelegateCommand(ShowAddWeightScreen);

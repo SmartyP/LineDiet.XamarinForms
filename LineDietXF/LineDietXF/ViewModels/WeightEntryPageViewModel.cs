@@ -89,16 +89,14 @@ namespace LineDietXF.ViewModels
 
         // Services
         IDataService DataService { get; set; }
-        ISettingsService SettingsService { get; set; }
 
         // Private variables        
         private bool _isUpdating = false;
 
-        public WeightEntryPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, ISettingsService settingsService, IPageDialogService dialogService, IDataService dataService) :
-            base(navigationService, analyticsService, dialogService)
+        public WeightEntryPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
+            base(navigationService, settingsService, analyticsService, dialogService)
         {
             DataService = dataService;
-            SettingsService = settingsService;
 
             SaveCommand = new DelegateCommand(Save, SaveCanExecute); // SaveCanExecute dictates whether the command can fire, and in turn disables the button if not
             CloseCommand = new DelegateCommand(Close);

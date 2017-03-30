@@ -14,6 +14,7 @@ namespace LineDietXF.ViewModels
     public class BaseViewModel : BindableBase
     {
         protected INavigationService NavigationService { get; set; }
+        protected ISettingsService SettingsService { get; set; }
         protected IAnalyticsService AnalyticsService { get; set; }
         protected IPageDialogService DialogService { get; set; }
 
@@ -38,10 +39,11 @@ namespace LineDietXF.ViewModels
 
         public event EventHandler IsBusyChanged;
 
-        public BaseViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService)
+        public BaseViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService)
         {
             // Store off injected services
             NavigationService = navigationService;
+            SettingsService = settingsService;
             AnalyticsService = analyticsService;
             DialogService = dialogService;
         }
