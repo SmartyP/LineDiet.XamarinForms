@@ -23,7 +23,7 @@ namespace LineDietXF.Constants
         public const string Common_SettingWeightUnits_Message = "Line Diet is currently set to use {0} for weight measurements. You can change this by going to the menu tab, and selecting Settings.";
 
         // Getting Started
-        public static string GettingStarted_Page1Title = $"Welcome to {Environment.NewLine} Line Diet!";
+        public static readonly string GettingStarted_Page1Title = $"Welcome to {Environment.NewLine} Line Diet!";
         public const string GettingStarted_Page1Text = "Losing weight doesn't have to be complicated. Line Diet makes losing weight simple.";
         public const string GettingStarted_Page2Title = "Set a Goal";
         public const string GettingStarted_Page2Text = "The first thing you'll do is set a goal weight and a goal date to achieve it by.";
