@@ -26,7 +26,7 @@
     <!-- NOTE:: Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
 		<!-- colorPrimary is used for the default action bar background -->
     <!-- colorPrimaryDark is used for the status bar -->
-    <!-- colorAccent is used for varous accents in controles (ex: selected text area in a text field, header fill on date picker, underline color in nav bar context menu, etc.) -->
+    <!-- colorAccent is used for various accents in controls (ex: selected text area in a text field, header fill on date picker, underline color in nav bar context menu, etc.) -->
     <!-- NOTE:: You can also set colorControlNormal, colorControlActivated colorControlHighlight and colorSwitchThumbNormal. -->
 		<item name="colorPrimary">@color/PrimaryColor</item>
 		<item name="colorPrimaryDark">@color/DarkPrimaryColor</item>
