@@ -75,8 +75,9 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 * Remove delay before graph/listings populate the first time
 
 ## Version History
-* v1.0 - initial release
-* v1.1 - support for pounds, kilograms, and stones as weight units (in Settings)
+* v1.00 - initial release
+* v1.10 - support for pounds, kilograms, and stones as weight units (in Settings)
+* v1.11 - fix for landscape graphing, added ListView virtualization, removed graph/listing limit
 
 ## Known Issues
 * Mock services have been stubbed out, but would not work well if used for unit tests currently
