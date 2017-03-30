@@ -14,7 +14,7 @@ namespace LineDietXF.Constants
 
         public const string SQLite_DB_Filename = "Linediet.db";
 
-        public static int HISTORY_WeightEntryMaxCount = 31;
+        public static int HISTORY_WeightEntryMaxCount = int.MaxValue; // NOTE:: since everything is local currently we're not limiting how many weights are shown on graph and listing
         public const int SetGoalPage_DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now
         public const int PoundsInAStone = 14;
 

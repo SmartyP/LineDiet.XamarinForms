@@ -30,11 +30,14 @@
 				Text="Turn Red"
 				Command="{Binding TurnRedCommand}"/>
             <Button Style="{StaticResource BoxButtonStyle}"
-                Text="Test ending a goal"
+                Text="Test Ending a Goal"
                 Command="{Binding TestEndingAGoalCommand}" />
             <Button Style="{StaticResource BoxButtonStyle}"
-                Text="Test real data"
+                Text="Test Real Data Set"
                 Command="{Binding TestRealDataSetCommand}" />
+            <Button Style="{StaticResource BoxButtonStyle}"
+                Text="Test Large Data Set"
+                Command="{Binding TestLargeDataSetCommand}" />            
         </StackLayout>
 
         <!-- loading overlay -->

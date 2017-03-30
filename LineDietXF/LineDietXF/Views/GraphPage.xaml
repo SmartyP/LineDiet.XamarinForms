@@ -40,6 +40,7 @@
 				      ItemSelected="WeightEntryListView_ItemSelected"
 				      SeparatorVisibility="None"				  
                       BackgroundColor="Transparent"
+                      CachingStrategy="RecycleElement"
                       IsVisible="{Binding IsWeightListingVisible}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

@@ -29,6 +29,7 @@ namespace LineDietXF.ViewModels
         public DelegateCommand TurnRedCommand { get; set; }
         public DelegateCommand TestEndingAGoalCommand { get; set; }
         public DelegateCommand TestRealDataSetCommand { get; set; }
+        public DelegateCommand TestLargeDataSetCommand { get; set; }
 
         public DebugPageViewModel(INavigationService navigationService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, ISettingsService settingsService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
             base(navigationService, analyticsService, dialogService)
@@ -46,6 +47,7 @@ namespace LineDietXF.ViewModels
             TurnRedCommand = new DelegateCommand(TurnRed);
             TestEndingAGoalCommand = new DelegateCommand(TestEndingAGoal);
             TestRealDataSetCommand = new DelegateCommand(TestRealDataSet);
+            TestLargeDataSetCommand = new DelegateCommand(TestLargeDataSet);
         }
 
         async Task ClearData()
@@ -160,6 +162,40 @@ namespace LineDietXF.ViewModels
                 await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 15), 221.8M, WeightUnitEnum.ImperialPounds));
                 await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 16), 221.6M, WeightUnitEnum.ImperialPounds));
                 await DataService.AddWeightEntry(new WeightEntry(new DateTime(2017, 3, 17), 221.4M, WeightUnitEnum.ImperialPounds));
+            }
+            finally
+            {
+                DecrementPendingRequestCount();
+            }
+
+            Close();
+        }
+
+        async void TestLargeDataSet()
+        {
+            if (!await ShowLoseDataWarning())
+                return;
+
+            try
+            {
+                IncrementPendingRequestCount();
+
+                await ClearData();
+
+                // set goal
+                var goal = new WeightLossGoal(new DateTime(2017, 1, 1), 200, new DateTime(2017, 7, 1), 200, WeightUnitEnum.ImperialPounds);
+                await DataService.SetGoal(goal);
+
+                // add some weights
+                DateTime date = new DateTime(2017, 3, 29);
+                TimeSpan day = TimeSpan.FromDays(1);
+                Random random = new Random();                
+                for (int i = 0; i < 1000; i++)
+                {
+                    date = date - day;
+                    var weightEntry = new WeightEntry(date, 200 + (decimal)(random.NextDouble() * 10) - 5, WeightUnitEnum.ImperialPounds);
+                    await DataService.AddWeightEntry(weightEntry);
+                }
             }
             finally
             {
