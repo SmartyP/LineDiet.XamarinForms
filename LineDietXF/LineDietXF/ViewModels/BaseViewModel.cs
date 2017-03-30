@@ -18,8 +18,8 @@ namespace LineDietXF.ViewModels
         protected IAnalyticsService AnalyticsService { get; set; }
         protected IPageDialogService DialogService { get; set; }
 
-        private int _pendingRequestsCounter;
-        private bool _isBusy;
+        int _pendingRequestsCounter;
+        bool _isBusy;
         public bool IsBusy
         {
             get { return _isBusy; }

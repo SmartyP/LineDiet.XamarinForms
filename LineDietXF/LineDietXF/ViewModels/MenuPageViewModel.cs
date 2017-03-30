@@ -20,7 +20,7 @@ namespace LineDietXF.ViewModels
     /// </summary>
     public class MenuPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
-        private List<MenuItem> _menuEntries;
+        List<MenuItem> _menuEntries;
         public List<MenuItem> MenuEntries
         {
             get { return _menuEntries; }
@@ -41,7 +41,7 @@ namespace LineDietXF.ViewModels
 
         public event EventHandler IsActiveChanged;
 
-        private bool _isActive;
+        bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }

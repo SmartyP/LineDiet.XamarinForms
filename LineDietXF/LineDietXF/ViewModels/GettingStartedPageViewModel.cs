@@ -15,14 +15,14 @@ namespace LineDietXF.ViewModels
     public class GettingStartedPageViewModel : BaseViewModel, INavigationAware
     {
         // Bindable Properties
-        private ObservableCollection<GettingStartedCarouselItem> _carouselItems;
+        ObservableCollection<GettingStartedCarouselItem> _carouselItems;
         public ObservableCollection<GettingStartedCarouselItem> CarouselItems
         {
             get { return _carouselItems; }
             set { SetProperty(ref _carouselItems, value); }
         }
 
-        private GettingStartedCarouselItem _selectedCarouselItem;
+        GettingStartedCarouselItem _selectedCarouselItem;
         public GettingStartedCarouselItem SelectedCarouselItem
         {
             get { return _selectedCarouselItem; }

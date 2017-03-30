@@ -13,10 +13,10 @@ namespace LineDietXF.Droid.Services
     {
         Context _appContext;
 
-        private static GoogleAnalytics GAInstance;
-        private static Tracker GATracker;
+        static GoogleAnalytics GAInstance;
+        static Tracker GATracker;
 
-        private string TrackingID { get; set; }
+        string TrackingID { get; set; }
 
         public AnalyticsService(Context appContext)
         {

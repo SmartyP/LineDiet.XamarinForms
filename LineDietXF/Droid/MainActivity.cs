@@ -21,7 +21,7 @@ namespace LineDietXF.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IPlatformInitializer
     {
         public static IAnalyticsService AnalyticsService { get; private set; }
-        private App _app;
+        App _app;
 
         protected override void OnCreate(Bundle bundle)
         {

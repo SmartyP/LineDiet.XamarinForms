@@ -16,14 +16,14 @@ namespace LineDietXF.ViewModels
     public class WeightEntryPageViewModel : BaseViewModel, INavigationAware
     {
         // Bindable Properties
-        private string _titleText = string.Empty;
+        string _titleText = string.Empty;
         public string TitleText
         {
             get { return _titleText; }
             set { SetProperty(ref _titleText, value); }
         }
 
-        private DateTime _date = DateTime.Today;
+        DateTime _date = DateTime.Today;
         public DateTime Date
         {
             get { return _date; }
@@ -35,7 +35,7 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        private string _weight = string.Empty;
+        string _weight = string.Empty;
         public string Weight
         {
             get { return _weight; }
@@ -46,7 +46,7 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        private string _weightStones = string.Empty;
+        string _weightStones = string.Empty;
         public string WeightStones
         {
             get { return _weightStones; }
@@ -57,7 +57,7 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        private string _weightStonePounds = string.Empty;
+        string _weightStonePounds = string.Empty;
         public string WeightStonePounds
         {
             get { return _weightStonePounds; }
@@ -91,7 +91,7 @@ namespace LineDietXF.ViewModels
         IDataService DataService { get; set; }
 
         // Private variables        
-        private bool _isUpdating = false;
+        bool _isUpdating = false;
 
         public WeightEntryPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
             base(navigationService, settingsService, analyticsService, dialogService)

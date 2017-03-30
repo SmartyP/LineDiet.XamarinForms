@@ -16,11 +16,6 @@ namespace LineDietXF.ViewModels
     /// </summary>
     public class DebugPageViewModel : BaseViewModel
     {
-        // Services        
-        IDataService DataService { get; set; }
-        IEventAggregator EventAggregator { get; set; }
-        IWindowColorService WindowColorService { get; set; }
-
         // Bindable Commands
         public DelegateCommand CloseCommand { get; set; }
         public DelegateCommand TurnGrayCommand { get; set; }
@@ -29,6 +24,11 @@ namespace LineDietXF.ViewModels
         public DelegateCommand TestEndingAGoalCommand { get; set; }
         public DelegateCommand TestRealDataSetCommand { get; set; }
         public DelegateCommand TestLargeDataSetCommand { get; set; }
+
+        // Services        
+        IDataService DataService { get; set; }
+        IEventAggregator EventAggregator { get; set; }
+        IWindowColorService WindowColorService { get; set; }
 
         public DebugPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService, IEventAggregator eventAggregator, IWindowColorService windowColorService) :
             base(navigationService, settingsService, analyticsService, dialogService)

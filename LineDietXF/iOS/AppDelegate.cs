@@ -17,7 +17,7 @@ namespace LineDietXF.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IPlatformInitializer
     {
-        private App _app;
+        App _app;
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {

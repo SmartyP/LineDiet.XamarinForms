@@ -15,7 +15,7 @@ namespace LineDietXF.ViewModels
 {
     public class SettingsPageViewModel : BaseViewModel
     {
-        private ObservableCollection<MenuItem> _menuEntries;
+        ObservableCollection<MenuItem> _menuEntries;
         public ObservableCollection<MenuItem> MenuEntries
         {
             get { return _menuEntries; }
@@ -33,7 +33,7 @@ namespace LineDietXF.ViewModels
         }
 
         // Services
-        IDataService DataService;
+        IDataService DataService { get; set; }
 
         public SettingsPageViewModel(INavigationService navigationService, ISettingsService settingsService, IAnalyticsService analyticsService, IPageDialogService dialogService, IDataService dataService) :
             base(navigationService, settingsService, analyticsService, dialogService)
@@ -61,7 +61,7 @@ namespace LineDietXF.ViewModels
             MenuEntries = new ObservableCollection<MenuItem>(menuEntries);
         }
 
-        private void HandleMenuItemSelected(MenuItem menuEntry)
+        void HandleMenuItemSelected(MenuItem menuEntry)
         {
             switch (menuEntry.MenuType)
             {
@@ -76,7 +76,7 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        private void SetWeightUnitsTapped()
+        void SetWeightUnitsTapped()
         {
             var imperialPoundsAction = ActionSheetButton.CreateButton(WeightUnitEnum.ImperialPounds.ToSettingsName(), 
                 new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.ImperialPounds); }));

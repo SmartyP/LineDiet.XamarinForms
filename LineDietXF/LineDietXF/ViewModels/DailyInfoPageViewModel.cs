@@ -66,7 +66,7 @@ namespace LineDietXF.ViewModels
 
         public event EventHandler IsActiveChanged;
 
-        private bool _isActive;
+        bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }
@@ -85,7 +85,7 @@ namespace LineDietXF.ViewModels
 
         #endregion
 
-        private bool _isFirstStartup = true;
+        bool _isFirstStartup = true;
 
         // Services
         IDataService DataService { get; set; }

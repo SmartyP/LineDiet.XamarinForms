@@ -12,11 +12,11 @@ namespace LineDietXF.iOS.Services
     public class AnalyticsService : IAnalyticsService
     {
         // constant strings by iOS GA library
-        private const string AllowTrackingKey = "AllowTracking";
-        private const string AppEvent = "AppEvent";
+        const string AllowTrackingKey = "AllowTracking";
+        const string AppEvent = "AppEvent";
 
-        private ITracker Tracker { get; set; }
-        private string TrackingID { get; set; }
+        ITracker Tracker { get; set; }
+        string TrackingID { get; set; }
 
         public void Initialize(string trackingID, string appName, int dispatchPeriodInSeconds)
         {

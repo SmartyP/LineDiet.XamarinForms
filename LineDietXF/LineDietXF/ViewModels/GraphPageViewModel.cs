@@ -51,7 +51,7 @@ namespace LineDietXF.ViewModels
         const string YearScale_AxisFormat = "MMM";
 
         // Bindable Properties
-        private ObservableCollection<WeightEntry> _latestWeightEntries;
+        ObservableCollection<WeightEntry> _latestWeightEntries;
         public ObservableCollection<WeightEntry> LatestWeightEntries
         {
             get { return _latestWeightEntries; }
@@ -93,7 +93,7 @@ namespace LineDietXF.ViewModels
 
         public event EventHandler IsActiveChanged;
 
-        private bool _isActive;
+        bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }
