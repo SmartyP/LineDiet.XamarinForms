@@ -32,11 +32,11 @@ namespace LineDietXF.Extensions
             switch (baseColorEnum)
             {
                 case BaseColorEnum.Gray:
-                    return Constants.UI.COLOR_LIGHTGRAY_FILL;
+                    return Constants.UI.LightGrayFillColor;
                 case BaseColorEnum.Green:
-                    return Constants.UI.COLOR_LIGHTGREEN_FILL;
+                    return Constants.UI.LightGreenFillColor;
                 case BaseColorEnum.Red:
-                    return Constants.UI.COLOR_LIGHTRED_FILL;
+                    return Constants.UI.LightRedFillColor;
                 default:
                     if (Debugger.IsAttached)
                         Debugger.Break();
@@ -51,11 +51,11 @@ namespace LineDietXF.Extensions
             switch (baseColorEnum)
             {
                 case BaseColorEnum.Gray:
-                    return Constants.UI.COLOR_DARKGRAY_FILL;
+                    return Constants.UI.DarkGrayFillColor;
                 case BaseColorEnum.Green:
-                    return Constants.UI.COLOR_DARKGREEN_FILL;
+                    return Constants.UI.DarkGreenFillColor;
                 case BaseColorEnum.Red:
-                    return Constants.UI.COLOR_DARKRED_FILL;
+                    return Constants.UI.DarkRedFillColor;
                 default:
                     if (Debugger.IsAttached)
                         Debugger.Break();

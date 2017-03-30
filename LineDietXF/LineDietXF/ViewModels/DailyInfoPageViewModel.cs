@@ -117,7 +117,7 @@ namespace LineDietXF.ViewModels
             {
                 await DialogService.DisplayAlertAsync(Constants.Strings.Common_SettingWeightUnits_Title,
                     string.Format(Constants.Strings.Common_SettingWeightUnits_Message, SettingsService.WeightUnit.ToSentenceUsageName()),
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
             }
         }
 
@@ -226,7 +226,7 @@ namespace LineDietXF.ViewModels
             bool showGettingStartedFlow = (existingGoal == null && !SettingsService.HasDismissedStartupView);
 
 #if DEBUG
-            if (Constants.App.DEBUG_FORCE_SHOW_GETTING_STARTED)
+            if (Constants.App.DEBUG_AlwaysShowGettingStarted)
                 showGettingStartedFlow = true;
 #endif
 

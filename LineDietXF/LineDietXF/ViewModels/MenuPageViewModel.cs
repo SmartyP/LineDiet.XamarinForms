@@ -87,7 +87,7 @@ namespace LineDietXF.ViewModels
             {
                 await DialogService.DisplayAlertAsync(Constants.Strings.Common_SettingWeightUnits_Title,
                     string.Format(Constants.Strings.Common_SettingWeightUnits_Message, SettingsService.WeightUnit.ToSentenceUsageName()),
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
             }
         }
 
@@ -227,7 +227,7 @@ namespace LineDietXF.ViewModels
                     errorMessage = string.Format(Constants.Strings.Review_Failed_Message, Constants.Strings.Review_Failed_Part_Generic);
                 }
 
-                DialogService.DisplayAlertAsync(Constants.Strings.Review_Failed_Title, errorMessage, Constants.Strings.GENERIC_OK);
+                DialogService.DisplayAlertAsync(Constants.Strings.Review_Failed_Title, errorMessage, Constants.Strings.Generic_OK);
             }
         }
 
@@ -236,9 +236,9 @@ namespace LineDietXF.ViewModels
             await CrossShare.Current.OpenBrowser(Constants.App.FeedbackUrl,
                 new BrowserOptions()
                 {
-                    SafariBarTintColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor(),
-                    ChromeToolbarColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor(),
-                    SafariControlTintColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor()
+                    SafariBarTintColor = Constants.UI.WebBrowserNavColor.ToShareColor(),
+                    ChromeToolbarColor = Constants.UI.WebBrowserNavColor.ToShareColor(),
+                    SafariControlTintColor = Constants.UI.WebBrowserNavColor.ToShareColor()
                 });
         }
 

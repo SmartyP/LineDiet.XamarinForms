@@ -57,7 +57,7 @@ namespace LineDietXF.ViewModels
                 // remove goal
                 if (!await DataService.RemoveGoal())
                 {
-                    await DialogService.DisplayAlertAsync("Error", "An error occurred removing the goal", Constants.Strings.GENERIC_OK);
+                    await DialogService.DisplayAlertAsync("Error", "An error occurred removing the goal", Constants.Strings.Generic_OK);
                     return;
                 }
 
@@ -79,13 +79,13 @@ namespace LineDietXF.ViewModels
             if (SettingsService.WeightUnit != WeightUnitEnum.ImperialPounds)
             {
                 await DialogService.DisplayAlertAsync("Wrong units", "These methods are only setup for use when using pounds as the units. Change to pounds in Settings before using these methods for creating test data, then change units back.",
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
 
                 return false;
             }
 
             return await DialogService.DisplayAlertAsync("Are you sure?", "This will delete all data and set it back up with sample data, are you sure?",
-                Constants.Strings.GENERIC_OK, Constants.Strings.GENERIC_CANCEL);
+                Constants.Strings.Generic_OK, Constants.Strings.Generic_Cancel);
         }
 
         async void TestEndingAGoal()

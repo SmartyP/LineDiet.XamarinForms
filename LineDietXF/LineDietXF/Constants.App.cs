@@ -6,34 +6,36 @@ namespace LineDietXF.Constants
     {
 #if DEBUG        
         // NOTE:: DEBUG FLAGS - THESE SHOULD NEVER BE CHECKED IN AS TRUE
-        public const bool DEBUG_USE_MOCKS = false;
-        public const bool DEBUG_SIMULATE_SLOW_RESPONSE = false;
-        public const bool DEBUG_FORCE_SHOW_GETTING_STARTED = false;
-        public const int DEBUG_SIMULATE_SLOW_RESPONSE_TIME = 1000; // in milliseconds
+        public const bool DEBUG_UseMocks = false;
+        public const bool DEBUG_AlwaysShowGettingStarted = false;
+        public const bool DEBUG_SimulateSlowResponseTimes = false;
+        public const int DEBUG_SimulatedSlowResponseTime = 1000; // in milliseconds        
 #endif
 
+        // General Constants
         public const string SQLite_DB_Filename = "Linediet.db";
-        
-        // NOTE:: since everything is local currently we're not significantly limiting how many weights are shown on the listing
-        public const int HISTORY_WeightEntryMaxCount_Listing = int.MaxValue;
-        // NOTE:: if we graph more than ~530 items Android appears to stop drawing lines connecting the dots
-        public const int HISTORY_WeightEntryMaxCount_Graphing = 1000; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (1000 is max tested)
-        public const int HISTORY_WeightEntryMaxCount_Graphing_Android = 525; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing        
-
-        public const int SetGoalPage_DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now
         public const int PoundsInAStone = 14;
+        public const decimal PoundsToKilograms = 0.45359237M; // for conversion between unit types
+        public const decimal KilogramsToPounds = 2.2046226218M; // for conversion between unit types
 
-        // Settings
-        public const string Settings_HasDismissedStartupView = "HasDismissedStartupView";
-        public const string Settings_WeightUnits = "WeightUnits";
-        public const bool Settings_HasDismissedStartupView_DefaultValue = false;
-        public const WeightUnitEnum Settings_WeightUnits_DefaultValue = WeightUnitEnum.ImperialPounds;
+        // Graphing / Listing Weights
+        public const int WeightListingMaxCount = int.MaxValue; // NOTE:: since everything is local currently we're not significantly limiting how many weights are shown on the listing
+        public const int WeightGraphingMaxCount = 1000; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (1000 is max tested)
+        public const int WeightGraphingMaxCount_Android = 525; // should always be less than or equal to HISTORY_WeightEntryMaxCount_Listing (NOTE:: Android stops drawing lines connecting dots if over ~530)
 
-        // Nav params
+        // Setting a Goal
+        public const int DefaultGoalDateOffsetInMonths = 3; // default new goal end date to X months from now        
+
+        // Settings Keys and Default Values
+        public const string Setting_DismissedStartupView_Key = "HasDismissedStartupView";
+        public const bool Setting_DismissedStartupView_Default = false;
+        public const string Setting_WeightUnits_Key = "WeightUnits";        
+        public const WeightUnitEnum Setting_WeightUnits_Default = WeightUnitEnum.ImperialPounds;
+
+        // Navigation Parameters
         public const string NavParam_FromGettingStarted = "FromGettingStarted";
 
-        // Graphing
-        // NOTE:: constants relative to break points in graph labeling are defined within GraphPageViewModel
+        // Graphing (NOTE:: constants relative to break points in graph labeling are defined within GraphPageViewModel)
         public const int Graph_MinDateRangeVisible = 5;
         public const int Graph_MaxDateRangeVisible = 365;
         public const decimal Graph_WeightRange_MinPadding = 0.98M;
@@ -48,11 +50,6 @@ namespace LineDietXF.Constants
         public const int Graph_Pounds_MaxWeightRangeVisible = 100;
         public const int Graph_Kilograms_MinWeightRangeVisible = 5;
         public const int Graph_Kilograms_MaxWeightRangeVisible = 45;
-
-
-        // Weight conversions
-        public const decimal PoundsToKilograms = 0.45359237M;
-        public const decimal KilogramsToPounds = 2.2046226218M;
 
         // Urls
         public const string ShareUrl = "http://www.linedietapp.com/?ref=LDapp";

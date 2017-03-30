@@ -266,7 +266,7 @@ namespace LineDietXF.ViewModels
                 // show error about invalid value if we can't convert the entered value to a decimal
                 await DialogService.DisplayAlertAsync(Constants.Strings.WeightEntryPage_InvalidWeight_Title,
                     Constants.Strings.WeightEntryPage_InvalidWeight_Message,
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
 
                 return;
             }
@@ -300,8 +300,8 @@ namespace LineDietXF.ViewModels
                         // show warning that an existing entry will be updated (is actually deleted and re-added), allow them to cancel
                         var result = await DialogService.DisplayAlertAsync(Constants.Strings.Common_UpdateExistingWeight_Title,
                             warningMessage,
-                            Constants.Strings.GENERIC_OK,
-                            Constants.Strings.GENERIC_CANCEL);
+                            Constants.Strings.Generic_OK,
+                            Constants.Strings.Generic_Cancel);
 
                         // if they canceled the dialog then return without changing anything
                         if (!result)
@@ -314,7 +314,7 @@ namespace LineDietXF.ViewModels
                         AnalyticsService.TrackError($"{nameof(Save)} - an error occurred trying to remove existing weight entry");
 
                         await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                            Constants.Strings.WeightEntryPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.GENERIC_OK);
+                            Constants.Strings.WeightEntryPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.Generic_OK);
 
                         return;
                     }
@@ -327,7 +327,7 @@ namespace LineDietXF.ViewModels
                     AnalyticsService.TrackError($"{nameof(Save)} - an error occurred trying to add new weight entry");
 
                     await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                        Constants.Strings.WeightEntryPage_Save_AddingWeightFailed_Message, Constants.Strings.GENERIC_OK);
+                        Constants.Strings.WeightEntryPage_Save_AddingWeightFailed_Message, Constants.Strings.Generic_OK);
                     return;
                 }
 
@@ -350,7 +350,7 @@ namespace LineDietXF.ViewModels
                         AnalyticsService.TrackError($"{nameof(Save)} - an error occurred trying to update start date of existing goal");
 
                         await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                            Constants.Strings.WeightEntryPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.GENERIC_OK);
+                            Constants.Strings.WeightEntryPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.Generic_OK);
 
                         return;
                     }
@@ -363,7 +363,7 @@ namespace LineDietXF.ViewModels
                 AnalyticsService.TrackFatalError($"{nameof(Save)} - an exception occurred.", ex);
 
                 await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                    Constants.Strings.WeightEntryPage_Save_Exception_Message, Constants.Strings.GENERIC_OK);
+                    Constants.Strings.WeightEntryPage_Save_Exception_Message, Constants.Strings.Generic_OK);
             }
             finally
             {

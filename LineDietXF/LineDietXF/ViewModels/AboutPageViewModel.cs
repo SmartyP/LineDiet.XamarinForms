@@ -39,9 +39,9 @@ namespace LineDietXF.ViewModels
             await CrossShare.Current.OpenBrowser(url,
                 new BrowserOptions()
                 {
-                    SafariBarTintColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor(),
-                    ChromeToolbarColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor(),
-                    SafariControlTintColor = Constants.UI.COLOR_WebBrowserNavColor.ToShareColor()
+                    SafariBarTintColor = Constants.UI.WebBrowserNavColor.ToShareColor(),
+                    ChromeToolbarColor = Constants.UI.WebBrowserNavColor.ToShareColor(),
+                    SafariControlTintColor = Constants.UI.WebBrowserNavColor.ToShareColor()
                 });
         }
 

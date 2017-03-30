@@ -47,7 +47,7 @@ namespace LineDietXF
         {
             bool useMockServices = false;
 #if DEBUG
-            useMockServices = Constants.App.DEBUG_USE_MOCKS;
+            useMockServices = Constants.App.DEBUG_UseMocks;
 #endif
 
             // Register Services

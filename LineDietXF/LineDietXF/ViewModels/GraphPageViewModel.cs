@@ -25,9 +25,9 @@ namespace LineDietXF.ViewModels
     /// </summary>
     public class GraphPageViewModel : BaseViewModel, IActiveAware, INavigatedAware
     {
-        static OxyColor GRID_LINES_COLOR_MINOR = Constants.UI.GRAPH_MinorGridLines.ToOxyColor();
-        static OxyColor GRID_LINES_COLOR_MAJOR = Constants.UI.GRAPH_MajorGridLines.ToOxyColor();
-        static OxyColor GRID_LINES_COLOR_BORDER = Constants.UI.GRAPH_BorderColor.ToOxyColor();
+        static OxyColor GRID_LINES_COLOR_MINOR = Constants.UI.GraphMinorGridLinesColor.ToOxyColor();
+        static OxyColor GRID_LINES_COLOR_MAJOR = Constants.UI.GraphMajorGridLinesColor.ToOxyColor();
+        static OxyColor GRID_LINES_COLOR_BORDER = Constants.UI.GraphBorderColor.ToOxyColor();
 
         // The graph has several breakpoints for how the date axis is labeled and how often those labels appear
         // This roughly breaks down to a a day scale, week scale, thirty day scale, and year scale
@@ -196,7 +196,7 @@ namespace LineDietXF.ViewModels
                 WindowColorService.ChangeAppBaseColor(infoForToday.ColorToShow);
 
                 // update the listing of weight entries
-                var latestWeightEntries = await DataService.GetLatestWeightEntries(Constants.App.HISTORY_WeightEntryMaxCount_Listing)
+                var latestWeightEntries = await DataService.GetLatestWeightEntries(Constants.App.WeightListingMaxCount)
                                                            .ConfigureAwait(false) as List<WeightEntry>;
 
                 IsWeightListingVisible = latestWeightEntries.Count > 0; // will show/hide list and placeholder label        
@@ -220,8 +220,8 @@ namespace LineDietXF.ViewModels
                 });
 
                 // NOTE:: we limit how many points are graphed as it can be a performance concern if too high, and OxyPlot appears to stop drawing connecting lines beyond ~530 items
-                int maxGraphPoints = (Device.OS == TargetPlatform.Android) ? Constants.App.HISTORY_WeightEntryMaxCount_Graphing_Android : 
-                    Constants.App.HISTORY_WeightEntryMaxCount_Graphing;
+                int maxGraphPoints = (Device.OS == TargetPlatform.Android) ? Constants.App.WeightGraphingMaxCount_Android : 
+                    Constants.App.WeightGraphingMaxCount;
                 var limitedEntries = latestWeightEntries.OrderByDescending(x => x.Date).Take(maxGraphPoints).ToList();
                 RefreshGraphDataModel(limitedEntries, goal);
             }
@@ -436,8 +436,8 @@ namespace LineDietXF.ViewModels
             // show warning that an entry will be deleted, allow them to cancel
             var result = await DialogService.DisplayAlertAsync(Constants.Strings.GraphPage_ConfirmDelete_Title,
                 string.Format(Constants.Strings.GraphPage_ConfirmDelete_Message, entry.Date),
-                Constants.Strings.GENERIC_OK,
-                Constants.Strings.GENERIC_CANCEL);
+                Constants.Strings.Generic_OK,
+                Constants.Strings.Generic_Cancel);
 
             if (!result)
             {
@@ -469,7 +469,7 @@ namespace LineDietXF.ViewModels
 
             if (!deleteSucceeded)
             {
-                await DialogService.DisplayAlertAsync(Constants.Strings.GraphPage_DeleteFailed_Title, Constants.Strings.GraphPage_DeleteFailed_Message, Constants.Strings.GENERIC_OK);
+                await DialogService.DisplayAlertAsync(Constants.Strings.GraphPage_DeleteFailed_Title, Constants.Strings.GraphPage_DeleteFailed_Message, Constants.Strings.Generic_OK);
                 this.RefreshFromUserDataAsync();
             }
         }

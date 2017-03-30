@@ -270,8 +270,8 @@ namespace LineDietXF.Services
         async Task SimulateSlowNetworkIfEnabled()
         {
 #if DEBUG
-            if (Constants.App.DEBUG_SIMULATE_SLOW_RESPONSE)
-                await Task.Delay(Constants.App.DEBUG_SIMULATE_SLOW_RESPONSE_TIME);
+            if (Constants.App.DEBUG_SimulateSlowResponseTimes)
+                await Task.Delay(Constants.App.DEBUG_SimulatedSlowResponseTime);
 #endif
         }
     }

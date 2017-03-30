@@ -83,7 +83,7 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        DateTime _goalDate = DateTime.Today.AddMonths(Constants.App.SetGoalPage_DefaultGoalDateOffsetInMonths);
+        DateTime _goalDate = DateTime.Today.AddMonths(Constants.App.DefaultGoalDateOffsetInMonths);
         public DateTime GoalDate
         {
             get { return _goalDate; }
@@ -353,7 +353,7 @@ namespace LineDietXF.ViewModels
                 // show error about invalid value if we can't convert the entered value to a decimal
                 await DialogService.DisplayAlertAsync(Constants.Strings.SetGoalPage_InvalidWeight_Title,
                     Constants.Strings.SetGoalPage_InvalidWeight_Message,
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
 
                 return;
             }
@@ -367,7 +367,7 @@ namespace LineDietXF.ViewModels
                 // TODO:: analytics
                 var result = await DialogService.DisplayAlertAsync(Constants.Strings.SetGoalPage_GoalWeightGreaterThanStartWeight_Title,
                     Constants.Strings.SetGoalpage_GoalWeightGreaterThanStartWeight_Message,
-                    Constants.Strings.GENERIC_OK, Constants.Strings.GENERIC_CANCEL);
+                    Constants.Strings.Generic_OK, Constants.Strings.Generic_Cancel);
 
                 if (!result)
                     return;
@@ -402,8 +402,8 @@ namespace LineDietXF.ViewModels
 
                         // show warning that an existing entry will be updated (is actually deleted and re-added), allow them to cancel
                         var result = await DialogService.DisplayAlertAsync(Constants.Strings.Common_UpdateExistingWeight_Title, warningMessage,
-                            Constants.Strings.GENERIC_OK,
-                            Constants.Strings.GENERIC_CANCEL);
+                            Constants.Strings.Generic_OK,
+                            Constants.Strings.Generic_Cancel);
 
                         // if they canceled the dialog then return without changing anything
                         if (!result)
@@ -416,7 +416,7 @@ namespace LineDietXF.ViewModels
                         AnalyticsService.TrackError($"{nameof(Save)} - Error when trying to remove existing weight entry for start date");
 
                         await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                            Constants.Strings.SetGoalPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.GENERIC_OK);
+                            Constants.Strings.SetGoalPage_Save_RemoveExistingWeightFailed_Message, Constants.Strings.Generic_OK);
                         return;
                     }
                 }
@@ -427,7 +427,7 @@ namespace LineDietXF.ViewModels
                     AnalyticsService.TrackError($"{nameof(Save)} - Error when trying to add weight entry for start date");
 
                     await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                        Constants.Strings.SetGoalPage_Save_AddingWeightFailed_Message, Constants.Strings.GENERIC_OK);
+                        Constants.Strings.SetGoalPage_Save_AddingWeightFailed_Message, Constants.Strings.Generic_OK);
                     return;
                 }
 
@@ -437,7 +437,7 @@ namespace LineDietXF.ViewModels
                     AnalyticsService.TrackError($"{nameof(Save)} - Error when trying to save new weight loss goal");
 
                     await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                        Constants.Strings.SetGoalPage_Save_AddingGoalFailed_Message, Constants.Strings.GENERIC_OK);
+                        Constants.Strings.SetGoalPage_Save_AddingGoalFailed_Message, Constants.Strings.Generic_OK);
                     return;
                 }
 
@@ -448,7 +448,7 @@ namespace LineDietXF.ViewModels
                 AnalyticsService.TrackFatalError($"{nameof(Save)} - an exception occurred.", ex);
 
                 await DialogService.DisplayAlertAsync(Constants.Strings.Common_SaveError,
-                    Constants.Strings.SetGoalPage_Save_Exception_Message, Constants.Strings.GENERIC_OK);
+                    Constants.Strings.SetGoalPage_Save_Exception_Message, Constants.Strings.Generic_OK);
             }
             finally
             {

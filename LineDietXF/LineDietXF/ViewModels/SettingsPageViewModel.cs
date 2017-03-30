@@ -84,7 +84,7 @@ namespace LineDietXF.ViewModels
                 new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.Kilograms); }));
             var stonesPoundAction = ActionSheetButton.CreateButton(WeightUnitEnum.StonesAndPounds.ToSettingsName(),
                 new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.StonesAndPounds); }));
-            var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.GENERIC_CANCEL, 
+            var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.Generic_Cancel, 
                 new DelegateCommand(() => { }));
 
             DialogService.DisplayActionSheetAsync(Constants.Strings.Settings_ChangeWeightUnitsActionSheet, 
@@ -121,7 +121,7 @@ namespace LineDietXF.ViewModels
                 AnalyticsService.TrackFatalError($"{nameof(WeightUnitTypeSelected)} - an exception occurred getting all weights", ex);
                 await DialogService.DisplayAlertAsync(Constants.Strings.Settings_ChangeWeightUnits_GetWeightsError_Title,
                     Constants.Strings.Settings_ChangeWeightUnits_GetWeightsError_Message, 
-                    Constants.Strings.GENERIC_OK);
+                    Constants.Strings.Generic_OK);
             }
             finally
             {
@@ -142,7 +142,7 @@ namespace LineDietXF.ViewModels
                 new DelegateCommand(() => { UpdateWeightEntriesAndGoalUnits(newUnits, true); }));
             var changeUnitAction = ActionSheetButton.CreateButton(Constants.Strings.Settings_ChangeWeightUnits_ConvertWarning_ChangeUnits,
                 new DelegateCommand(() => { UpdateWeightEntriesAndGoalUnits(newUnits, false); }));
-            var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.GENERIC_CANCEL, 
+            var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.Generic_Cancel, 
                 new DelegateCommand(() => { }));
 
             await DialogService.DisplayActionSheetAsync(Constants.Strings.Settings_ChangeWeightUnits_ConvertWarning,
@@ -179,7 +179,7 @@ namespace LineDietXF.ViewModels
                 var msgText = convertValues ? Constants.Strings.Settings_ChangeWeightUnits_ConvertWeightValues_FatalError :
                     Constants.Strings.Settings_ChangeWeightUnits_ChangeUnits_FatalError;
 
-                await DialogService.DisplayAlertAsync(Constants.Strings.Common_FatalError, msgText + result.ErrorText, Constants.Strings.GENERIC_OK);
+                await DialogService.DisplayAlertAsync(Constants.Strings.Common_FatalError, msgText + result.ErrorText, Constants.Strings.Generic_OK);
                 return;
             }
         }

@@ -49,7 +49,7 @@ namespace LineDietXF.iOS
 
             bool useMockServices = false;
 #if DEBUG
-            useMockServices = LineDietXF.Constants.App.DEBUG_USE_MOCKS;
+            useMockServices = LineDietXF.Constants.App.DEBUG_UseMocks;
 #endif
 
             if (!useMockServices) // main XF App.xaml.cs will register a mock IAnalyticsService if this is true

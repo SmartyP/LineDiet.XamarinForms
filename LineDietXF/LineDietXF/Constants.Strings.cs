@@ -5,8 +5,8 @@ namespace LineDietXF.Constants
     public static class Strings
     {
         // Generic strings
-        public const string GENERIC_OK = "OK";
-        public const string GENERIC_CANCEL = "Cancel";
+        public const string Generic_OK = "OK";
+        public const string Generic_Cancel = "Cancel";
 
         // Common strings - used multiple places
         public const string Common_WeightUnit_ImperialPounds = "pounds";
