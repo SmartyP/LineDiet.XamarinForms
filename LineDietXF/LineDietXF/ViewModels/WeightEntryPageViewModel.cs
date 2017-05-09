@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Globalization;
 
 namespace LineDietXF.ViewModels
 {
@@ -153,12 +154,12 @@ namespace LineDietXF.ViewModels
                 return null;
 
             int weightStones;
-            if (!int.TryParse(WeightStones, out weightStones))
+            if (!int.TryParse(WeightStones, NumberStyles.Integer, CultureInfo.CurrentCulture, out weightStones))
                 return null;
 
             // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             decimal weightPounds = 0;
-            if (!string.IsNullOrEmpty(WeightStonePounds) && !decimal.TryParse(WeightStonePounds, out weightPounds))
+            if (!string.IsNullOrEmpty(WeightStonePounds) && !decimal.TryParse(WeightStonePounds, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out weightPounds))
                 return null;
 
             // don't allow negative values
@@ -191,7 +192,7 @@ namespace LineDietXF.ViewModels
             }
             else
             {
-                if (!decimal.TryParse(Weight, out weightValue))
+                if (!decimal.TryParse(Weight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out weightValue))
                     return false;
 
                 // disable save button if they enter a negative number or 0
@@ -255,7 +256,7 @@ namespace LineDietXF.ViewModels
             }
             else
             {
-                if (!decimal.TryParse(Weight, out weightValue))
+                if (!decimal.TryParse(Weight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out weightValue))
                 {
                     parsedWeightValues = false;
                 }

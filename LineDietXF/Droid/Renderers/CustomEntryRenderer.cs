@@ -1,5 +1,6 @@
 // NOTE:: auto-select text largely taken from: https://forums.xamarin.com/discussion/comment/64776/#Comment_64776
 // NOTE:: removing field underline largely taken from: https://gist.github.com/dkudelko/42f2d5bc1c8b3aba1d3d
+using Android.Text.Method;
 using LineDietXF.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -22,6 +23,12 @@ namespace LineDietXF.Droid.Renderers
             {
                 var nativeEditText = (global::Android.Widget.EditText)Control;
                 nativeEditText.SetSelectAllOnFocus(true);
+            }
+
+            if (this.Control != null)
+            {
+                // HACK:: allows commas to be used for folks in locales where comma is used as a decimal
+                this.Control.KeyListener = DigitsKeyListener.GetInstance("1234567890.,");
             }
 
             // setting this background color to transparent gets rid of the underline normally seen in Android edit fields
