@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Globalization;
 
 namespace LineDietXF.ViewModels
 {
@@ -260,8 +261,9 @@ namespace LineDietXF.ViewModels
                     return false;
 
                 // disable the save button if either weight text field can't be parsed
-                decimal startWeight, goalWeight;
-                if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
+                decimal startWeight, goalWeight;                
+                if (!decimal.TryParse(StartWeight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out startWeight) ||
+                    !decimal.TryParse(GoalWeight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out goalWeight))
                     return false;
             }
 
@@ -274,12 +276,12 @@ namespace LineDietXF.ViewModels
                 return null;
 
             int startWeightStones;
-            if (!int.TryParse(StartWeightStones, out startWeightStones))
+            if (!int.TryParse(StartWeightStones, NumberStyles.Integer, CultureInfo.CurrentCulture, out startWeightStones))
                 return null;
 
             // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             decimal startWeightPounds = 0;
-            if (!string.IsNullOrEmpty(StartWeightStonePounds) && !decimal.TryParse(StartWeightStonePounds, out startWeightPounds))
+            if (!string.IsNullOrEmpty(StartWeightStonePounds) && !decimal.TryParse(StartWeightStonePounds, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out startWeightPounds))
                 return null;
 
             // don't allow negative values
@@ -299,12 +301,12 @@ namespace LineDietXF.ViewModels
                 return null;
 
             int goalWeightStones;
-            if (!int.TryParse(GoalWeightStones, out goalWeightStones))
+            if (!int.TryParse(GoalWeightStones, NumberStyles.Integer, CultureInfo.CurrentCulture, out goalWeightStones))
                 return null;
 
             // NOTE:: we will consider a blank pounds field as 0 pounds - the stones field is only required
             decimal goalWeightPounds = 0;
-            if (!string.IsNullOrEmpty(GoalWeightStonePounds) && !decimal.TryParse(GoalWeightStonePounds, out goalWeightPounds))
+            if (!string.IsNullOrEmpty(GoalWeightStonePounds) && !decimal.TryParse(GoalWeightStonePounds, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out goalWeightPounds))
                 return null;
 
             // don't allow negative values
@@ -344,7 +346,8 @@ namespace LineDietXF.ViewModels
             }
             else
             {
-                if (!decimal.TryParse(StartWeight, out startWeight) || !decimal.TryParse(GoalWeight, out goalWeight))
+                if (!decimal.TryParse(StartWeight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out startWeight) || 
+                    !decimal.TryParse(GoalWeight, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out goalWeight))
                     parsedWeightFields = false;                
             }
 
