@@ -8,6 +8,9 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 
 namespace LineDietXF
 {
@@ -88,6 +91,11 @@ namespace LineDietXF
 
         async Task InitializeAsyncServices()
         {
+            MobileCenter.Start("ios={TODO replace me};" +
+				   "uwp={Your UWP App secret here};" +
+				   "android={TODO replace me}",
+				   typeof(Analytics), typeof(Crashes));
+            
             await Container.Resolve<IDataService>().Initialize(DBPath);
         }
 
