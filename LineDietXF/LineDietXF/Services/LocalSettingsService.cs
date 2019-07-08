@@ -15,12 +15,12 @@ namespace LineDietXF.Services
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault<bool>(Constants.App.Setting_DismissedStartupView_Key,
+                return CrossSettings.Current.GetValueOrDefault(Constants.App.Setting_DismissedStartupView_Key,
                                                                      Constants.App.Setting_DismissedStartupView_Default);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue<bool>(Constants.App.Setting_DismissedStartupView_Key, value);
+                CrossSettings.Current.AddOrUpdateValue(Constants.App.Setting_DismissedStartupView_Key, value);
             }
         }
 
@@ -28,12 +28,12 @@ namespace LineDietXF.Services
         { 
             get
             {
-                return CrossSettings.Current.GetValueOrDefault<WeightUnitEnum>(Constants.App.Setting_WeightUnits_Key,
-                    Constants.App.Setting_WeightUnits_Default);
+                return (WeightUnitEnum)CrossSettings.Current.GetValueOrDefault(Constants.App.Setting_WeightUnits_Key,
+                    (int)Constants.App.Setting_WeightUnits_Default);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue<WeightUnitEnum>(Constants.App.Setting_WeightUnits_Key, value);
+                CrossSettings.Current.AddOrUpdateValue(Constants.App.Setting_WeightUnits_Key, (int)value);
             }
         }
 

@@ -77,9 +77,9 @@ namespace LineDietXF.ViewModels
             MenuEntries = BuildMenu();
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters) { }
+        public void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_Menu);
 
@@ -217,9 +217,9 @@ namespace LineDietXF.ViewModels
             if (!reviewSuccess)
             {
                 var errorMessage = string.Empty;
-                if (Device.OS == TargetPlatform.Android)
+                if (Device.RuntimePlatform == Device.Android)
                     errorMessage = string.Format(Constants.Strings.Review_Failed_Message, Constants.Strings.Review_Failed_Part_Android);
-                else if (Device.OS == TargetPlatform.iOS)
+                else if (Device.RuntimePlatform == Device.iOS)
                     errorMessage = string.Format(Constants.Strings.Review_Failed_Message, Constants.Strings.Review_Failed_Part_iOS);
                 else
                 {

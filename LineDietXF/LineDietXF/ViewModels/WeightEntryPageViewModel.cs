@@ -103,7 +103,7 @@ namespace LineDietXF.ViewModels
             CloseCommand = new DelegateCommand(Close);
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
             ShowStonesEntryFields = SettingsService.WeightUnit == WeightUnitEnum.StonesAndPounds;
 
@@ -139,12 +139,12 @@ namespace LineDietXF.ViewModels
             }
         }
 
-        public void OnNavigatedTo(NavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_WeightEntry);
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
         }
 

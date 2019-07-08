@@ -5,9 +5,9 @@ using Android.Support.Design.Widget;
 using LineDietXF.Droid.Services;
 using LineDietXF.Events;
 using LineDietXF.Interfaces;
-using Microsoft.Practices.Unity;
+using Prism;
 using Prism.Events;
-using Prism.Unity;
+using Prism.Ioc;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -47,10 +47,10 @@ namespace LineDietXF.Droid
             eventAggregator.GetEvent<ChangeColorEvent>().Subscribe(HandleChangeColorEvent);
         }
 
-        public void RegisterTypes(IUnityContainer container)
+        public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             var reviewService = new ReviewService(this, PackageName);
-            container.RegisterInstance<IReviewService>(reviewService, new ContainerControlledLifetimeManager());
+            containerRegistry.RegisterInstance<IReviewService>(reviewService);
 
             bool useMockServices = false;
 #if DEBUG
@@ -60,7 +60,7 @@ namespace LineDietXF.Droid
             if (!useMockServices) // main XF App.xaml.cs will register a mock IAnalyticsService if this is true
             {
                 AnalyticsService = new AnalyticsService(this);
-                container.RegisterInstance<IAnalyticsService>(AnalyticsService, new ContainerControlledLifetimeManager());
+                containerRegistry.RegisterInstance<IAnalyticsService>(AnalyticsService);
             }
         }
 
@@ -74,5 +74,5 @@ namespace LineDietXF.Droid
             if (navPage != null)
                 navPage.BarBackgroundColor = color;
         }
-    }
+  }
 }

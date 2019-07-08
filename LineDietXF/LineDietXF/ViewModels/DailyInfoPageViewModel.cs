@@ -107,9 +107,9 @@ namespace LineDietXF.ViewModels
             SetGoalCommand = new DelegateCommand(ShowSetGoalScreen);
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters) { }
+        public void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_DailyInfo);
 
@@ -227,10 +227,12 @@ namespace LineDietXF.ViewModels
 
 #if DEBUG
             if (Constants.App.DEBUG_AlwaysShowGettingStarted)
+#pragma warning disable CS0162 // Unreachable code detected
                 showGettingStartedFlow = true;
+#pragma warning restore CS0162 // Unreachable code detected
 #endif
 
-            if (showGettingStartedFlow)
+      if (showGettingStartedFlow)
             {
                 AnalyticsService.TrackEvent(Constants.Analytics.DailyInfoCategory, Constants.Analytics.DailyInfo_LaunchingGettingStarted, 1);
 

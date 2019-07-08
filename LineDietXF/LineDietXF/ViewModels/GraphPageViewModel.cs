@@ -132,9 +132,9 @@ namespace LineDietXF.ViewModels
             DeleteEntryCommand = new DelegateCommand<WeightEntry>(ConfirmDeleteItem);
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters) { }
+        public void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public void OnNavigatedTo(NavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_Graph);
         }
@@ -221,7 +221,7 @@ namespace LineDietXF.ViewModels
                 });
 
                 // NOTE:: we limit how many points are graphed as it can be a performance concern if too high, and OxyPlot appears to stop drawing connecting lines beyond ~530 items
-                int maxGraphPoints = (Device.OS == TargetPlatform.Android) ? Constants.App.WeightGraphingMaxCount_Android : 
+                int maxGraphPoints = (Device.RuntimePlatform == Device.Android) ? Constants.App.WeightGraphingMaxCount_Android : 
                     Constants.App.WeightGraphingMaxCount;
                 var limitedEntries = latestWeightEntries.OrderByDescending(x => x.Date).Take(maxGraphPoints).ToList();
                 RefreshGraphDataModel(limitedEntries, goal);

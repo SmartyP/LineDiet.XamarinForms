@@ -1,5 +1,6 @@
 // NOTE:: auto-select text largely taken from: https://forums.xamarin.com/discussion/comment/64776/#Comment_64776
 // NOTE:: removing field underline largely taken from: https://gist.github.com/dkudelko/42f2d5bc1c8b3aba1d3d
+using Android.Content;
 using Android.Text.Method;
 using LineDietXF.Droid.Renderers;
 using Xamarin.Forms;
@@ -13,7 +14,12 @@ namespace LineDietXF.Droid.Renderers
     /// NOTE:: This renderer affects all Entry elements, should instead target a derived Entry type if this is not desired
     /// </summary>
     public class CustomEntryRenderer : EntryRenderer
-    {
+  {
+
+        public CustomEntryRenderer(Context context) : base(context)
+        {
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);

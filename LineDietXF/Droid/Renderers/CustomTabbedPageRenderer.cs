@@ -1,5 +1,6 @@
 // largely taken from https://forums.xamarin.com/discussion/comment/205661/#Comment_205661
 
+using Android.Content;
 using LineDietXF.Droid.Renderers;
 using System.Reflection;
 using Xamarin.Forms;
@@ -14,6 +15,12 @@ namespace LineDietXF.Droid.Renderers
     /// </summary>
     public class CustomTabbedPageRenderer : TabbedPageRenderer
     {
+
+        public CustomTabbedPageRenderer(Context context) : base(context)
+        {
+
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
         {
             // Disable animations only when UseAnimations is queried for enabling gestures
