@@ -43,7 +43,7 @@ namespace LineDietXF.iOS.Renderers
                 var tab = TabBar.Items[i];
                 var tabPage = tabbedPage.Children[i];
 
-                var iconFilename = tabPage.IconImageSource + UnselectedFilenameExtension;
+                var iconFilename = ((FileImageSource)tabPage.IconImageSource).File + UnselectedFilenameExtension;
                 var tabImageUnselected = new UIImage(iconFilename).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 
                 tab.Image = tabImageUnselected; // set unselected image to semi-transparent version (same filename, appended with "_unselected")                
