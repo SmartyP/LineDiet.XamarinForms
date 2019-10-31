@@ -6,18 +6,18 @@
 
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.4" />
-    <PackageReference Include="OxyPlot.Core" Version="1.0.0" />
+    <PackageReference Include="OxyPlot.Core" Version="2.0.0" />
     <PackageReference Include="OxyPlot.Xamarin.Forms" Version="1.0.0" />
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
-    <PackageReference Include="Prism.Core" Version="7.2.0.1347-pre" />
-    <PackageReference Include="Prism.Forms" Version="7.2.0.1347-pre" />
-    <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1347-pre" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.14" />
-    <PackageReference Include="SQLitePCLRaw.core" Version="1.1.14" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1367" />
+    <PackageReference Include="Prism.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.302-beta" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.1" />
+    <PackageReference Include="SQLitePCLRaw.core" Version="2.0.1" />
     <PackageReference Include="Unity" Version="5.11.1" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.947036" />
   </ItemGroup>
 
 </Project>
