@@ -31,7 +31,7 @@ namespace LineDietXF
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+           
             Container.Resolve<IAnalyticsService>().Initialize(Constants.Analytics.GA_TrackingID, Constants.Analytics.GA_AppName, Constants.Analytics.GA_DispatchPeriod);
             Container.Resolve<ISettingsService>().Initialize();
 

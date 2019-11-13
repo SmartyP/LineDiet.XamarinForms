@@ -97,20 +97,7 @@
     <BundleResource Include="Resources\graph_unselected.png" />
     <BundleResource Include="Resources\graph_unselected%402x.png" />
     <BundleResource Include="Resources\graph_unselected%403x.png" />
-    <BundleResource Include="Resources\Icon.png" />
-    <BundleResource Include="Resources\Icon%402x.png" />
-    <BundleResource Include="Resources\Icon-60%402x.png" />
-    <BundleResource Include="Resources\Icon-72.png" />
-    <BundleResource Include="Resources\Icon-72%402x.png" />
-    <BundleResource Include="Resources\Icon-76.png" />
-    <BundleResource Include="Resources\Icon-76%402x.png" />
     <BundleResource Include="Resources\Icon-83.5%402x.png" />
-    <BundleResource Include="Resources\Icon-Small.png" />
-    <BundleResource Include="Resources\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40.png" />
-    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-50.png" />
-    <BundleResource Include="Resources\Icon-Small-50%402x.png" />
     <BundleResource Include="Resources\menu.png" />
     <BundleResource Include="Resources\menu%402x.png" />
     <BundleResource Include="Resources\menu%403x.png" />
@@ -183,10 +170,10 @@
       <Version>1.7.302-beta</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_green">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.core">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.provider.sqlite3.ios_unified">
       <Version>1.1.14</Version>
@@ -388,6 +375,20 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-60%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-72.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-72%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-76%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small-50.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small-50%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small-40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Icon-Small-40%402x.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

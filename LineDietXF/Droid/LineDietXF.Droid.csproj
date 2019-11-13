@@ -17,7 +17,6 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
@@ -36,9 +35,6 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -129,13 +125,13 @@
       <Version>1.7.302-beta</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_green">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.core">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3.android">
       <Version>1.1.14</Version>

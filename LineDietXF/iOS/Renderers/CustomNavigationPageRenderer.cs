@@ -20,6 +20,11 @@ namespace LineDietXF.iOS.Renderers
 
         bool _wiredUpEventHandler = false;
 
+        public override UIStatusBarStyle PreferredStatusBarStyle()
+        {
+            return UIStatusBarStyle.LightContent;
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -27,10 +32,6 @@ namespace LineDietXF.iOS.Renderers
             // set to default gray color
             this.NavigationBar.BarTintColor = BaseColorEnum.Gray.GetDarkColor().ToUIColor();
             this.NavigationBar.TintColor = UIColor.White;
-
-            // Set status bar to have white status bar text
-            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
-            this.SetNeedsStatusBarAppearanceUpdate();
 
             if (!_wiredUpEventHandler)
             {

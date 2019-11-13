@@ -8,7 +8,8 @@
                    prism:ViewModelLocator.AutowireViewModel="True"
 			       x:Class="LineDietXF.Views.MainPage"
                    Title="Line Diet"
-                   NavigationPage.BackButtonTitle="Back">
+                   NavigationPage.BackButtonTitle="Back"
+                   SelectedTabColor="White">
     <TabbedPage.Children>
         <pages:DailyInfoPage x:Name="SummaryTab" />
         <pages:GraphPage x:Name="GraphTab" />
