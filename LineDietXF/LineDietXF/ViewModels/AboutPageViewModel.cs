@@ -26,10 +26,10 @@ namespace LineDietXF.ViewModels
             CloseCommand = new DelegateCommand(Close);
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters) { }
-        public void OnNavigatedFrom(NavigationParameters parameters) { }
+        public void OnNavigatingTo(INavigationParameters parameters) { }
+        public void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public void OnNavigatedTo(NavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             AnalyticsService.TrackPageView(Constants.Analytics.Page_About);
         }

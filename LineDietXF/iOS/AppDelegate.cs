@@ -2,9 +2,9 @@
 using LineDietXF.Interfaces;
 using LineDietXF.iOS.Renderers;
 using LineDietXF.iOS.Services;
-using Microsoft.Practices.Unity;
+using Prism;
 using Prism.Events;
-using Prism.Unity;
+using Prism.Ioc;
 using System;
 using System.IO;
 using UIKit;
@@ -43,9 +43,9 @@ namespace LineDietXF.iOS
             return base.FinishedLaunching(app, options);
         }
 
-        public void RegisterTypes(IUnityContainer container)
+        public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            container.RegisterType<IReviewService, ReviewService>(new ContainerControlledLifetimeManager());
+            containerRegistry.RegisterSingleton<IReviewService, ReviewService>();
 
             bool useMockServices = false;
 #if DEBUG
@@ -53,7 +53,7 @@ namespace LineDietXF.iOS
 #endif
 
             if (!useMockServices) // main XF App.xaml.cs will register a mock IAnalyticsService if this is true
-                container.RegisterType<IAnalyticsService, AnalyticsService>(new ContainerControlledLifetimeManager());
+                containerRegistry.RegisterSingleton<IAnalyticsService, AnalyticsService>();
         }
     }
 }

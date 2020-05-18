@@ -3,10 +3,13 @@
 			       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                    xmlns:pages="clr-namespace:LineDietXF.Views"
+                   xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                   android:TabbedPage.IsSwipePagingEnabled="False"
                    prism:ViewModelLocator.AutowireViewModel="True"
 			       x:Class="LineDietXF.Views.MainPage"
                    Title="Line Diet"
-                   NavigationPage.BackButtonTitle="Back">
+                   NavigationPage.BackButtonTitle="Back"
+                   SelectedTabColor="White">
     <TabbedPage.Children>
         <pages:DailyInfoPage x:Name="SummaryTab" />
         <pages:GraphPage x:Name="GraphTab" />

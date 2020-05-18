@@ -79,13 +79,13 @@ namespace LineDietXF.ViewModels
         void SetWeightUnitsTapped()
         {
             var imperialPoundsAction = ActionSheetButton.CreateButton(WeightUnitEnum.ImperialPounds.ToSettingsName(), 
-                new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.ImperialPounds); }));
+                () => { WeightUnitTypeSelected(WeightUnitEnum.ImperialPounds); });
             var kilogramsAction = ActionSheetButton.CreateButton(WeightUnitEnum.Kilograms.ToSettingsName(),
-                new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.Kilograms); }));
+                () => { WeightUnitTypeSelected(WeightUnitEnum.Kilograms); });
             var stonesPoundAction = ActionSheetButton.CreateButton(WeightUnitEnum.StonesAndPounds.ToSettingsName(),
-                new DelegateCommand(() => { WeightUnitTypeSelected(WeightUnitEnum.StonesAndPounds); }));
+                () => { WeightUnitTypeSelected(WeightUnitEnum.StonesAndPounds); });
             var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.Generic_Cancel, 
-                new DelegateCommand(() => { }));
+                () => { });
 
             DialogService.DisplayActionSheetAsync(Constants.Strings.Settings_ChangeWeightUnitsActionSheet, 
                 imperialPoundsAction, kilogramsAction, stonesPoundAction, cancelAction);
@@ -139,11 +139,11 @@ namespace LineDietXF.ViewModels
 
             // show warning of needing to convert these values
             var convertAction = ActionSheetButton.CreateButton(Constants.Strings.Settings_ChangeWeightUnits_ConvertWarning_ConvertWeightValues,
-                new DelegateCommand(() => { UpdateWeightEntriesAndGoalUnits(newUnits, true); }));
+                () => { UpdateWeightEntriesAndGoalUnits(newUnits, true); });
             var changeUnitAction = ActionSheetButton.CreateButton(Constants.Strings.Settings_ChangeWeightUnits_ConvertWarning_ChangeUnits,
-                new DelegateCommand(() => { UpdateWeightEntriesAndGoalUnits(newUnits, false); }));
+                () => { UpdateWeightEntriesAndGoalUnits(newUnits, false); });
             var cancelAction = ActionSheetButton.CreateCancelButton(Constants.Strings.Generic_Cancel, 
-                new DelegateCommand(() => { }));
+                () => { });
 
             await DialogService.DisplayActionSheetAsync(Constants.Strings.Settings_ChangeWeightUnits_ConvertWarning,
                 convertAction, changeUnitAction, cancelAction);

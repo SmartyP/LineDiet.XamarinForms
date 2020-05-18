@@ -2,18 +2,26 @@
 using LineDietXF.MockServices;
 using LineDietXF.Services;
 using LineDietXF.Views;
-using Microsoft.Practices.Unity;
+using Unity;
 using Prism.Unity;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Prism;
+using Prism.Ioc;
 
 namespace LineDietXF
 {
     public partial class App : PrismApplication
     {
         string DBPath { get; set; }
+        /* 
+         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
+         * This imposes a limitation in which the App class must have a default constructor. 
+         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
+         */
+        public App() : this(null, "") { }
 
         public App(IPlatformInitializer platformInitializer, string dbPath) : base(platformInitializer)
         {
@@ -23,7 +31,7 @@ namespace LineDietXF
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+           
             Container.Resolve<IAnalyticsService>().Initialize(Constants.Analytics.GA_TrackingID, Constants.Analytics.GA_AppName, Constants.Analytics.GA_DispatchPeriod);
             Container.Resolve<ISettingsService>().Initialize();
 
@@ -43,7 +51,7 @@ namespace LineDietXF
             }
         }
 
-        protected override void RegisterTypes()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             bool useMockServices = false;
 #if DEBUG
@@ -54,35 +62,35 @@ namespace LineDietXF
             // NOTE:: we register with ContainerControlledLifetimeManager to ensure only one instance exists
             if (useMockServices)
             {
-                Container.RegisterType<IAnalyticsService, MockAnalyticsService>(new ContainerControlledLifetimeManager());
-                Container.RegisterType<ISettingsService, MockSettingsService>(new ContainerControlledLifetimeManager());
-                Container.RegisterType<IDataService, MockDataService>(new ContainerControlledLifetimeManager());
-                Container.RegisterType<IReviewService, MockReviewService>(new ContainerControlledLifetimeManager());
-                Container.RegisterType<IWindowColorService, MockWindowColorService>(new ContainerControlledLifetimeManager());
+                containerRegistry.RegisterSingleton<IAnalyticsService, MockAnalyticsService>();
+                containerRegistry.RegisterSingleton<ISettingsService, MockSettingsService>();
+                containerRegistry.RegisterSingleton<IDataService, MockDataService>();
+                containerRegistry.RegisterSingleton<IReviewService, MockReviewService>();
+                containerRegistry.RegisterSingleton<IWindowColorService, MockWindowColorService>();
             }
             else
             {
                 // NOTE:: IAnalyticsService must be registered by platform via IPlatformInitializer.RegisterTypes()
-                Container.RegisterType<ISettingsService, LocalSettingsService>(new ContainerControlledLifetimeManager());
-                Container.RegisterType<IDataService, SQLiteDataService>(new ContainerControlledLifetimeManager());
+                containerRegistry.RegisterSingleton<ISettingsService, LocalSettingsService>();
+                containerRegistry.RegisterSingleton<IDataService, SQLiteDataService>();
                 // NOTE:: IReviewService must be registered by platform via IPlatformInitializer.RegisterTypes()
-                Container.RegisterType<IWindowColorService, WindowColorService>(new ContainerControlledLifetimeManager());
+                containerRegistry.RegisterSingleton<IWindowColorService, WindowColorService>();
             }
 
             // Register Pages
-            Container.RegisterTypeForNavigation<NavigationPage>();
-            Container.RegisterTypeForNavigation<MainPage>();
-            Container.RegisterTypeForNavigation<DailyInfoPage>();
-            Container.RegisterTypeForNavigation<GraphPage>();
-            Container.RegisterTypeForNavigation<MenuPage>();
-            Container.RegisterTypeForNavigation<SetGoalPage>();
-            Container.RegisterTypeForNavigation<WeightEntryPage>();
-            Container.RegisterTypeForNavigation<GettingStartedPage>();
-            Container.RegisterTypeForNavigation<AboutPage>();
-            Container.RegisterTypeForNavigation<SettingsPage>();
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<DailyInfoPage>();
+            containerRegistry.RegisterForNavigation<GraphPage>();
+            containerRegistry.RegisterForNavigation<MenuPage>();
+            containerRegistry.RegisterForNavigation<SetGoalPage>();
+            containerRegistry.RegisterForNavigation<WeightEntryPage>();
+            containerRegistry.RegisterForNavigation<GettingStartedPage>();
+            containerRegistry.RegisterForNavigation<AboutPage>();
+            containerRegistry.RegisterForNavigation<SettingsPage>();
 
 #if DEBUG
-            Container.RegisterTypeForNavigation<DebugPage>();
+            containerRegistry.RegisterForNavigation<DebugPage>();
 #endif
         }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+<prism:PrismApplication
+                        xmlns="http://xamarin.com/schemas/2014/forms"
 						xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-						xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity"
+						xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
 						xmlns:cvt="clr-namespace:LineDietXF.Converters"
 						x:Class="LineDietXF.App">
   <Application.Resources>

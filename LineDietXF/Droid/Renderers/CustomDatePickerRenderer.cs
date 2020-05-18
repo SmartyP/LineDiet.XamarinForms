@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using LineDietXF.Droid.Renderers;
 using Xamarin.Forms.Platform.Android;
+using Android.Content;
 
 [assembly: ExportRenderer(typeof(DatePicker), typeof(CustomDatePickerRenderer))]
 namespace LineDietXF.Droid.Renderers
@@ -12,6 +13,11 @@ namespace LineDietXF.Droid.Renderers
     /// </summary>
     public class CustomDatePickerRenderer : DatePickerRenderer
     {
+
+        public CustomDatePickerRenderer(Context context) : base(context)
+        {
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.DatePicker> e)
         {
             base.OnElementChanged(e);

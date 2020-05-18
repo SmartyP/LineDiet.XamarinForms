@@ -12,6 +12,7 @@ using Android.Graphics;
 // using CustomLayouts.Droid.Renderers; // RFP:: 
 using LineDietXF.Controls; // RFP::
 using LineDietXF.Droid.Renderers; // RFP::
+using Android.Content;
 
 // RFP:: changed namespace
 [assembly: ExportRenderer(typeof(CarouselLayout), typeof(CarouselLayoutRenderer))]
@@ -24,6 +25,11 @@ namespace LineDietXF.Droid.Renderers
 		Timer _deltaXResetTimer;
 		Timer _scrollStopTimer;
 		HorizontalScrollView _scrollView;
+
+        public CarouselLayoutRenderer(Context context) : base(context)
+        {
+
+        }
 
 		protected override void OnElementChanged (VisualElementChangedEventArgs e)
 		{

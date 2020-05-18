@@ -43,21 +43,20 @@ namespace LineDietXF.iOS.Renderers
                 var tab = TabBar.Items[i];
                 var tabPage = tabbedPage.Children[i];
 
-                var iconFilename = tabPage.Icon.File + UnselectedFilenameExtension;
+                var iconFilename = ((FileImageSource)tabPage.IconImageSource).File + UnselectedFilenameExtension;
                 var tabImageUnselected = new UIImage(iconFilename).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 
                 tab.Image = tabImageUnselected; // set unselected image to semi-transparent version (same filename, appended with "_unselected")                
                 tab.ImageInsets = new UIEdgeInsets(imageOffset, 0, -imageOffset, 0); // shift the icon down as we aren't showing text labels for tabs    
             }
         }
-
+        
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
 
             // Set default color to dark gray
             var darkGray = BaseColorEnum.Gray.GetDarkColor().ToUIColor();
-            TabBar.TintColor = UIColor.White; // selected icon color
             TabBar.BarTintColor = darkGray; // bar fill color
             TabBar.BackgroundColor = UIColor.Purple; // unknown
             TabBar.Translucent = false;

@@ -27,7 +27,7 @@ namespace LineDietXF.Controls
 			Orientation = StackOrientation.Horizontal;
 
             // RFP:: The spacing between dots has to be adjusted to not have large gaps on Android
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform == Device.Android)
                 Spacing = 0;
 		}
 
@@ -36,7 +36,7 @@ namespace LineDietXF.Controls
             // RFP:: The scaling of these dots has to be adjusted to show on Android
             var scaleFactorX = 1.0f;
             var scaleFactorY = 1.0f;
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform == Device.Android)
             {
                 scaleFactorX = 2.5f;
                 scaleFactorY = 3.2f;
@@ -44,7 +44,7 @@ namespace LineDietXF.Controls
 
 			//Make one button and add it to the dotLayout
 			var dot = new Button {
-				BorderRadius = Convert.ToInt32(DotSize/2),
+				CornerRadius = Convert.ToInt32(DotSize/2),
                 HeightRequest = DotSize * scaleFactorY, // RFP::
                 WidthRequest = DotSize * scaleFactorX, // RFP::
 				BackgroundColor = DotColor

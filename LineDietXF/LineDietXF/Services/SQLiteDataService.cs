@@ -271,8 +271,10 @@ namespace LineDietXF.Services
         {
 #if DEBUG
             if (Constants.App.DEBUG_SimulateSlowResponseTimes)
+#pragma warning disable CS0162 // Unreachable code detected
                 await Task.Delay(Constants.App.DEBUG_SimulatedSlowResponseTime);
+#pragma warning restore CS0162 // Unreachable code detected
 #endif
-        }
+    }
     }
 }

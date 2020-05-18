@@ -37,7 +37,7 @@ namespace LineDietXF.Controls
 
 		public IndicatorStyleEnum IndicatorStyle { get; set; }
 
-		public IList<View> Children {
+		new public IList<View> Children {
 			get {
 				return _stack.Children;
 			}
