@@ -9,7 +9,7 @@ Line Diet is a mobile app for tracking and graphing your diet based off of a sim
 
 ## Platforms Supported
 - iOS (8.0+)
-- Android (4.0.3+)
+- Android (5.0+)
 
 ## Technologies Used
 * [Xamarin.Forms](https://www.xamarin.com/forms)
